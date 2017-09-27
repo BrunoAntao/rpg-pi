@@ -1,0 +1,56 @@
+body {
+
+  margin: 0;
+  overflow: hidden;
+  user-select: none;
+
+}
+
+canvas {
+
+  display: block;
+
+}
+
+.input-group {
+
+  padding-bottom: 5%;
+
+}
+
+@media (min-width: 800px) {
+
+  .list-group {
+
+    width: 25%;
+    margin: auto;
+    padding-top: 5%;
+
+  }
+
+  .alert {
+
+    width: 25%;
+    margin: auto;
+
+  }
+
+}
+@media (max-width: 800px) {
+
+  .list-group {
+
+    width: 200px;
+    margin: auto;
+    padding-top: 5%;
+
+  }
+
+  .alert {
+
+    width: 200px;
+    margin: auto;
+
+  }
+
+}

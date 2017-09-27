@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "ejs": "latest",
+    "express": "latest",
+    "socket.io": "latest"
+  }
+}
