@@ -12,29 +12,17 @@ if(localStorage.getItem('up') === null){
     
     localStorage.setItem('up', Phaser.Keyboard.W);
     
-} else {
-
-    keys.up = localStorage.getItem('up');
-
 }
 
 if(localStorage.getItem('down') === null){
     
     localStorage.setItem('down', Phaser.Keyboard.S);
     
-} else {
-
-    keys.down = localStorage.getItem('down');
-
 }
 
 if(localStorage.getItem('left') === null){
     
     localStorage.setItem('left', Phaser.Keyboard.A);
-    
-} else {
-    
-    keys.left = localStorage.getItem('left');
     
 }
 
@@ -42,11 +30,12 @@ if(localStorage.getItem('right') === null){
     
     localStorage.setItem('right', Phaser.Keyboard.D);
     
-} else {
-    
-    keys.right = localStorage.getItem('right');
-    
 }
+
+keys.up = localStorage.getItem('up');
+keys.down = localStorage.getItem('down');
+keys.left = localStorage.getItem('left');
+keys.right = localStorage.getItem('right');
 
 function codeToKey(code) {
 
