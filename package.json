@@ -5,5 +5,7 @@
     "express": "latest",
     "mocha": "^4.0.0",
     "socket.io": "latest"
-  }
+  },
+  
+  "scripts": {"test": "mocha"}
 }
