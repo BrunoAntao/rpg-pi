@@ -6,8 +6,6 @@ window.addEventListener('resize', function () {
 
 })
 
-var keys = {};
-
 if(localStorage.getItem('up') === null){
     
     localStorage.setItem('up', Phaser.Keyboard.W);
@@ -31,11 +29,14 @@ if(localStorage.getItem('right') === null){
     localStorage.setItem('right', Phaser.Keyboard.D);
     
 }
+var keys = {
 
-keys.up = localStorage.getItem('up');
-keys.down = localStorage.getItem('down');
-keys.left = localStorage.getItem('left');
-keys.right = localStorage.getItem('right');
+    up: localStorage.getItem('up'),
+    down: localStorage.getItem('down'),
+    left: localStorage.getItem('left'),
+    right: localStorage.getItem('right')
+
+};
 
 function codeToKey(code) {
 
@@ -51,10 +52,8 @@ function codeToKey(code) {
 
 }
 
-var listenKey = false;
-
 game.state.add('Menu', menuState);
 game.state.add('Game', gameState);
 game.state.add('Settings', settingsState);
 
-game.state.start('Menu');
+game.state.start('Game');

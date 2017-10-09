@@ -1,6 +1,11 @@
 gameState = {
 
     preload: function() {
+
+        game.load.image('tree1', 'client/assets/entities/tree1.png');
+        game.load.image('tree2', 'client/assets/entities/tree2.png');
+        game.load.image('tree3', 'client/assets/entities/tree3.png');
+
     },
 
     create: function() {
@@ -18,13 +23,22 @@ gameState = {
 
         }
 
-        console.log();
+        this.Mgroup = game.add.group();
 
-        new Player(100, 100, ctrls);
+        new Map(3200, 1600, this.Mgroup);
+
+        var a = new Player(100, 100, this.Mgroup, ctrls);
 
     },  
 
     update: function() {
+
+        this.Mgroup.customSort(function(a, b) {
+
+            return a.y - b.y;
+
+        });
+
     },
 
     render: function() {
