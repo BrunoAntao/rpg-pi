@@ -8,6 +8,7 @@ class Map {
         this.width = width;
         this.height = height;
         this.group = group;
+        this.bg = game.add.group();
 
         new Entity(200, 200, 'tree1', this.group);
 
@@ -34,6 +35,11 @@ class Map {
         b4.lineStyle(2, 0xffffff, 1);
         b4.drawRect(width/4, 0, width/2, height/2);
         b4.endFill();
+
+        this.bg.add(b1);
+        this.bg.add(b2);
+        this.bg.add(b3);
+        this.bg.add(b4);
 
     }
 

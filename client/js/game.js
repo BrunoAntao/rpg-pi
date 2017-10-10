@@ -25,13 +25,15 @@ gameState = {
 
         this.Mgroup = game.add.group();
 
-        new Map(3200, 1600, this.Mgroup);
+        this.map = new Map(3200, 1600, this.Mgroup);
 
-        var a = new Player(100, 100, this.Mgroup, ctrls);
+        this.player = new Player(100, 100, this.Mgroup, ctrls);
 
     },  
 
-    update: function() {
+    update: function() {       
+
+        game.world.bringToTop(this.map.group);
 
         this.Mgroup.customSort(function(a, b) {
 
