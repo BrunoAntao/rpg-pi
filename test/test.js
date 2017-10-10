@@ -1,10 +1,50 @@
 var expect  = require('chai').expect;
 var request = require('request');
 
-it('Status', function() {
+var player = new Player(100, 100);
 
-    request('http://localhost:80' , function(error, response, body) {
+describe('Server', () => {
+
+    it('Status', () => {
         
-        expect(res.statusCode).to.equal(200);
+            request('http://localhost:80' , function(error, response, body) {
+                
+                expect(res.statusCode).to.equal(200);
+        });
     });
 });
+
+describe('Player', () =>{
+
+    describe('Movement', () =>{
+
+        it('movement up', () => {
+
+            player.y -= 5;
+            player.y.should.equal(95);
+
+        });
+
+        it('movement down', () => {
+
+            player.y += 5;
+            player.y.should.equal(105);
+
+        });
+
+        it('movement right', () =>{
+
+
+            player.x += 5;
+            player.x.should.equal(105);
+
+        });
+
+        it('movement left', () =>{
+
+            player.x -= 5;
+            player.x.should.equal(95);
+
+        });
+    })
+})

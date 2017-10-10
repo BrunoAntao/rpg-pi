@@ -8,38 +8,45 @@ class Map {
         this.width = width;
         this.height = height;
         this.group = group;
-        this.bg = game.add.group();
+        this.biome = game.add.group();
+
+        this.forestBiomeBorders = { x1: 0, y1: 0, x2: width/4, y2: height};
+        this.fireBiomeBorders = {x1: width*3/4, y1: 0, x2: width/4, y2: height};
+        this.iceBiomeBorders = {x1: width/4, y1: height/2, x2: width/2, y2: height/2};
+        this.desertBiomeBorders = {x1: width/4, y1: 0, x2: width/2, y2: height/2};
 
         new Entity(200, 200, 'tree1', this.group);
+        new Entity(300, 300, 'cactus1', this.group);
+        new Entity(400, 400, 'cactus2', this.group);
 
-        let b1 = game.add.graphics(0, 0);
-        b1.beginFill(0x00ff00);
-        b1.lineStyle(2, 0xffffff, 1);
-        b1.drawRect(0, 0, width/4, height);
-        b1.endFill();
+        let forestBiome = game.add.graphics(0, 0);
+        forestBiome.beginFill(0x00ff00);
+        forestBiome.lineStyle(2, 0xffffff, 1);
+        forestBiome.drawRect(0, 0, width/4, height);
+        forestBiome.endFill();
 
-        let b2 = game.add.graphics(0, 0);
-        b2.beginFill(0xff0000);
-        b2.lineStyle(2, 0xffffff, 1);
-        b2.drawRect(width* 3/4, 0, width/4, height);
-        b2.endFill();
+        let fireBiome = game.add.graphics(0, 0);
+        fireBiome.beginFill(0xff0000);
+        fireBiome.lineStyle(2, 0xffffff, 1);
+        fireBiome.drawRect(width* 3/4, 0, width/4, height);
+        fireBiome.endFill();
 
-        let b3 = game.add.graphics(0, 0);
-        b3.beginFill(0x000000);
-        b3.lineStyle(2, 0xffffff, 1);
-        b3.drawRect(width/4, height/2, width/2, height/2);
-        b3.endFill();
+        let iceBiome = game.add.graphics(0, 0);
+        iceBiome.beginFill(0xffff00);
+        iceBiome.lineStyle(2, 0xffffff, 1);
+        iceBiome.drawRect(width/4, height/2, width/2, height/2);
+        iceBiome.endFill();
 
-        let b4 = game.add.graphics(0, 0);
-        b4.beginFill(0x0000ff);
-        b4.lineStyle(2, 0xffffff, 1);
-        b4.drawRect(width/4, 0, width/2, height/2);
-        b4.endFill();
+        let desertBiome = game.add.graphics(0, 0);
+        desertBiome.beginFill(0x0000ff);
+        desertBiome.lineStyle(2, 0xffffff, 1);
+        desertBiome.drawRect(width/4, 0, width/2, height/2);
+        desertBiome.endFill();
 
-        this.bg.add(b1);
-        this.bg.add(b2);
-        this.bg.add(b3);
-        this.bg.add(b4);
+        this.biome.add(forestBiome);
+        this.biome.add(fireBiome);
+        this.biome.add(iceBiome);
+        this.biome.add(desertBiome);
 
     }
 
