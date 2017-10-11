@@ -21,6 +21,9 @@ gameState = {
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
+        music = game.add.audio('desert');
+        music.play();
+
         game.physics.startSystem(Phaser.Physics.P2JS);
 
         ctrls = {
