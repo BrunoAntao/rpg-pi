@@ -12,4 +12,5 @@ class Entity extends Phaser.Sprite{
         group.add(this);
     }
 
+
 }

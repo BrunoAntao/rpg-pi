@@ -15,9 +15,9 @@ class Map {
         this.iceBiomeBorders = {x1: width/4, y1: height/2, x2: width/2, y2: height/2};
         this.desertBiomeBorders = {x1: width/4, y1: 0, x2: width/2, y2: height/2};
 
-        new Entity(200, 200, 'tree1', this.group);
-        new Entity(300, 300, 'cactus1', this.group);
-        new Entity(400, 400, 'cactus2', this.group);
+        //new Entity(200, 200, 'tree1', this.group);
+        //new Entity(300, 300, 'cactus1', this.group);
+        //new Entity(400, 400, 'cactus2', this.group);
 
         let forestBiome = game.add.graphics(0, 0);
         forestBiome.beginFill(0x00ff00);
