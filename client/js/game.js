@@ -9,7 +9,9 @@ gameState = {
         game.load.image('cactus2', 'client/assets/entities/desert2.png');
       
         game.load.image('mage', 'client/assets/player/mage.png');
-        game.load.audio('desert', ['client/assets/sounds/desert.mp3'])
+        game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
+
+        game.load.audio('desert', 'client/assets/sounds/desert.mp3');
 
     },
 
@@ -33,6 +35,9 @@ gameState = {
             attack:game.input.activePointer.leftButton
 
         }
+
+        //music = game.add.audio('desert');
+        //music.play();
 
         this.Mgroup = game.add.group();
 
