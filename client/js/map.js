@@ -75,8 +75,6 @@ class Map {
         this.biome.add(iceBiome);
         this.biome.add(desertBiome);
 
-        
-
     }
 
     load() {
