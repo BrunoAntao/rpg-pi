@@ -9,7 +9,7 @@ gameState = {
         game.load.image('cactus2', 'client/assets/entities/desert2.png');
       
         game.load.image('mage', 'client/assets/player/mage.png');
-        game.load.audio('desert', ['client/assets/sounds/desert.mp3'])
+        //game.load.audio('desert', ['client/assets/sounds/desert.mp3'])
 
     },
 
@@ -36,7 +36,7 @@ gameState = {
 
         this.Mgroup = game.add.group();
 
-        this.map = new Map(window.outerWidth, window.outerHeight, this.Mgroup);
+        this.map = new Map(3200, 1600, this.Mgroup);
 
         this.player = new Mage(100, 100, this.Mgroup, ctrls);
 
