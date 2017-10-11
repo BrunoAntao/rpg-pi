@@ -5,7 +5,11 @@ gameState = {
         game.load.image('tree1', 'client/assets/entities/tree1.png');
         game.load.image('tree2', 'client/assets/entities/tree2.png');
         game.load.image('tree3', 'client/assets/entities/tree3.png');
+        game.load.image('cactus1', 'client/assets/entities/desert1.png');
+        game.load.image('cactus2', 'client/assets/entities/desert2.png');
+      
         game.load.image('mage', 'client/assets/player/mage.png');
+
 
     },
 
@@ -26,7 +30,7 @@ gameState = {
 
         this.Mgroup = game.add.group();
 
-        this.map = new Map(3200, 1600, this.Mgroup);
+        this.map = new Map(window.outerWidth, window.outerHeight, this.Mgroup);
 
         this.player = new Mage(100, 100, this.Mgroup, ctrls);
 

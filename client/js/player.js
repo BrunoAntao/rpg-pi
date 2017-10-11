@@ -42,6 +42,7 @@ class Player extends Phaser.Sprite {
 
 }
 
+
 class Mage extends Player {
 
     constructor(x, y, group, ctrls) {
