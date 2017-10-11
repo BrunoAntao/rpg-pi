@@ -9,7 +9,7 @@ gameState = {
         game.load.image('cactus2', 'client/assets/entities/desert2.png');
       
         game.load.image('mage', 'client/assets/player/mage.png');
-
+        game.load.audio('desert', ['client/assets/sounds/desert.mp3'])
 
     },
 
@@ -18,6 +18,9 @@ gameState = {
         game.stage.backgroundColor = "#212121";
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
+
+        music = game.add.audio('desert');
+        music.play();
 
         game.physics.startSystem(Phaser.Physics.P2JS);
 

@@ -1,7 +1,7 @@
 let express = require('express');
 let app = express();
 let http = require('http').Server(app);
-let port = 80;
+let port = 9090;
 
 app.set('view engine', 'ejs');
 app.use('/client', express.static('client'));
