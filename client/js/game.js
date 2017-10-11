@@ -19,12 +19,15 @@ gameState = {
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
+        game.physics.startSystem(Phaser.Physics.P2JS);
+
         ctrls = {
 
             up:game.input.keyboard.addKey(keys.up),
             down:game.input.keyboard.addKey(keys.down),
             left:game.input.keyboard.addKey(keys.left),
-            right:game.input.keyboard.addKey(keys.right)
+            right:game.input.keyboard.addKey(keys.right),
+            attack:game.input.activePointer.leftButton
 
         }
 
