@@ -21,8 +21,8 @@ gameState = {
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
-        music = game.add.audio('desert');
-        music.play();
+        //music = game.add.audio('desert');
+        //music.play();
 
         game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -35,9 +35,6 @@ gameState = {
             attack:game.input.activePointer.leftButton
 
         }
-
-        //music = game.add.audio('desert');
-        //music.play();
 
         this.Mgroup = game.add.group();
 
