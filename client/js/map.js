@@ -18,33 +18,31 @@ class Map {
         this.desertBiomeBorders = {x1: width/4, y1: height/2, x2: width*3/4, y2: height};
 
         this.borders = [
-                        {biome: this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']},
-
-                        {biome: this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'] },
-
-                        {biome: this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']},
-
-                        {biome: this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']}
-                        ];
+            
+          {biome: this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']},
+          {biome: this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'] },
+          {biome: this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']},
+          {biome: this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']}
+        
+        ];
 
         this.entitiesToLoad = [];
         
-        this.borders.forEach( (element) =>{
+        this.borders.forEach( function(biome) {
 
             for(var i = 0; i < this.numOfSrites; i++){
 
-                this.entitiesToLoad.push(generateSpritePlace(element));
+                this.entitiesToLoad.push(this.generateSprite(biome));
 
             }
 
-        });
+        }, this);
 
-        this.entitiesToLoad.forEach( (element) => {
+        this.entitiesToLoad.forEach( function(entity) {
 
-            new Entity(element.xCoord, element.yCoord, element.sprite, this.group);
+            new Entity(entity.x, entity.y, entity.key, this.group);
 
-        })
-
+        }, this)
 
         let forestBiome = game.add.graphics(0, 0);
         forestBiome.beginFill(0x00ff00);
@@ -85,13 +83,10 @@ class Map {
 
         })
 
-
     }
 
-}
-
-var generateSpritePlace = function(border){
-
+    generateSprite(border){
+        
         let minX = Math.min(border.biome.x1, border.biome.x2) + 64;
         let maxX = Math.max(border.biome.x1, border.biome.x2) - 64;
 
@@ -103,6 +98,8 @@ var generateSpritePlace = function(border){
 
         let spriteNum = Math.floor(Math.random() * 3);
 
-        return {xCoord: x, yCoord: y, sprite: border.sprites[spriteNum]};
-    
+        return {x: x, y: y, key: border.sprites[spriteNum]};
+        
+    }
+
 }
