@@ -19,10 +19,10 @@ class Map {
 
         this.borders = [
             
-        {biome: this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']},
-        {biome: this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'] },
-        {biome: this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']},
-        {biome: this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']}
+          {biome: this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']},
+          {biome: this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'] },
+          {biome: this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']},
+          {biome: this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']}
         
         ];
 
@@ -43,7 +43,6 @@ class Map {
             new Entity(entity.x, entity.y, entity.key, this.group);
 
         }, this)
-
 
         let forestBiome = game.add.graphics(0, 0);
         forestBiome.beginFill(0x00ff00);
@@ -83,7 +82,6 @@ class Map {
             new Entity(entity.x, entity.y, this.group);
 
         })
-
 
     }
 

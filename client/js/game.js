@@ -9,7 +9,9 @@ gameState = {
         game.load.image('cactus2', 'client/assets/entities/desert2.png');
       
         game.load.image('mage', 'client/assets/player/mage.png');
+        game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
 
+        game.load.audio('desert', 'client/assets/sounds/desert.mp3');
 
     },
 
@@ -18,6 +20,9 @@ gameState = {
         game.stage.backgroundColor = "#212121";
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
+
+        music = game.add.audio('desert');
+        music.play();
 
         game.physics.startSystem(Phaser.Physics.P2JS);
 
@@ -31,9 +36,12 @@ gameState = {
 
         }
 
+        //music = game.add.audio('desert');
+        //music.play();
+
         this.Mgroup = game.add.group();
 
-        this.map = new Map(window.outerWidth, window.outerHeight, this.Mgroup);
+        this.map = new Map(3200, 1600, this.Mgroup);
 
         this.player = new Mage(100, 100, this.Mgroup, ctrls);
 
