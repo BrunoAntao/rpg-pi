@@ -52,6 +52,8 @@ function codeToKey(code) {
 
 }
 
+var global = {};
+
 game.state.add('Menu', menuState);
 game.state.add('Game', gameState);
 game.state.add('Settings', settingsState);

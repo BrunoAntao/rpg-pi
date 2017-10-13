@@ -1,0 +1,65 @@
+{
+    "mage": [
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          59,
+          29,
+          59,
+          49,
+          20,
+          49,
+          20,
+          29
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          20,
+          29,
+          59,
+          20,
+          75,
+          20,
+          76,
+          28,
+          59,
+          29
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          20,
+          29,
+          11,
+          28,
+          11,
+          0,
+          63,
+          1,
+          59,
+          20
+        ]
+      }
+    ]
+  }

@@ -15,6 +15,8 @@ gameState = {
 
         game.load.audio('desert', 'client/assets/sounds/desert.mp3');
 
+        game.load.physics('physics', 'client/assets/physics/physics.json');
+
     },
 
     create: function() {
@@ -27,6 +29,11 @@ gameState = {
         //music.play();
 
         game.physics.startSystem(Phaser.Physics.P2JS);
+        game.physics.p2.setImpactEvents(true);
+
+        //global.material = game.physics.p2.createMaterial('material');
+        //global.projGroup = game.physics.p2.createCollisionGroup();
+        //game.physics.p2.updateBoundsCollisionGroup();
 
         ctrls = {
 
@@ -48,7 +55,7 @@ gameState = {
 
     update: function() {       
 
-        game.world.bringToTop(this.map.bg);
+        //game.world.bringToTop(this.map.bg);
         game.world.bringToTop(this.Mgroup);
 
         this.Mgroup.customSort(function(a, b) {

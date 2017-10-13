@@ -6,6 +6,7 @@ class Player extends Phaser.Sprite {
         this.smoothed = false;
 
         this.ctrls = ctrls;
+        this.speed = 5;
 
         game.add.existing(this);
         game.camera.follow(this);
@@ -16,25 +17,25 @@ class Player extends Phaser.Sprite {
 
         if(this.ctrls.up.isDown) {
 
-            this.y -= 5;
+            this.y -= this.speed;
 
         }
 
         if(this.ctrls.down.isDown) {
 
-            this.y += 5;
+            this.y += this.speed;
 
         }
 
         if(this.ctrls.left.isDown) {
 
-            this.x -= 5;
+            this.x -= this.speed;
 
         }
 
         if(this.ctrls.right.isDown) {
 
-            this.x += 5;
+            this.x += this.speed;
 
         }
 
@@ -84,6 +85,11 @@ class Mage extends Player {
         this.anchor.setTo(0.5, 1);
 
         this.group = group;
+
+        game.physics.enable(this, Phaser.Physics.ARCADE);
+        this.body.collideWorldBounds = true;
+
+        this.body.debug = true;
         
         this.fireRate = 200;
         this.nextFire = 0;
