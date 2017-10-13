@@ -7,6 +7,8 @@ gameState = {
         game.load.image('tree3', 'client/assets/entities/tree3.png');
         game.load.image('cactus1', 'client/assets/entities/desert1.png');
         game.load.image('cactus2', 'client/assets/entities/desert2.png');
+
+        //game.load.image('capPoint', 'client/assets/entities/capPoint.png');
       
         game.load.image('mage', 'client/assets/player/mage.png');
         game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
@@ -46,7 +48,8 @@ gameState = {
 
     update: function() {       
 
-        game.world.bringToTop(this.map.group);
+        game.world.bringToTop(this.map.bg);
+        game.world.bringToTop(this.Mgroup);
 
         this.Mgroup.customSort(function(a, b) {
 

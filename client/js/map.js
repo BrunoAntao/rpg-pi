@@ -1,104 +1,105 @@
 class Map {
 
-    constructor(width, height, group, entities) {
+    constructor(width, height, eGroup) {
 
-        this.entities = entities;
         game.world.resize(width, height);
 
         this.numOfSrites = 10;
 
         this.width = width;
         this.height = height;
-        this.group = group;
-        this.biome = game.add.group();
+        this.bg = game.add.group();
+        this.eGroup = eGroup;
+        this.biomes = [];
 
         this.forestBiomeBorders = { x1: 0, y1: 0, x2: width/4, y2: height};
         this.fireBiomeBorders = {x1: width*3/4, y1: 0, x2: width, y2: height};
         this.iceBiomeBorders = {x1: width/4, y1: 0, x2: width*3/4, y2: height/2};
         this.desertBiomeBorders = {x1: width/4, y1: height/2, x2: width*3/4, y2: height};
+       
+        let forestBg = game.add.graphics(0, 0);
+        forestBg.beginFill(0x00ff00);
+        forestBg.lineStyle(2, 0xffffff, 1);
+        forestBg.drawRect(0, 0, width/4, height);
+        forestBg.endFill();
 
-        this.borders = [
-            
-          {biome: this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']},
-          {biome: this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'] },
-          {biome: this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']},
-          {biome: this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']}
-        
-        ];
+        let fireBg = game.add.graphics(0, 0);
+        fireBg.beginFill(0xff0000);
+        fireBg.lineStyle(2, 0xffffff, 1);
+        fireBg.drawRect(width* 3/4, 0, width/4, height);
+        fireBg.endFill();
 
-        this.entitiesToLoad = [];
+        let iceBg = game.add.graphics(0, 0);
+        iceBg.beginFill(0xffff00);
+        iceBg.lineStyle(2, 0xffffff, 1);
+        iceBg.drawRect(width/4, height/2, width/2, height/2);
+        iceBg.endFill();
+
+        let desertBg = game.add.graphics(0, 0);
+        desertBg.beginFill(0x0000ff);
+        desertBg.lineStyle(2, 0xffffff, 1);
+        desertBg.drawRect(width/4, 0, width/2, height/2);
+        desertBg.endFill();
+
+        let forestBiome = {bg:forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
+        let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
+        let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']};
+        let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']};
+
+        this.biomes.push(forestBiome);
+        this.biomes.push(fireBiome);
+        this.biomes.push(iceBiome);
+        this.biomes.push(desertBiome);
+
+        this.bg.add(forestBiome.bg);
+        this.bg.add(fireBiome.bg);
+        this.bg.add(iceBiome.bg);
+        this.bg.add(desertBiome.bg);
+
+        this.entities = [];
+        this.capPoints = [];
         
-        this.borders.forEach( function(biome) {
+        this.biomes.forEach( function(biome) {
 
             for(var i = 0; i < this.numOfSrites; i++){
 
-                this.entitiesToLoad.push(this.generateSprite(biome));
+                this.entities.push(this.generateSprite(biome));
+                //this.capPoints.push(this.generateCapPoint(biome));
 
             }
 
         }, this);
 
-        this.entitiesToLoad.forEach( function(entity) {
-
-            new Entity(entity.x, entity.y, entity.key, this.group);
-
-        }, this)
-
-        let forestBiome = game.add.graphics(0, 0);
-        forestBiome.beginFill(0x00ff00);
-        forestBiome.lineStyle(2, 0xffffff, 1);
-        forestBiome.drawRect(0, 0, width/4, height);
-        forestBiome.endFill();
-
-        let fireBiome = game.add.graphics(0, 0);
-        fireBiome.beginFill(0xff0000);
-        fireBiome.lineStyle(2, 0xffffff, 1);
-        fireBiome.drawRect(width* 3/4, 0, width/4, height);
-        fireBiome.endFill();
-
-        let iceBiome = game.add.graphics(0, 0);
-        iceBiome.beginFill(0xffff00);
-        iceBiome.lineStyle(2, 0xffffff, 1);
-        iceBiome.drawRect(width/4, height/2, width/2, height/2);
-        iceBiome.endFill();
-
-        let desertBiome = game.add.graphics(0, 0);
-        desertBiome.beginFill(0x0000ff);
-        desertBiome.lineStyle(2, 0xffffff, 1);
-        desertBiome.drawRect(width/4, 0, width/2, height/2);
-        desertBiome.endFill();
-
-        this.biome.add(forestBiome);
-        this.biome.add(fireBiome);
-        this.biome.add(iceBiome);
-        this.biome.add(desertBiome);
-
     }
 
-    load() {
-
-        map.forEach(function(entity) {
-
-            new Entity(entity.x, entity.y, this.group);
-
-        })
-
-    }
-
-    generateSprite(border){
+    generateSprite(biome){
         
-        let minX = Math.min(border.biome.x1, border.biome.x2) + 64;
-        let maxX = Math.max(border.biome.x1, border.biome.x2) - 64;
+        let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
+        let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
 
-        let minY = Math.min(border.biome.y1, border.biome.y2) + 64;
-        let maxY = Math.max(border.biome.y1, border.biome.y2) - 64;
+        let minY = Math.min(biome.border.y1, biome.border.y2) + 64;
+        let maxY = Math.max(biome.border.y1, biome.border.y2) - 64;
 
         let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
 
         let spriteNum = Math.floor(Math.random() * 3);
 
-        return {x: x, y: y, key: border.sprites[spriteNum]};
+        new Entity(x, y, biome.sprites[spriteNum], this.eGroup);
+        
+    }
+
+    generateCapPoint(biome){
+
+        //this.biome
+        
+        this.entities.forEach(function (entities) {
+
+
+
+        })
+
+        new CapturePoint(x, y, this.group);
         
     }
 

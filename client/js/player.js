@@ -82,6 +82,8 @@ class Mage extends Player {
         super(x, y, 'mage', group, ctrls);
 
         this.anchor.setTo(0.5, 1);
+
+        this.group = group;
         
         this.fireRate = 200;
         this.nextFire = 0;
@@ -111,7 +113,7 @@ class Mage extends Player {
 
         }, this)
 
-        this.projs.item = this;
+        this.group.add(this.projs);
 
     }
 
