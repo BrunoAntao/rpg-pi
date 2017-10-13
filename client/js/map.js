@@ -73,17 +73,19 @@ class Map {
     }
 
     generateSprite(biome){
+
+        let spriteNum = Math.floor(Math.random() * 3);
+
+        let spriteHeight = game.cache.getImage(biome.sprites[spriteNum]).height * 2;
         
         let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
         let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
 
-        let minY = Math.min(biome.border.y1, biome.border.y2) + 64;
-        let maxY = Math.max(biome.border.y1, biome.border.y2) - 64;
+        let minY = Math.min(biome.border.y1, biome.border.y2) + 32 + spriteHeight;
+        let maxY = Math.max(biome.border.y1, biome.border.y2) - 32;
 
         let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-
-        let spriteNum = Math.floor(Math.random() * 3);
 
         new Entity(x, y, biome.sprites[spriteNum], this.eGroup);
         
