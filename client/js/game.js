@@ -10,6 +10,9 @@ gameState = {
 
         //game.load.image('capPoint', 'client/assets/entities/capPoint.png');
       
+        game.load.image('ranger', 'client/assets/player/ranger.png');
+        game.load.image('ranger_attack', 'client/assets/player/ranger_attack.png');
+
         game.load.image('mage', 'client/assets/player/mage.png');
         game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
 
@@ -49,7 +52,7 @@ gameState = {
 
         this.map = new Map(3200, 1600, this.Mgroup);
 
-        this.player = new Mage(100, 100, this.Mgroup, ctrls);
+        this.player = new Ranger(100, 100, this.Mgroup, ctrls);
 
     },  
 
