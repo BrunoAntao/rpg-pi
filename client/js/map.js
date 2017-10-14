@@ -135,7 +135,7 @@ class Map {
         var xCoord;
         var yCoord;
 
-        while(minDistance < 300){
+        while(minDistance < 250){
             
             var distances = [];
 
@@ -156,7 +156,7 @@ class Map {
             minDistance = Math.min(...distances);
 
        }
-       
+
        return {x: xCoord, y: yCoord};
 
     }
