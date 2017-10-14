@@ -43,7 +43,7 @@ class Map {
 
         let forestBiome = {bg:forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
         let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
-        let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']};
+        let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm']};
         let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']};
 
         this.biomes.push(forestBiome);
@@ -76,6 +76,8 @@ class Map {
 
 
         }, this);
+
+        
 
     }
 
@@ -117,13 +119,13 @@ class Map {
 
         //this.biome
         
-        this.entities.forEach(function (entities) {
+        /*this.entities.forEach(function (entities) {
 
 
 
-        })
+        })*/
 
-        new CapturePoint(x, y, this.group);
+        new CapturePoint(200, 200, this.group);
         
     }
 
