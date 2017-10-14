@@ -61,33 +61,55 @@ class Map {
         
         this.biomes.forEach( function(biome) {
 
+            var prevCoords = [];
+
             for(var i = 0; i < this.numOfSrites; i++){
 
-                this.entities.push(this.generateSprite(biome));
-                //this.capPoints.push(this.generateCapPoint(biome));
+                var returnedValues = this.generateSprite(biome, prevCoords);
 
+                this.entities.push(returnedValues.entity);
+                prevCoords.push(returnedValues.prevCoords);
+
+                //this.capPoints.push(this.generateCapPoint(biome));
+                
             }
+
 
         }, this);
 
     }
 
-    generateSprite(biome){
+    generateSprite(biome, prevCoords){
+
+        var x;
+        var y;
 
         let spriteNum = Math.floor(Math.random() * 3);
 
         let spriteHeight = game.cache.getImage(biome.sprites[spriteNum]).height * 2;
-        
+
         let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
         let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
 
         let minY = Math.min(biome.border.y1, biome.border.y2) + 32 + spriteHeight;
         let maxY = Math.max(biome.border.y1, biome.border.y2) - 32;
 
-        let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-        let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+        if(prevCoords.length >= 1){
 
-        new Entity(x, y, biome.sprites[spriteNum], this.eGroup);
+            let newCoords = this.checkDistante(prevCoords, maxX, maxY, minX, minY);
+
+            x = newCoords.x;
+            y = newCoords.y;
+
+        } else {
+
+             x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+             y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+        }
+
+        return { entity: new Entity(x, y, biome.sprites[spriteNum], this.eGroup), prevCoords: {x: x, y: y}};
+
+        //new Entity(x, y, biome.sprites[spriteNum], this.eGroup);
         
     }
 
@@ -105,4 +127,37 @@ class Map {
         
     }
 
+    checkDistante(prevCoords, maxX, maxY, minX, minY){
+
+        var minDistance = 0; 
+        //var maxDistance
+
+        var xCoord;
+        var yCoord;
+
+        while(minDistance < 300){
+            
+            var distances = [];
+
+            xCoord = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+            yCoord = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+
+            for(let i = 0; i < prevCoords.length; i++){
+
+                let x1 = prevCoords[i].x
+                let y1 = prevCoords[i].y;
+
+                let dist = Math.sqrt((xCoord-x1)**2 + (yCoord-y1)**2);
+
+                distances.push(dist);
+                
+            }
+
+            minDistance = Math.min(...distances);
+
+       }
+       
+       return {x: xCoord, y: yCoord};
+
+    }
 }
