@@ -37,7 +37,7 @@ class Map {
         iceBg.endFill();
 
         let desertBg = game.add.graphics(0, 0);
-        desertBg.beginFill(0x0000ff);
+        desertBg.beginFill(0xffffff);
         desertBg.lineStyle(2, 0xffffff, 1);
         desertBg.drawRect(width/4, 0, width/2, height/2);
         desertBg.endFill();
@@ -45,7 +45,7 @@ class Map {
         let forestBiome = {bg:forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
         let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano', 'tree3']};
         let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm']};
-        let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']};
+        let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan', 'cactus2']};
 
         this.biomes.push(forestBiome);
         this.biomes.push(fireBiome);
