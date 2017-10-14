@@ -4,7 +4,8 @@ class Map {
 
         game.world.resize(width, height);
 
-        this.numOfSrites = 10;
+        this.numOfSrites = Math.floor(height*2/250);
+        this.maxDistance = 250;
 
         this.width = width;
         this.height = height;
@@ -125,19 +126,19 @@ class Map {
 
         })*/
 
-        new CapturePoint(200, 200, this.group);
+       return new CapturePoint(200, 200, this.eGroup);
         
     }
 
     checkDistante(prevCoords, maxX, maxY, minX, minY){
 
         var minDistance = 0; 
-        //var maxDistance
+        //var maxDistance 
 
         var xCoord;
         var yCoord;
 
-        while(minDistance < 250){
+        while(minDistance < this.maxDistance){
             
             var distances = [];
 
