@@ -7,7 +7,9 @@ gameState = {
         game.load.image('tree3', 'client/assets/entities/tree3.png');
         game.load.image('cactus1', 'client/assets/entities/desert1.png');
         game.load.image('cactus2', 'client/assets/entities/desert2.png');
-        game.load.image('palm', 'client/assets/entities/desert3.png')
+        game.load.image('palm', 'client/assets/entities/desert3.png');
+        game.load.image('magma1', 'client/assets/entities/magma1.png');
+        game.load.image('volcano', 'client/assets/entities/volcano.png')
 
         //game.load.image('capPoint', 'client/assets/entities/capPoint.png');
       

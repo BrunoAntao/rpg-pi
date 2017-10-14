@@ -42,7 +42,7 @@ class Map {
         desertBg.endFill();
 
         let forestBiome = {bg:forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
-        let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
+        let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano', 'tree3']};
         let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm']};
         let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['cactus1', 'cactus2', 'cactus2']};
 
