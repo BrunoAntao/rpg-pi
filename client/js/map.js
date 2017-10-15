@@ -71,10 +71,10 @@ class Map {
                 this.entities.push(returnedValues.entity);
                 prevCoords.push(returnedValues.prevCoords);
 
-                //this.capPoints.push(this.generateCapPoint(biome));
                 
             }
 
+            this.capPoints.push(this.generateCapPoint(biome));
 
         }, this);
 
@@ -118,15 +118,17 @@ class Map {
 
     generateCapPoint(biome){
 
-        //this.biome
-        
-        /*this.entities.forEach(function (entities) {
 
+        let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
+        let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
 
+        let minY = Math.min(biome.border.y1, biome.border.y2) + 32;;
+        let maxY = Math.max(biome.border.y1, biome.border.y2) - 32;
 
-        })*/
-
-       return new CapturePoint(200, 200, this.eGroup);
+        var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+        var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+ 
+        return new CapturePoint(x, y, this.eGroup);
         
     }
 
