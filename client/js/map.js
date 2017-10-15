@@ -42,10 +42,10 @@ class Map {
         desertBg.drawRect(width/4, 0, width/2, height/2);
         desertBg.endFill();
 
-        let forestBiome = {bg:forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3']};
-        let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano', 'tree3']};
-        let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm']};
-        let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan', 'cactus2']};
+        let forestBiome = {bg:forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'};
+        let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano', 'tree3'], capPoint: 'capPoint2'};
+        let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint4'};
+        let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan', 'cactus2'], capPoint: 'capPoint3'};
 
         this.biomes.push(forestBiome);
         this.biomes.push(fireBiome);
@@ -128,7 +128,7 @@ class Map {
         var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
  
-        return new CapturePoint(x, y, this.eGroup);
+        return new CapturePoint(x, y, biome.capPoint,this.eGroup);
         
     }
 

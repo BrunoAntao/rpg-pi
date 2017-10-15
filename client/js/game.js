@@ -14,7 +14,10 @@ gameState = {
         game.load.image('frozen1', 'client/assets/entities/frozen1.png');
         game.load.image('snowMan', 'client/assets/entities/snowMan.png');
 
-        //game.load.image('capPoint', 'client/assets/entities/capPoint.png');
+        game.load.image('capPoint1', 'client/assets/capturePoints/cp1.png');
+        game.load.image('capPoint2', 'client/assets/capturePoints/cp2.png');
+        game.load.image('capPoint3', 'client/assets/capturePoints/cp3.png');
+        game.load.image('capPoint4', 'client/assets/capturePoints/cp4.png');
       
         game.load.image('ranger', 'client/assets/player/ranger.png');
         game.load.image('ranger_attack', 'client/assets/player/ranger_attack.png');
