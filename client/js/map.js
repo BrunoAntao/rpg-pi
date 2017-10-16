@@ -42,10 +42,10 @@ class Map {
         desertBg.drawRect(width/4, 0, width/2, height/2);
         desertBg.endFill();
 
-        let forestBiome = {bg:forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'};
-        let fireBiome = {bg:fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano', 'tree3'], capPoint: 'capPoint2'};
-        let desertBiome =  {bg:desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint4'};
-        let iceBiome = {bg:iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan', 'cactus2'], capPoint: 'capPoint3'};
+        let forestBiome = {bg: forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'};
+        let fireBiome = {bg: fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano', 'tree3'], capPoint: 'capPoint2'};
+        let desertBiome =  {bg: desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint4'};
+        let iceBiome = {bg: iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan', 'cactus2'], capPoint: 'capPoint3'};
 
         this.biomes.push(forestBiome);
         this.biomes.push(fireBiome);
@@ -62,16 +62,15 @@ class Map {
         
         this.biomes.forEach( function(biome) {
 
-            var prevCoords = [];
+            let prevCoords = [];
 
-            for(var i = 0; i < this.numOfSrites; i++){
+            for(let i = 0; i < this.numOfSrites; i++){
 
-                var returnedValues = this.generateSprite(biome, prevCoords);
+                let returnedValues = this.generateSprite(biome, prevCoords);
 
                 this.entities.push(returnedValues.entity);
                 prevCoords.push(returnedValues.prevCoords);
-
-                
+  
             }
 
             this.capPoints.push(this.generateCapPoint(biome));
@@ -84,8 +83,7 @@ class Map {
 
     generateSprite(biome, prevCoords){
 
-        var x;
-        var y;
+        let x, y;
 
         let spriteNum = Math.floor(Math.random() * 3);
 
@@ -99,15 +97,15 @@ class Map {
 
         if(prevCoords.length >= 1){
 
-            let newCoords = this.checkDistante(prevCoords, maxX, maxY, minX, minY);
+            let coords = this.checkDistante(prevCoords, maxX, maxY, minX, minY);
 
-            x = newCoords.x;
-            y = newCoords.y;
+            x = coords.x;
+            y = coords.y;
 
         } else {
 
-             x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-             y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+            x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+            y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
         }
 
         return { entity: new Entity(x, y, biome.sprites[spriteNum], this.eGroup), prevCoords: {x: x, y: y}};
@@ -118,15 +116,14 @@ class Map {
 
     generateCapPoint(biome){
 
-
         let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
         let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
 
         let minY = Math.min(biome.border.y1, biome.border.y2) + 32;;
         let maxY = Math.max(biome.border.y1, biome.border.y2) - 32;
 
-        var x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-        var y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+        let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+        let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
  
         return new CapturePoint(x, y, biome.capPoint,this.eGroup);
         
@@ -134,25 +131,22 @@ class Map {
 
     checkDistante(prevCoords, maxX, maxY, minX, minY){
 
-        var minDistance = 0; 
-        //var maxDistance 
+        let minDistance = 0; 
+        let x, y;
 
-        var xCoord;
-        var yCoord;
-
-        while(minDistance < this.maxDistance){
+        while(minDistance < 250){
             
-            var distances = [];
+            let distances = [];
 
-            xCoord = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-            yCoord = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+            x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+            y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
 
             for(let i = 0; i < prevCoords.length; i++){
 
                 let x1 = prevCoords[i].x
                 let y1 = prevCoords[i].y;
 
-                let dist = Math.sqrt((xCoord-x1)**2 + (yCoord-y1)**2);
+                let dist = Math.sqrt((x-x1)**2 + (y-y1)**2);
 
                 distances.push(dist);
                 
@@ -162,7 +156,7 @@ class Map {
 
        }
 
-       return {x: xCoord, y: yCoord};
+       return {x: x, y: y};
 
     }
 }
