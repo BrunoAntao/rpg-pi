@@ -12,7 +12,8 @@ menuState = {
             game.stage.smoothed = false;
             game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
-            options = [{name:'Play', down:function(){ game.state.start('Game'); }},{name:'Controls', down:function(){ game.state.start('Settings'); }}];
+            options = [{name:'Play', down:function(){ game.state.start('Char'); }},
+                       {name:'Controls', down:function(){ game.state.start('Settings'); }}];
 
             new Menu(game.width/2, game.height/2, options);
 

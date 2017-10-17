@@ -7,6 +7,7 @@ class Player extends Phaser.Sprite {
 
         this.ctrls = ctrls;
         this.speed = 5;
+        this.score = 0;
 
         game.add.existing(this);
         game.camera.follow(this);
