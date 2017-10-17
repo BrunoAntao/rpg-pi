@@ -55,7 +55,8 @@ function codeToKey(code) {
 var global = {};
 
 game.state.add('Menu', menuState);
+game.state.add('Char', charState);
 game.state.add('Game', gameState);
 game.state.add('Settings', settingsState);
 
-game.state.start('Game');
+game.state.start('Char');

@@ -1,12 +1,22 @@
 class Menu extends Array{
 
-    constructor(x, y, options) {
+    constructor(x, y, options, vertical) {
 
         super();
 
+        if(typeof vertical == 'undefined') {
+
+            this.vertical = true;
+
+        } else {
+
+            this.vertical = vertical;
+
+        }
+
         options.forEach(function (option, id) {
 
-            let b = new Button(x, y + 54 * id, id, option.name, option.down);
+            let b = new Button(id, this, option);
             this.push(b);
 
         },this)
@@ -17,17 +27,47 @@ class Menu extends Array{
 
 class Button extends Phaser.Sprite{
 
-    constructor(x, y, id, name, down) {
+    constructor(id, list, option) {
 
-        super(game, x, y, 'button');
-        this.width = 200;
-        this.height = 50;
+        super(game, 0, 0, 'button');
+
+        if(typeof option.width == 'undefined') {
+            
+            this.width = 200;
+                        
+        } else {
+
+            this.width = option.width;
+
+        }
+
+        if(typeof option.height == 'undefined') {
+
+            this.height = 50;
+
+        } else {
+
+            this.height = option.height;
+
+        }
+
+        if(typeof option.display == 'undefined') {
+            
+            this.display = false;
+                        
+        } else {
+
+            this.display = option.display;
+
+        }
+
         this.smoothed = false;
 
         this.anchor.setTo(0.5, 0.5);
 
         this.id = id;
-        this.name = name;
+        this.name = option.name;
+        this.list = list;
         this.over = false;
 
         var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
@@ -39,9 +79,9 @@ class Button extends Phaser.Sprite{
 
         this.inputEnabled = true;
 
-        if(typeof down != 'undefined') {
+        if(typeof option.down != 'undefined') {
 
-            this.events.onInputDown.add(down, this);
+            this.events.onInputDown.add(option.down, this);
 
         } else {
 
@@ -77,16 +117,52 @@ class Button extends Phaser.Sprite{
 
         }, this)
 
+        if(this.display && !this.list.vertical) {
+
+            this.dsp = new Display(this.id, this);
+
+        }
+
         game.add.existing(this);
     }
 
     update() {
 
         game.world.bringToTop(this.label);
-
-        this.x = game.width/2;
-        this.y = game.height/2 + this.id * 54;
+        this.x = game.width/2 + (this.width + 10) * (this.id * (1 - this.list.vertical)) - (this.width * ((this.list.length - 1)/ 2)) * (1 - this.list.vertical);
+        this.y = game.height/2 + (this.height + 5) * (this.id * this.list.vertical) + 160 * (1 - this.list.vertical) - (this.height * ((this.list.length - 1)/ 2)) * this.list.vertical;
 
     }
 
 }
+
+class Display extends Phaser.Sprite{
+    
+        constructor(id, button) {
+    
+            super(game, 0, 0, 'display');
+
+            this.width = button.width;
+            
+            this.anchor.setTo(0.5, 0.5);
+            this.smoothed = false;
+    
+            this.id = id;
+            this.button = button;
+            this.addChild(new Phaser.Sprite(game, this.x, this.y, button.display));
+
+            this.children[0].anchor.setTo(0.5, 0.5);
+            this.children[0].smoothed = false;
+            this.children[0].scale.setTo(1.4, 1.4);
+
+            game.add.existing(this);
+        }
+    
+        update() {
+
+            this.x = this.button.x;
+            this.y = this.button.y - 190;
+            
+        }
+    
+    }

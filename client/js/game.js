@@ -1,5 +1,11 @@
 gameState = {
 
+    init: function(nclass) {
+
+        this.class = nclass;
+
+    },
+
     preload: function() {
 
         game.load.image('tree1', 'client/assets/entities/tree1.png');
@@ -18,6 +24,9 @@ gameState = {
         game.load.image('capPoint2', 'client/assets/capturePoints/cp2.png');
         game.load.image('capPoint3', 'client/assets/capturePoints/cp3.png');
         game.load.image('capPoint4', 'client/assets/capturePoints/cp4.png');
+
+        game.load.image('warrior', 'client/assets/player/warrior.png');
+        game.load.image('warrior_attack', 'client/assets/player/warrior_attack.png');
       
         game.load.image('ranger', 'client/assets/player/ranger.png');
         game.load.image('ranger_attack', 'client/assets/player/ranger_attack.png');
@@ -61,7 +70,15 @@ gameState = {
 
         this.map = new Map(3200, 1600, this.Mgroup);
 
-        this.player = new Ranger(100, 100, this.Mgroup, ctrls);
+        global.player = {};
+
+        switch (this.class) {
+
+            case 0: global.player = new Warrior(100, 100, this.Mgroup, ctrls); break;
+            case 1: global.player = new Ranger(100, 100, this.Mgroup, ctrls); break;
+            case 2: global.player = new Mage(100, 100, this.Mgroup, ctrls); break;
+
+        }
 
     },  
 
