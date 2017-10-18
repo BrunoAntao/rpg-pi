@@ -59,4 +59,5 @@ game.state.add('Char', charState);
 game.state.add('Game', gameState);
 game.state.add('Settings', settingsState);
 
-game.state.start('Game', true, false, 1);
+//game.state.start('Game', true, false, 1);
+game.state.start('Menu');

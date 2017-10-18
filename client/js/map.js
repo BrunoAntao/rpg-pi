@@ -151,10 +151,10 @@ class Map {
 
             for(let i = 0; i < prevCoords.length; i++){
 
-                let x1 = prevCoords[i].x
+                let x1 = prevCoords[i].x;
                 let y1 = prevCoords[i].y;
 
-                let dist = Math.sqrt((x-x1)**2 + (y-y1)**2);
+                let dist = Math.sqrt(Math.pow(x-x1, 2) + Math.pow(y-y1, 2));
 
                 distances.push(dist);
                 
