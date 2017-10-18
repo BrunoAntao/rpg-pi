@@ -12,7 +12,7 @@ class Player extends Phaser.Sprite {
         this.oldScore = 0;
 
         var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-        this.label = game.add.text(- this.width - this.width / 2 - 9, - 2 * this.height, '', style);
+        this.label = game.add.text(0, 0, '', style);
         this.label.setTextBounds(0, 0, 200, 54);
         this.label.smoothed = false;
         this.label.visible = false;
@@ -27,6 +27,8 @@ class Player extends Phaser.Sprite {
     update() {
 
         this.label.text = this.score;
+        this.label.x = - this.width;
+        this.label.y = - this.height * 3/2;
 
         if(game.time.now > this.timer + 500) {
 
