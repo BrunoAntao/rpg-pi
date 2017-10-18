@@ -124,11 +124,11 @@ class Map {
 
     generateCapPoint(biome){
 
-        let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
-        let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
+        let minX = Math.min(biome.border.x1, biome.border.x2) + 64 + 150;
+        let maxX = Math.max(biome.border.x1, biome.border.x2) - 64 - 150;
 
-        let minY = Math.min(biome.border.y1, biome.border.y2) + 32;;
-        let maxY = Math.max(biome.border.y1, biome.border.y2) - 32;
+        let minY = Math.min(biome.border.y1, biome.border.y2) + 64 + 150;
+        let maxY = Math.max(biome.border.y1, biome.border.y2) - 64 - 150;
 
         let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
@@ -167,4 +167,6 @@ class Map {
        return {x: x, y: y};
 
     }
+
+    
 }

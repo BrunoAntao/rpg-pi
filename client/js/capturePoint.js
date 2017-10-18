@@ -1,6 +1,6 @@
 class CapturePoint extends Phaser.Sprite{
 
-    constructor(x, y, key,group){
+    constructor(x, y, key, group){
 
         super(game, x, y, key);
 
