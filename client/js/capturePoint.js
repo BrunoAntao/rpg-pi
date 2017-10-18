@@ -12,45 +12,8 @@ class CapturePoint extends Phaser.Sprite{
         this.bg = game.add.graphics(0, 0);
         this.loader = game.add.graphics(0, 0);
 
-        switch (this.key) {
-
-            case 'capPoint1': 
-                
-                this.bg.beginFill(0x00ff00);
-                this.bg.lineStyle(2, 0x000000, 1);
-                this.bg.drawCircle(this.x, this.y, this.range * 2);
-                this.bg.endFill();
-            
-            break;
-
-            case 'capPoint2': 
-                
-                this.bg.beginFill(0xff0000);
-                this.bg.lineStyle(2, 0x000000, 1);
-                this.bg.drawCircle(this.x, this.y, this.range * 2);
-                this.bg.endFill();
-                
-            break;
-
-            case 'capPoint3': 
-            
-                this.bg.beginFill(0xffffff);
-                this.bg.lineStyle(2, 0x000000, 1);
-                this.bg.drawCircle(this.x, this.y, this.range * 2);
-                this.bg.endFill();
-                
-            break;
-
-            case 'capPoint4': 
-            
-                this.bg.beginFill(0xffff00);
-                this.bg.lineStyle(2, 0x000000, 1);
-                this.bg.drawCircle(this.x, this.y, this.range * 2);
-                this.bg.endFill();
-                
-            break;
-
-        }
+        this.bg.lineStyle(2, 0x000000, 1);
+        this.bg.drawCircle(this.x, this.y, this.range * 2);
 
         game.add.existing(this);
         group.add(this);
@@ -73,7 +36,7 @@ class CapturePoint extends Phaser.Sprite{
             } else {
 
                 global.player.score ++;
-                console.log(global.player.score);
+                global.player.label.visible = true;
 
             }
 

@@ -19,8 +19,8 @@ class Map {
         this.desertBiomeBorders = {x1: width/4, y1: height/2, x2: width*3/4, y2: height};
        
         let forestBg = game.add.graphics(0, 0);
-        forestBg.beginFill(0x00ff00);
-        forestBg.lineStyle(2, 0xffffff, 1);
+        forestBg.beginFill(0x009900);
+        forestBg.lineStyle(2, 0x006600, 1);
         forestBg.drawRect(0, 0, width/4, height);
         forestBg.endFill();
 

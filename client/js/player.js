@@ -8,6 +8,16 @@ class Player extends Phaser.Sprite {
         this.ctrls = ctrls;
         this.speed = 5;
         this.score = 0;
+        this.timer = 0;
+        this.oldScore = 0;
+
+        var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+        this.label = game.add.text(- this.width - this.width / 2 - 9, - 2 * this.height, '', style);
+        this.label.setTextBounds(0, 0, 200, 54);
+        this.label.smoothed = false;
+        this.label.visible = false;
+
+        this.addChild(this.label);
 
         game.add.existing(this);
         game.camera.follow(this);
@@ -15,6 +25,20 @@ class Player extends Phaser.Sprite {
     }
 
     update() {
+
+        this.label.text = this.score;
+
+        if(game.time.now > this.timer + 500) {
+
+            this.timer = game.time.now;
+            this.oldScore = this.score;
+            if(this.oldScore == this.score) {
+
+                this.label.visible = false;
+
+            }
+
+        }
 
         if(this.ctrls.up.isDown) {
 
