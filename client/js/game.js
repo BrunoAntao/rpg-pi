@@ -62,7 +62,7 @@ gameState = {
             down:game.input.keyboard.addKey(keys.down),
             left:game.input.keyboard.addKey(keys.left),
             right:game.input.keyboard.addKey(keys.right),
-            attack:game.input.activePointer.leftButtonw
+            attack:game.input.activePointer.leftButton
 
         }
 
