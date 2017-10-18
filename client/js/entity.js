@@ -9,7 +9,13 @@ class Entity extends Phaser.Sprite{
         this.smoothed = false;
 
         game.add.existing(this);
-        group.add(this);
+
+        if(typeof group != 'undefined') {
+            
+            group.add(this);
+
+        }
+
     }
 
 }

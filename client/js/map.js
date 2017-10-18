@@ -108,9 +108,17 @@ class Map {
             y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
         }
 
-        return { entity: new Entity(x, y, biome.sprites[spriteNum], this.eGroup), prevCoords: {x: x, y: y}};
+        switch(biome.sprites[spriteNum]) {
 
-        //new Entity(x, y, biome.sprites[spriteNum], this.eGroup);
+            case 'magma1':
+            case 'frozen1':
+                return { entity: new Entity(x, y, biome.sprites[spriteNum]), prevCoords: {x: x, y: y}};
+            break;
+            default:
+                return { entity: new Entity(x, y, biome.sprites[spriteNum], this.eGroup), prevCoords: {x: x, y: y}};
+            break;
+
+        }
         
     }
 
