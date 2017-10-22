@@ -16,7 +16,6 @@ menuState = {
                        {name:'Controls', down:function(){ game.state.start('Settings'); }}];
 
             new Menu(game.width/2, game.height/2, options);
-
         },  
     
         update: function() {

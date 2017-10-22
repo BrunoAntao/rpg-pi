@@ -1,8 +1,8 @@
-var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
+var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, 'game');
 
 window.addEventListener('resize', function () {
 
-    game.scale.setGameSize(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+    game.scale.setGameSize(window.innerWidth, window.innerHeight);
 
 })
 

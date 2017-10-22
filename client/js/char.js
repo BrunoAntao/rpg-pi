@@ -22,7 +22,7 @@ charState = {
                        {name:'Mage', display:'mage', down:function(){ game.state.start('Game', true, false, 2); }}];
 
             new Menu(game.width/2, game.height/2, options, false);
-
+            
         },  
     
         update: function() {

@@ -129,8 +129,8 @@ class Button extends Phaser.Sprite{
     update() {
 
         game.world.bringToTop(this.label);
-        this.x = game.width/2 + (this.width + 10) * (this.id * (1 - this.list.vertical)) - (this.width * ((this.list.length - 1)/ 2)) * (1 - this.list.vertical);
-        this.y = game.height/2 + (this.height + 5) * (this.id * this.list.vertical) + 160 * (1 - this.list.vertical) - (this.height * ((this.list.length - 1)/ 2)) * this.list.vertical;
+        this.x = game.width/2 + (this.width + 10) * (this.id * (1 - this.list.vertical)) - ((this.width + 10) * ((this.list.length - 1)/ 2)) * (1 - this.list.vertical);
+        this.y = game.height/2 + (this.height + 5) * (this.id * this.list.vertical) + (game.height/2) * (1 - this.list.vertical) - (this.height * ((this.list.length - 1)/ 2)) * this.list.vertical - game.height/4 * (1 - this.list.vertical);
 
     }
 
@@ -146,22 +146,29 @@ class Display extends Phaser.Sprite{
             
             this.anchor.setTo(0.5, 0.5);
             this.smoothed = false;
+            this.height = game.height/2;
     
             this.id = id;
             this.button = button;
-            this.addChild(new Phaser.Sprite(game, this.x, this.y, button.display));
+            this.image = new Phaser.Sprite(game, this.x, this.y, button.display);
+            this.imageG = game.add.group();
+            this.imageG.add(this.image);
 
-            this.children[0].anchor.setTo(0.5, 0.5);
-            this.children[0].smoothed = false;
-            this.children[0].scale.setTo(1.4, 1.4);
+            this.image.anchor.setTo(0.5, 0.5);
+            this.image.smoothed = false;
 
             game.add.existing(this);
         }
     
         update() {
 
+            game.world.bringToTop(this.imageG);
+
+            this.image.x = this.x;
+            this.image.y = this.y;
+
             this.x = this.button.x;
-            this.y = this.button.y - 190;
+            this.y = this.button.y - game.height/3;
             
         }
     
