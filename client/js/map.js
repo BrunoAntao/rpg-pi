@@ -20,19 +20,19 @@ class Map {
        
         let forestBg = game.add.graphics(0, 0);
         forestBg.beginFill(0x009900);
-        forestBg.lineStyle(2, 0x006600, 1);
+        forestBg.lineStyle(2, 0x009900, 1);
         forestBg.drawRect(0, 0, width/4, height);
         forestBg.endFill();
 
         let fireBg = game.add.graphics(0, 0);
         fireBg.beginFill(0xff0000);
-        fireBg.lineStyle(2, 0xffffff, 1);
+        fireBg.lineStyle(2, 0xff0000, 1);
         fireBg.drawRect(width* 3/4, 0, width/4, height);
         fireBg.endFill();
 
         let iceBg = game.add.graphics(0, 0);
         iceBg.beginFill(0xffff00);
-        iceBg.lineStyle(2, 0xffffff, 1);
+        iceBg.lineStyle(2, 0xffff00, 1);
         iceBg.drawRect(width/4, height/2, width/2, height/2);
         iceBg.endFill();
 
