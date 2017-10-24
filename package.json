@@ -4,8 +4,11 @@
     "ejs": "latest",
     "express": "latest",
     "mocha": "^4.0.0",
+    "request": "^2.83.0",
+    "sinon": "^4.0.1",
     "socket.io": "latest"
   },
-  
-  "scripts": {"test": "mocha"}
+  "scripts": {
+    "test": "mocha"
+  }
 }
