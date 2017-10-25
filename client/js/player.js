@@ -13,8 +13,6 @@ class Player extends Phaser.Sprite {
 
         this.speed = 5;
         this.score = 0;
-        this.timer = 0;
-        this.oldScore = 0;
         this.maxhealth = 10;
         this.health = 10;
 
@@ -36,22 +34,6 @@ class Player extends Phaser.Sprite {
     }
 
     update() {
-
-        this.label.text = this.score;
-        this.label.x = - this.width;
-        this.label.y = - this.height * 3/2;
-
-        if(game.time.now > this.timer + 500) {
-
-            this.timer = game.time.now;
-            this.oldScore = this.score;
-            if(this.oldScore == this.score) {
-
-                this.label.visible = false;
-
-            }
-
-        }
 
         if(typeof this.ctrls != 'undefined') {
 

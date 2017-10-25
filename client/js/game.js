@@ -86,6 +86,7 @@ gameState = {
         new Enemy(300, 100, 'warrior');
 
         new Bar(true, global.player, 'health');
+        new Label('Score: ', global.player, 'score');
 
     },  
 
