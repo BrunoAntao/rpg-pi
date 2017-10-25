@@ -8,6 +8,7 @@ class CapturePoint extends Phaser.Sprite{
 
         this.range = 150;
         this.prog = 0;
+        this.captured = false;
 
         this.bg = game.add.graphics(0, 0);
         this.loader = game.add.graphics(0, 0);
@@ -36,7 +37,7 @@ class CapturePoint extends Phaser.Sprite{
             } else {
 
                 global.player.score ++;
-                global.player.label.visible = true;
+                this.captured = true;
 
             }
 
@@ -44,6 +45,7 @@ class CapturePoint extends Phaser.Sprite{
 
             this.loader.clear();
             this.prog = 0;
+            this.captured = false;
 
         }
 

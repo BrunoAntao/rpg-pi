@@ -16,6 +16,7 @@ gameState = {
         game.load.image('palm', 'client/assets/entities/desert3.png');
         game.load.image('magma1', 'client/assets/entities/magma1.png');
         game.load.image('volcano', 'client/assets/entities/volcano.png');
+        game.load.image('arrow', 'client/assets/player/arrow.png');
 
         game.load.image('frozen1', 'client/assets/entities/frozen1.png');
         game.load.image('snowMan', 'client/assets/entities/snowMan.png');
@@ -71,7 +72,7 @@ gameState = {
 
         this.Mgroup = game.add.group();
 
-        this.map = new Map(3200, 1600, this.Mgroup);
+        global.map = new Map(3200, 1600, this.Mgroup);
 
         global.player = {};
 
@@ -85,8 +86,11 @@ gameState = {
 
         new Enemy(300, 100, 'warrior');
 
+        new Compass(global.map, global.player);
+
         new Bar(true, global.player, 'health');
         new Label('Score: ', global.player, 'score');
+        //new Bar(false, global.player, 'health');
 
     },  
 
