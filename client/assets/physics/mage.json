@@ -1,0 +1,46 @@
+{
+    "mage": [
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          59,
+          4,
+          59,
+          48,
+          19,
+          47,
+          18,
+          4
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          18,
+          4,
+          11,
+          4,
+          11,
+          0,
+          64,
+          0,
+          64,
+          4,
+          59,
+          4
+        ]
+      }
+    ]
+  }

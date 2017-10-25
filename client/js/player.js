@@ -5,11 +5,18 @@ class Player extends Phaser.Sprite {
         super(game, x, y, key);
         this.smoothed = false;
 
-        this.ctrls = ctrls;
+        if(typeof ctrls != 'undefined') {
+
+            this.ctrls = ctrls;
+
+        }
+
         this.speed = 5;
         this.score = 0;
         this.timer = 0;
         this.oldScore = 0;
+        this.maxHealth = 10;
+        this.health = 10;
 
         var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
         this.label = game.add.text(0, 0, '', style);
@@ -20,8 +27,12 @@ class Player extends Phaser.Sprite {
         this.addChild(this.label);
 
         game.add.existing(this);
-        game.camera.follow(this);
-        group.add(this);
+        
+        if(typeof group != 'undefined') {
+
+            group.add(this);
+
+        }
     }
 
     update() {
@@ -42,36 +53,63 @@ class Player extends Phaser.Sprite {
 
         }
 
-        if(this.ctrls.up.isDown) {
+        if(typeof this.ctrls != 'undefined') {
 
-            this.y -= this.speed;
+            if(this.ctrls.up.isDown) {
 
-        }
+                this.y -= this.speed;
 
-        if(this.ctrls.down.isDown) {
+            }
 
-            this.y += this.speed;
+            if(this.ctrls.down.isDown) {
 
-        }
+                this.y += this.speed;
 
-        if(this.ctrls.left.isDown) {
+            }
 
-            this.x -= this.speed;
+            if(this.ctrls.left.isDown) {
 
-        }
+                this.x -= this.speed;
 
-        if(this.ctrls.right.isDown) {
+            }
 
-            this.x += this.speed;
+            if(this.ctrls.right.isDown) {
 
-        }
+                this.x += this.speed;
 
-        if(this.ctrls.attack.isDown) {
-            
-            this.attack();
+            }
+
+            if(this.ctrls.attack.isDown) {
+                
+                this.attack();
+
+            }
 
         }
     
+    }
+
+}
+
+class Enemy extends Player {
+
+    constructor(x, y, key) {
+
+        super(x, y, key);
+        this.anchor.setTo(0.5, 1);
+
+        this.health = 10;
+
+        game.physics.enable(this, Phaser.Physics.P2JS);
+        this.body.clearShapes();
+        this.body.loadPolygon(key, key);
+        this.body.setCollisionGroup(global.enemiesGroup);
+        this.body.collides(global.projGroup);
+        this.body.fixedRotation = true;
+        this.body.static = true;
+        this.body.angle = 180;
+        
+
     }
 
 }
@@ -85,6 +123,7 @@ class Warrior extends Player {
                 this.anchor.setTo(0.5, 1);
                 
                 this.group = group;
+                this.flag = true;
         
                 game.physics.enable(this, Phaser.Physics.ARCADE);
                 this.body.collideWorldBounds = true;
@@ -106,8 +145,7 @@ class Warrior extends Player {
                 this.projs.forEach(function(proj) {
                     
                     proj.body.clearShapes();
-                    //proj.body.loadPolygon('physics', 'proj');
-                    proj.body.fixedRotation = true;
+                    proj.body.loadPolygon('sword', 'sword');
 
                     let range = this.range;
 
@@ -128,14 +166,38 @@ class Warrior extends Player {
 
                     }
         
-                    //proj.body.setCollisionGroup(global.projGroup);
-                    //proj.body.collides(global.enemies , hitMob, this);
-                    //proj.body.setMaterial(global.material);
+                    proj.body.setCollisionGroup(global.projGroup);
+                    proj.body.collides(global.enemiesGroup , this.hitMob, this);
         
                 }, this)
         
                 this.group.add(this.projs);
+
+                game.camera.follow(this);
                 
+            }
+
+            hitMob(a, b) {
+                
+                if(this.flag) {
+                    
+                    this.flag = false;
+    
+                    game.time.events.add(10, function() {
+    
+                        this.flag = true;
+    
+                    }, this);
+    
+                    a.sprite.kill();
+                    if(b.sprite != null && b.sprite.alive) {
+    
+                        b.sprite.damage(1);
+    
+                    }
+    
+                }
+    
             }
     
             attack() {
@@ -150,7 +212,7 @@ class Warrior extends Player {
                     let speed = 50000;
         
                     proj.rotation = game.physics.arcade.angleToPointer(proj);
-                    //proj.body.rotation = game.physics.arcade.angleToPointer(proj) + Math.PI /2 + Math.PI;
+                    proj.body.rotation = game.physics.arcade.angleToPointer(proj);
         
                     proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
                     proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
@@ -169,6 +231,7 @@ class Ranger extends Player {
             this.anchor.setTo(0.5, 1);
             
             this.group = group;
+            this.flag = true;
     
             game.physics.enable(this, Phaser.Physics.ARCADE);
             this.body.collideWorldBounds = true;
@@ -190,17 +253,40 @@ class Ranger extends Player {
             this.projs.forEach(function(proj) {
                 
                 proj.body.clearShapes();
-                //proj.body.loadPolygon('physics', 'proj');
-                proj.body.fixedRotation = true;
-    
-                //proj.body.setCollisionGroup(global.projGroup);
-                //proj.body.collides(global.enemies , hitMob, this);
-                //proj.body.setMaterial(global.material);
+                proj.body.loadPolygon('arrow', 'arrow');
+                proj.body.setCollisionGroup(global.projGroup);
+                proj.body.collides(global.enemiesGroup , this.hitMob, this);
+                proj.body.setMaterial(global.material);
     
             }, this)
     
             this.group.add(this.projs);
+
+            game.camera.follow(this);
             
+        }
+
+        hitMob(a, b) {
+            
+            if(this.flag) {
+                
+                this.flag = false;
+
+                game.time.events.add(10, function() {
+
+                    this.flag = true;
+
+                }, this);
+
+                a.sprite.kill();
+                if(b.sprite != null && b.sprite.alive) {
+
+                    b.sprite.damage(1);
+
+                }
+
+            }
+
         }
 
         attack() {
@@ -215,7 +301,7 @@ class Ranger extends Player {
                 let speed = 50000;
     
                 proj.rotation = game.physics.arcade.angleToPointer(proj);
-                //proj.body.rotation = game.physics.arcade.angleToPointer(proj) + Math.PI /2 + Math.PI;
+                proj.body.rotation = game.physics.arcade.angleToPointer(proj);
     
                 proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
                 proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
@@ -235,6 +321,7 @@ class Mage extends Player {
         this.anchor.setTo(0.5, 1);
 
         this.group = group;
+        this.flag = true;
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
@@ -256,19 +343,42 @@ class Mage extends Player {
         this.projs.forEach(function(proj) {
             
             proj.body.clearShapes();
-            //proj.body.loadPolygon('physics', 'proj');
-            proj.body.fixedRotation = true;
+            proj.body.loadPolygon('magic', 'magic');
 
             let anim = proj.animations.add('attack', [0, 1, 2, 3], 10, true);
             anim.play();
 
-            //proj.body.setCollisionGroup(global.projGroup);
-            //proj.body.collides(global.enemies , hitMob, this);
-            //proj.body.setMaterial(global.material);
+            proj.body.setCollisionGroup(global.projGroup);
+            proj.body.collides(global.enemiesGroup , this.hitMob, this);
 
         }, this)
 
         this.group.add(this.projs);
+
+        game.camera.follow(this);
+
+    }
+
+    hitMob(a, b) {
+        
+        if(this.flag) {
+            
+            this.flag = false;
+
+            game.time.events.add(10, function() {
+
+                this.flag = true;
+
+            }, this);
+
+            a.sprite.kill();
+            if(b.sprite != null && b.sprite.alive) {
+
+                b.sprite.damage(1);
+
+            }
+
+        }
 
     }
 
@@ -284,7 +394,7 @@ class Mage extends Player {
             let speed = 50000;
 
             proj.rotation = game.physics.arcade.angleToPointer(proj);
-            //proj.body.rotation = game.physics.arcade.angleToPointer(proj) + Math.PI /2 + Math.PI;
+            proj.body.rotation = game.physics.arcade.angleToPointer(proj);
 
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;

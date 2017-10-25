@@ -1,0 +1,23 @@
+{
+    "magic": [
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          55,
+          19,
+          81,
+          5,
+          105,
+          20,
+          81,
+          33
+        ]
+      }
+    ]
+  }

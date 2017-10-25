@@ -1,0 +1,90 @@
+{
+    "warrior": [
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          47,
+          3,
+          47,
+          0,
+          55,
+          0,
+          55,
+          3
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          55,
+          3,
+          59,
+          4,
+          59,
+          43,
+          27,
+          8,
+          31,
+          3,
+          47,
+          3
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          23,
+          3,
+          23,
+          0,
+          31,
+          0,
+          31,
+          3,
+          27,
+          8
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          59,
+          43,
+          56,
+          46,
+          22,
+          46,
+          19,
+          43,
+          19,
+          3,
+          23,
+          3
+        ]
+      }
+    ]
+  }
