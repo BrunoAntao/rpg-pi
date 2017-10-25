@@ -85,6 +85,8 @@ gameState = {
 
         new Enemy(300, 100, 'warrior');
 
+        new Bar(true, global.player, 'health');
+
     },  
 
     update: function() {       

@@ -15,7 +15,7 @@ class Player extends Phaser.Sprite {
         this.score = 0;
         this.timer = 0;
         this.oldScore = 0;
-        this.maxHealth = 10;
+        this.maxhealth = 10;
         this.health = 10;
 
         var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
@@ -97,8 +97,6 @@ class Enemy extends Player {
 
         super(x, y, key);
         this.anchor.setTo(0.5, 1);
-
-        this.health = 10;
 
         game.physics.enable(this, Phaser.Physics.P2JS);
         this.body.clearShapes();
