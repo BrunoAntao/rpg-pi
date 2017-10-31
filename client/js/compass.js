@@ -10,6 +10,8 @@ class Compass extends Array {
 
         }, this)
 
+        target.compass = this;
+
     }
     
 }

@@ -3,6 +3,7 @@ class Map {
     constructor(width, height, eGroup) {
 
         game.world.resize(width, height);
+        game.world.setBounds(0, 0, width, height);
 
         this.numOfSrites = Math.floor(height*2/250);
         this.maxDistance = 250;
@@ -43,9 +44,9 @@ class Map {
         desertBg.endFill();
 
         let forestBiome = {bg: forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'};
-        let fireBiome = {bg: fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano', 'tree3'], capPoint: 'capPoint2'};
+        let fireBiome = {bg: fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano'], capPoint: 'capPoint2'};
         let desertBiome =  {bg: desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint4'};
-        let iceBiome = {bg: iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan', 'cactus2'], capPoint: 'capPoint3'};
+        let iceBiome = {bg: iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan'], capPoint: 'capPoint3'};
 
         this.biomes.push(forestBiome);
         this.biomes.push(fireBiome);
@@ -77,15 +78,13 @@ class Map {
 
         }, this);
 
-        
-
     }
 
     generateSprite(biome, prevCoords){
 
         let x, y;
 
-        let spriteNum = Math.floor(Math.random() * 3);
+        let spriteNum = Math.floor(Math.random() * biome.sprites.length);
 
         let spriteHeight = game.cache.getImage(biome.sprites[spriteNum]).height * 2;
 
@@ -160,7 +159,7 @@ class Map {
                 
             }
 
-            minDistance = Math.min(...distances);
+            minDistance = Math.min(distances);
 
        }
 

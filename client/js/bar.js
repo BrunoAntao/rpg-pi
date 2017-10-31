@@ -1,6 +1,6 @@
 class Bar extends Phaser.Sprite {
 
-    constructor(side, target, stat) {
+    constructor(side, target, stat, color) {
 
         var graphics = game.add.graphics(100, 100);
         graphics.beginFill(0x000000, 1);
@@ -26,6 +26,7 @@ class Bar extends Phaser.Sprite {
         this.side = side;
         this.minwidth = 800/5;
         this.minheight = 600/15;
+        this.color = color;
 
         this.fixedToCamera = true;
         
@@ -55,7 +56,7 @@ class Bar extends Phaser.Sprite {
             this.graphics.lineStyle(2, 0xffffff, 1);
             this.graphics.drawRect(0, 0, game.width/5, game.height/15);
             this.graphics.endFill();
-            this.graphics.beginFill(0x33cc33, 1);
+            this.graphics.beginFill(this.color, 1);
             this.graphics.drawRect(0, 0, this.target[this.stat] / this.target['max' + this.stat] * game.width/5, game.height/15);
             this.graphics.endFill();
 
@@ -66,7 +67,7 @@ class Bar extends Phaser.Sprite {
             this.graphics.lineStyle(2, 0xffffff, 1);
             this.graphics.drawRect(0, 0, this.minwidth, this.minheight);
             this.graphics.endFill();
-            this.graphics.beginFill(0x33cc33, 1);
+            this.graphics.beginFill(this.color, 1);
             this.graphics.drawRect(0, 0, this.target[this.stat] / this.target['max' + this.stat] * this.minwidth, this.minheight);
             this.graphics.endFill();
 

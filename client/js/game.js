@@ -3,6 +3,7 @@ gameState = {
     init: function(nclass) {
 
         this.class = nclass;
+        console.log(map);
 
     },
 
@@ -66,7 +67,8 @@ gameState = {
             down:game.input.keyboard.addKey(keys.down),
             left:game.input.keyboard.addKey(keys.left),
             right:game.input.keyboard.addKey(keys.right),
-            attack:game.input.activePointer.leftButton
+            attack:game.input.activePointer.leftButton,
+            skill:game.input.activePointer.rightButton
 
         }
 
@@ -88,9 +90,9 @@ gameState = {
 
         new Compass(global.map, global.player);
 
-        new Bar(true, global.player, 'health');
-        new Label('Score: ', global.player, 'score');
-        //new Bar(false, global.player, 'health');
+        new Bar(true, global.player, 'health', 0x33cc33);
+        new Label('Score: ', global.player, 'score', global.player.resColor);
+        new Bar(false, global.player, 'resource', global.player.resColor);
 
     },  
 
