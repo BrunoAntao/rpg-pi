@@ -1,8 +1,8 @@
-module.exports = function(app) {
+module.exports = function(app, map) {
 
     app.get('/', function(req, res) {
 
-        res.render('index.ejs');
+        res.render('index.ejs',{map:map});
 
     });
 

@@ -3,6 +3,7 @@ gameState = {
     init: function(nclass) {
 
         this.class = nclass;
+        console.log(map);
 
     },
 
@@ -16,6 +17,7 @@ gameState = {
         game.load.image('palm', 'client/assets/entities/desert3.png');
         game.load.image('magma1', 'client/assets/entities/magma1.png');
         game.load.image('volcano', 'client/assets/entities/volcano.png');
+        game.load.image('arrow', 'client/assets/player/arrow.png');
 
         game.load.image('frozen1', 'client/assets/entities/frozen1.png');
         game.load.image('snowMan', 'client/assets/entities/snowMan.png');
@@ -26,17 +28,21 @@ gameState = {
         game.load.image('capPoint4', 'client/assets/capturePoints/cp4.png');
 
         game.load.image('warrior', 'client/assets/player/warrior.png');
+        game.load.physics('warrior', 'client/assets/physics/warrior.json');
         game.load.image('warrior_attack', 'client/assets/player/warrior_attack.png');
-      
+        game.load.physics('sword', 'client/assets/physics/sword.json');
+
         game.load.image('ranger', 'client/assets/player/ranger.png');
+        game.load.physics('ranger', 'client/assets/physics/ranger.json');
         game.load.image('ranger_attack', 'client/assets/player/ranger_attack.png');
+        game.load.physics('arrow', 'client/assets/physics/arrow.json');
 
         game.load.image('mage', 'client/assets/player/mage.png');
+        game.load.physics('mage', 'client/assets/physics/mage.json');
         game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
+        game.load.physics('magic', 'client/assets/physics/magic.json');
 
         game.load.audio('desert', 'client/assets/sounds/desert.mp3');
-
-        game.load.physics('physics', 'client/assets/physics/physics.json');
 
     },
 
@@ -52,9 +58,8 @@ gameState = {
         game.physics.startSystem(Phaser.Physics.P2JS);
         game.physics.p2.setImpactEvents(true);
 
-        //global.material = game.physics.p2.createMaterial('material');
-        //global.projGroup = game.physics.p2.createCollisionGroup();
-        //game.physics.p2.updateBoundsCollisionGroup();
+        global.projGroup = game.physics.p2.createCollisionGroup();
+        global.enemiesGroup = game.physics.p2.createCollisionGroup();
 
         ctrls = {
 
@@ -62,13 +67,14 @@ gameState = {
             down:game.input.keyboard.addKey(keys.down),
             left:game.input.keyboard.addKey(keys.left),
             right:game.input.keyboard.addKey(keys.right),
-            attack:game.input.activePointer.leftButton
+            attack:game.input.activePointer.leftButton,
+            skill:game.input.activePointer.rightButton
 
         }
 
         this.Mgroup = game.add.group();
 
-        this.map = new Map(3200, 1600, this.Mgroup);
+        global.map = new Map(3200, 1600, this.Mgroup);
 
         global.player = {};
 
@@ -79,6 +85,14 @@ gameState = {
             case 2: global.player = new Mage(100, 100, this.Mgroup, ctrls); break;
 
         }
+
+        new Enemy(300, 100, 'warrior');
+
+        new Compass(global.map, global.player);
+
+        new Bar(true, global.player, 'health', 0x33cc33);
+        new Label('Score: ', global.player, 'score', global.player.resColor);
+        new Bar(false, global.player, 'resource', global.player.resColor);
 
     },  
 

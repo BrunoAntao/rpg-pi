@@ -1,50 +1,41 @@
 var expect  = require('chai').expect;
 var request = require('request');
+var chai = require('chai');
 
-var player = new Player(100, 100);
+chai.use(require('chai-dom'));
+chai.use(require('chai-http'));
+
 
 describe('Server', () => {
 
     it('Status', () => {
         
             request('http://localhost:80' , function(error, response, body) {
+
+                expect(response.statusCode).to.equal(200);
                 
-                expect(res.statusCode).to.equal(200);
         });
     });
-});
+})
 
-describe('Player', () =>{
+describe('Game', () =>{
 
-    describe('Movement', () =>{
-
-        it('movement up', () => {
-
-            player.y -= 5;
-            player.y.should.equal(95);
-
-        });
-
-        it('movement down', () => {
-
-            player.y += 5;
-            player.y.should.equal(105);
-
-        });
-
-        it('movement right', () =>{
+    it('Player', ()=> {
+        
+        chai.request('http://localhost:80').get('/').end( function(err, res){
+        
+                
+        }) 
+    }); 
+    
+    it('Map', () => {
 
 
-            player.x += 5;
-            player.x.should.equal(105);
-
-        });
-
-        it('movement left', () =>{
-
-            player.x -= 5;
-            player.x.should.equal(95);
-
-        });
     })
 })
+
+
+
+
+
+

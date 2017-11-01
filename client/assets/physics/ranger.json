@@ -1,0 +1,84 @@
+{
+    "ranger": [
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          36,
+          4,
+          35,
+          0,
+          44,
+          0,
+          44,
+          4
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          44,
+          4,
+          48,
+          4,
+          48,
+          48,
+          8,
+          48,
+          20,
+          4,
+          36,
+          4
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          12,
+          4,
+          12,
+          0,
+          21,
+          -1,
+          20,
+          4
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          20,
+          4,
+          8,
+          48,
+          8,
+          4,
+          12,
+          4
+        ]
+      }
+    ]
+  }

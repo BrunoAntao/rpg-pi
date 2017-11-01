@@ -1,0 +1,90 @@
+{
+    "sword": [
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          19,
+          4,
+          45,
+          4,
+          52,
+          7,
+          45,
+          11,
+          19,
+          11
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          15,
+          11,
+          14,
+          4,
+          15,
+          0,
+          19,
+          0,
+          19,
+          4
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          19,
+          4,
+          19,
+          11,
+          19,
+          15,
+          15,
+          15,
+          15,
+          11
+        ]
+      },
+      {
+        "density": 2,
+        "friction": 0,
+        "bounce": 0,
+        "filter": {
+          "categoryBits": 1,
+          "maskBits": 65535
+        },
+        "shape": [
+          15,
+          11,
+          5,
+          11,
+          0,
+          9,
+          0,
+          5,
+          5,
+          4,
+          14,
+          4
+        ]
+      }
+    ]
+  }
