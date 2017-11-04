@@ -15,38 +15,6 @@ module.exports = function (width, height) {
     this.entities = [];
     this.capPoints = [];
 
-
-    this.generateSprite = function(biome, prevCoords){
-        
-        let x, y;
-
-        let spriteNum = Math.floor(Math.random() * 3);
-
-        var spriteHeight = 90;
-
-        let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
-        let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
-
-        let minY = Math.min(biome.border.y1, biome.border.y2) + 32 + spriteHeight;
-        let maxY = Math.max(biome.border.y1, biome.border.y2) - 32;
-
-        if(prevCoords.length >= 1){
-
-            let coords = this.checkDistante(prevCoords, maxX, maxY, minX, minY);
-
-            x = coords.x;
-            y = coords.y;
-
-        } else {
-
-            x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-            y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-        }
-
-        return {x:x, y:y};
-        
-    }
-
     this.generateCapPoint = function(biome){
         
         let minX = Math.min(biome.border.x1, biome.border.x2) + 64 + 150;
@@ -62,52 +30,98 @@ module.exports = function (width, height) {
         
     }
 
-    this.checkDistante = function(prevCoords, maxX, maxY, minX, minY){
-
-        let minDistance = 0; 
-        let x, y;
-
-        while(minDistance < 250){
-            
-            let distances = [];
-
-            x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-            y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-
-            for(let i = 0; i < prevCoords.length; i++){
-
-                let x1 = prevCoords[i].x;
-                let y1 = prevCoords[i].y;
-
-                let dist = Math.sqrt(Math.pow(x-x1, 2) + Math.pow(y-y1, 2));
-
-                distances.push(dist);
+    this.genCords = function(biomes){
+        
+        let numOfSrites = Math.floor(3.90625e-6*this.width*this.height);
                 
+        let minX = Math.min(biomes.border.x1, biomes.border.x2) + 64;
+        let maxX = Math.max(biomes.border.x1, biomes.border.x2) - 64;
+                
+        let minY = Math.min(biomes.border.y1, biomes.border.y2) + 32; //+ spriteHeight;
+        let maxY = Math.max(biomes.border.y1, biomes.border.y2) - 32;
+                
+        let area = 0;
+            
+        let cords = [];
+                
+        while(area <= numOfSrites*Math.pow(100, 2)*Math.PI ){
+                
+            let x = Math.floor(Math.random()*(maxX - minX + 1)) + minX;
+            let y = Math.floor(Math.random()*(maxY - minY + 1)) + minY;
+                
+            if( cords.length >= 1){
+        
+                if(this.checkDistante({x: x, y: y}, cords)){
+        
+                    cords.push({x: x, y: y});
+                            
+                    area += Math.pow(100, 2)*Math.PI;
+        
+                }
+                
+            } else if(cords.length == 0){
+        
+                cords.push({x: x, y: y});
+                        
+                area += Math.pow(100, 2)*Math.PI;
+        
+                }
             }
+        
+        return cords;
+        
+    }
 
-            minDistance = Math.min(distances);
+    this.applySprite = function(biome, cords){
 
+        for(i = 0; i < cords.length; i++){
+
+            let spriteIndex = Math.floor(Math.random() * biome.sprites.length);
+
+            switch(biome.sprites[spriteIndex]) {
+                
+                case 'magma1':
+
+                case 'frozen1':
+
+                    this.entities.push({x: cords[i].x, y: cords[i].y, sprite: biome.sprites[spriteIndex], group: null})
+                    break;
+
+                default:
+
+                    this.entities.push({x: cords[i].x, y: cords[i].y, sprite: biome.sprites[spriteIndex], group: eGroup})
+                    break;
+                
+                   
+            }
         }
-
-        return {x: x, y: y};
 
     }
 
-    this.biomes.forEach( function(biome) {
+    this.checkDistante = function(cords, finalCords){
         
-        let prevCoords = [];
-
-        for(let i = 0; i < this.numOfSrites; i++){
-
-            let sprite = this.generateSprite(biome, prevCoords);
-
-            this.entities.push(sprite);
-            prevCoords.push(sprite);
-
+        for(let i = 0; i < finalCords.length; i++){
+                    
+            let center = {a: finalCords[i].x, b: finalCords[i].y};
+                    
+            let result = Math.sqrt(Math.pow((cords.x - center.a), 2) + Math.pow((cords.y - center.b), 2));
+                    
+            if(result < 200) return false;
+                    
         }
+                    
+        return true;
+        
+    }
 
+    this.biomes.forEach(  function(biome) {
+        
+        let cords =this.genCords(biome);
+        
+        this.applySprite(biome, cords);
+        
         this.capPoints.push(this.generateCapPoint(biome));
-
+        
     }, this);
 
 }

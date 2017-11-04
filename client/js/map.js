@@ -5,9 +5,6 @@ class Map {
         game.world.resize(width, height);
         game.world.setBounds(0, 0, width, height);
 
-        this.numOfSrites = Math.floor(height*2/250);
-        this.maxDistance = 250;
-
         this.width = width;
         this.height = height;
         this.bg = game.add.group();
@@ -63,16 +60,9 @@ class Map {
         
         this.biomes.forEach( function(biome) {
 
-            let prevCoords = [];
-
-            for(let i = 0; i < this.numOfSrites; i++){
-
-                let returnedValues = this.generateSprite(biome, prevCoords);
-
-                this.entities.push(returnedValues.entity);
-                prevCoords.push(returnedValues.prevCoords);
-  
-            }
+            let cords = this.genCords(biome);
+            
+            this.applySprite(biome, cords);
 
             this.capPoints.push(this.generateCapPoint(biome));
 
@@ -80,43 +70,66 @@ class Map {
 
     }
 
-    generateSprite(biome, prevCoords){
+    genCords(biomes){
 
-        let x, y;
+        let numOfSrites = Math.floor(3.90625e-6*this.width*this.height);
+        
+        let minX = Math.min(biomes.border.x1, biomes.border.x2) + 64;
+        let maxX = Math.max(biomes.border.x1, biomes.border.x2) - 64;
+        
+        let minY = Math.min(biomes.border.y1, biomes.border.y2) + 32; //+ spriteHeight;
+        let maxY = Math.max(biomes.border.y1, biomes.border.y2) - 32;
+        
+        let area = 0;
+    
+        let cords = [];
+        
+        while(area <= numOfSrites*Math.pow(100, 2)*Math.PI ){
+        
+            let x = Math.floor(Math.random()*(maxX - minX + 1)) + minX;
+            let y = Math.floor(Math.random()*(maxY - minY + 1)) + minY;
+        
+            if( cords.length >= 1){
 
-        let spriteNum = Math.floor(Math.random() * biome.sprites.length);
+                if(this.checkDistante({x: x, y: y}, cords)){
 
-        let spriteHeight = game.cache.getImage(biome.sprites[spriteNum]).height * 2;
+                    cords.push({x: x, y: y});
+                    
+                    area += Math.pow(100, 2)*Math.PI;
 
-        let minX = Math.min(biome.border.x1, biome.border.x2) + 64;
-        let maxX = Math.max(biome.border.x1, biome.border.x2) - 64;
+                }
+        
+            }else if( cords.length == 0){
 
-        let minY = Math.min(biome.border.y1, biome.border.y2) + 32 + spriteHeight;
-        let maxY = Math.max(biome.border.y1, biome.border.y2) - 32;
+                cords.push({x: x, y: y});
+                
+                area += Math.pow(100, 2)*Math.PI;
 
-        if(prevCoords.length >= 1){
-
-            let coords = this.checkDistante(prevCoords, maxX, maxY, minX, minY);
-
-            x = coords.x;
-            y = coords.y;
-
-        } else {
-
-            x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-            y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+            }
         }
 
-        switch(biome.sprites[spriteNum]) {
+        
+        return cords;
 
-            case 'magma1':
-            case 'frozen1':
-                return { entity: new Entity(x, y, biome.sprites[spriteNum]), prevCoords: {x: x, y: y}};
-            break;
-            default:
-                return { entity: new Entity(x, y, biome.sprites[spriteNum], this.eGroup), prevCoords: {x: x, y: y}};
-            break;
+    }
 
+    applySprite(biome, cords){
+
+        for(let i = 0; i < cords.length; i++){
+            
+            let spriteIndex = Math.floor(Math.random() * biome.sprites.length);
+
+            switch(biome.sprites[spriteIndex]) {
+                
+                case 'magma1':
+                case 'frozen1':
+                    this.entities.push(new Entity(cords[i].x, cords[i].y, biome.sprites[spriteIndex]));
+                    break;
+                default:
+                    this.entities.push(new Entity(cords[i].x, cords[i].y, biome.sprites[spriteIndex], this.eGroup));
+                    break;
+                
+            }
         }
         
     }
@@ -136,34 +149,19 @@ class Map {
         
     }
 
-    checkDistante(prevCoords, maxX, maxY, minX, minY){
+    checkDistante(cords, finalCords){
 
-        let minDistance = 0; 
-        let x, y;
-
-        while(minDistance < 250){
+        for(let i = 0; i < finalCords.length; i++){
             
-            let distances = [];
-
-            x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-            y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
-
-            for(let i = 0; i < prevCoords.length; i++){
-
-                let x1 = prevCoords[i].x;
-                let y1 = prevCoords[i].y;
-
-                let dist = Math.sqrt(Math.pow(x-x1, 2) + Math.pow(y-y1, 2));
-
-                distances.push(dist);
-                
-            }
-
-            minDistance = Math.min(distances);
-
-       }
-
-       return {x: x, y: y};
+            let center = {a: finalCords[i].x, b: finalCords[i].y};
+            
+            let result = Math.sqrt(Math.pow((cords.x - center.a), 2) + Math.pow((cords.y - center.b), 2));
+            
+            if(result < 200) return false;
+            
+        }
+            
+        return true;
 
     }
 

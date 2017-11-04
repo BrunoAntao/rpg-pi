@@ -3,7 +3,7 @@ gameState = {
     init: function(nclass) {
 
         this.class = nclass;
-        console.log(map);
+        //console.log(map);
 
     },
 
