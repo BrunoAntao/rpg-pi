@@ -43,7 +43,7 @@ gameState = {
         game.load.physics('magic', 'client/assets/physics/magic.json');
 
         game.load.audio('desert', 'client/assets/sounds/desert.mp3');
-
+        game.load.audio('ice', 'client/assets/sounds/ice.mp3');
     },
 
     create: function() {
@@ -52,7 +52,7 @@ gameState = {
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
-        //music = game.add.audio('desert');
+        music = game.add.audio('desert',0.5,true,true);
         //music.play();
 
         game.physics.startSystem(Phaser.Physics.P2JS);
