@@ -1,8 +1,5 @@
 module.exports = function (width, height) {
 
-    this.numOfSrites = Math.floor(height*2/250);
-    this.maxDistance = 250;
-
     this.biomes = [
 
         {bg:0x009900, border:{x1: 0, y1: 0, x2: width/4, y2: height}, sprites: ['tree1', 'tree2', 'tree3']},
@@ -33,6 +30,8 @@ module.exports = function (width, height) {
     this.genCords = function(biomes){
         
         let numOfSrites = Math.floor(3.90625e-6*this.width*this.height);
+
+        const Density = 1.6;
                 
         let minX = Math.min(biomes.border.x1, biomes.border.x2) + 64;
         let maxX = Math.max(biomes.border.x1, biomes.border.x2) - 64;

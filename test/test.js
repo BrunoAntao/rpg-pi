@@ -5,6 +5,8 @@ var chai = require('chai');
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
 
+Map = require('../server/map.js');
+
 
 describe('Server', () => {
 
@@ -22,13 +24,14 @@ describe('Game', () =>{
 
     it('Player', ()=> {
         
-        chai.request('http://localhost:80').get('/').end( function(err, res){
-        
-                
-        }) 
+
     }); 
     
     it('Map', () => {
+
+        var map = new Map(3200, 1600);
+        
+
 
 
     })
