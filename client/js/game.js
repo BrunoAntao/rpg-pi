@@ -42,8 +42,9 @@ gameState = {
         game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
         game.load.physics('magic', 'client/assets/physics/magic.json');
 
-        game.load.audio('desert', 'client/assets/sounds/desert.mp3');
-        game.load.audio('ice', 'client/assets/sounds/ice.mp3');
+        game.load.audio('desert', 'client/assets/sounds/desert.mp3, client/assets/sounds/desert.ogg');
+        game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg');
+        game.load.audio('fire', 'client/assets/sounds/fire.mp3, client/assets/sounds/fire.ogg');
     },
 
     create: function() {
@@ -51,9 +52,6 @@ gameState = {
         game.stage.backgroundColor = "#212121";
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
-
-        music = game.add.audio('desert',0.5,true,true);
-        //music.play();
 
         game.physics.startSystem(Phaser.Physics.P2JS);
         game.physics.p2.setImpactEvents(true);
