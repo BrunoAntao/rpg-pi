@@ -1,5 +1,8 @@
 module.exports = function (width, height) {
 
+    this.width = width;
+    this.height = height;
+
     this.biomes = [
 
         {bg:0x009900, border:{x1: 0, y1: 0, x2: width/4, y2: height}, sprites: ['tree1', 'tree2', 'tree3']},
@@ -23,7 +26,7 @@ module.exports = function (width, height) {
         let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
     
-        return {x:x, y:y};
+        this.capPoints.push({x:x, y:y});
         
     }
 
@@ -88,7 +91,7 @@ module.exports = function (width, height) {
 
                 default:
 
-                    this.entities.push({x: cords[i].x, y: cords[i].y, sprite: biome.sprites[spriteIndex], group: eGroup})
+                    this.entities.push({x: cords[i].x, y: cords[i].y, sprite: biome.sprites[spriteIndex], group: 'eGroup'})
                     break;
                 
                    
@@ -115,11 +118,11 @@ module.exports = function (width, height) {
 
     this.biomes.forEach(  function(biome) {
         
-        let cords =this.genCords(biome);
+        let cords = this.genCords(biome);
         
         this.applySprite(biome, cords);
         
-        this.capPoints.push(this.generateCapPoint(biome));
+        this.generateCapPoint(biome);
         
     }, this);
 

@@ -8,6 +8,7 @@ chai.use(require('chai-http'));
 Map = require('../server/map.js');
 
 
+
 describe('Server', () => {
 
     it('Status', () => {
@@ -20,19 +21,26 @@ describe('Server', () => {
     });
 })
 
-describe('Game', () =>{
+describe('Map', () =>{
 
-    it('Player', ()=> {
+    var map = new Map(3200, 1600);
+
+    it('Properties', ()=> {
+
+        expect(map).to.have.property('entities');
+        expect(map).to.have.property('capPoints');
+
+        chai.assert.isDefined(map.entities);
+        chai.assert.isDefined(map.capPoints);
         
-
     }); 
     
-    it('Map', () => {
+    it('Generation', () => {
 
-        var map = new Map(3200, 1600);
+        let numOfSprites = Math.floor(3.90625e-6*map.width*map.height)*4;
         
-
-
+        chai.assert.equal(map.entities.length, numOfSprites);
+        chai.assert.equal(map.capPoints.length, 4);
 
     })
 })
