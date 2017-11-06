@@ -151,6 +151,26 @@ describe('Player', () => {
 
 describe('Warrior', () =>{
 
+    var warrior = new Warrior(100, 100);
+
+    it('Properties', () => {
+        
+        expect(warrior).to.have.property('maxhealth').and.to.equal(15);
+        
+        expect(warrior).to.have.property('health').and.to.equal(15);
+        
+        expect(warrior).to.have.property('resource').and.to.equal(0);
+        
+        expect(warrior).to.have.property('resourcecd').and.to.equal(0);
+
+        expect(warrior).to.have.property('fireRate').and.to.equal(200);
+
+        expect(warrior).to.have.property('range').and.to.equal(10);
+
+        expect(warrior).to.have.property('atkdamage').and.to.equal(3);
+
+        expect(warrior).to.have.property('skillCost').and.to.equal(6);
+    })
 
 })
 

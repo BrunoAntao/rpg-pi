@@ -1,12 +1,7 @@
 module.exports = function(x, y, group, crls){
     
-        this.anchor.setTo(0.5, 1);
-    
         this.group = group;
         this.flag = true;
-
-        game.physics.enable(this, Phaser.Physics.ARCADE);
-        this.body.collideWorldBounds = true;
     
         this.fireRate = 200;
         this.nextFire = 0;
@@ -25,50 +20,6 @@ module.exports = function(x, y, group, crls){
     
         this.resColor = 0xcc3333;
     
-        this.projs = game.add.group();
-        this.projs.enableBody = true;
-        this.projs.physicsBodyType = Phaser.Physics.P2JS;
-    
-        this.projs.createMultiple(50, 'warrior_attack');
-        this.projs.setAll('checkWorldBounds', true);
-        this.projs.setAll('outOfBoundsKill', true);
-        this.projs.setAll('anchor', { x: 0.5, y: 0.5 });
-        this.projs.setAll('smoothed', false);
-    
-        this.projs.forEach(function (proj) {
-    
-            proj.body.clearShapes();
-            proj.body.loadPolygon('sword', 'sword');
-    
-            let range = this.range;
-    
-            proj.hp = range;
-    
-            proj.update = function () {
-    
-                if (this.alive && this.hp > 0) {
-    
-                    this.hp--;
-    
-                } else if (this.alive) {
-    
-                    this.hp = range;
-                    this.kill();
-    
-                }
-    
-                }
-    
-            proj.body.setCollisionGroup(global.projGroup);
-            proj.body.collides(global.enemiesGroup, this.hitMob, this);
-    
-        }, this)
-    
-        this.group.add(this.projs);
-    
-        game.camera.follow(this);
-    
-        }
     
     this.hitMob = function(a, b) {
     
@@ -160,4 +111,5 @@ module.exports = function(x, y, group, crls){
             this.resource = 0;
     
         }
+    }
 }
