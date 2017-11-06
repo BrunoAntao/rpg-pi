@@ -1,24 +1,24 @@
 module.exports = function(x, y, group, ctrls){
     
-        this.group = group;
-        this.flag = true;
+    this.group = group;
+    this.flag = true;
     
-        this.fireRate = 200;
-        this.nextFire = 0;
-        this.range = 10;
-        this.atkdamage = 3;
+    this.fireRate = 200;
+    this.nextFire = 0;
+    this.range = 10;
+    this.atkdamage = 3;
+
+    this.health = 15;
+    this.maxhealth = 15;
     
-        this.health = 15;
-        this.maxhealth = 15;
+    this.resource = 0;
+    this.resourcecd = 0;
     
-        this.resource = 0;
-        this.resourcecd = 0;
+    this.ignoreActive = false;
+    this.skillTimer = 0;
+    this.skillCost = 6;
     
-        this.ignoreActive = false;
-        this.skillTimer = 0;
-        this.skillCost = 6;
-    
-        this.resColor = 0xcc3333;
+    this.resColor = 0xcc3333;
     
     
     this.hitMob = function(a, b) {

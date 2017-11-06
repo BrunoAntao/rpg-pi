@@ -1,35 +1,35 @@
 module.exports = function(x, y, group, ctrls){
     
-        this.group = group;
-        this.flag = true;
-        this.sflag = true;
+    this.group = group;
+    this.flag = true;
+    this.sflag = true;
     
-        this.fireRate = 200;
-        this.nextFire = 0;
-        this.atkdamage = 2;
+    this.fireRate = 200;
+    this.nextFire = 0;
+    this.atkdamage = 2;
     
-        this.sfireRate = 500;
-        this.snextFire = 0;
-        this.satkdamage = 3;
+    this.sfireRate = 500;
+    this.snextFire = 0;
+    this.satkdamage = 3;
     
-        this.health = 10;
-        this.maxhealth = 10;
+    this.health = 10;
+    this.maxhealth = 10;
     
-        this.resColor = 0xcccc33;
+    this.resColor = 0xcccc33;
     
-        this.gainResource = function () {
+    this.gainResource = function () {
     
-                if(this.resource < this.maxresource) {
+        if(this.resource < this.maxresource) {
     
-                    this.resource++;
+                this.resource++;
     
-                }
+        }
     
-            }
+    }
     
-        this.timer = game.time.create(false);
-        this.timer.loop(5000, this.gainResource, this);
-        this.timer.start();
+    this.timer = game.time.create(false);
+    this.timer.loop(5000, this.gainResource, this);
+    this.timer.start();
     
             
     this.hitMob = function(a, b) {

@@ -215,12 +215,45 @@ describe('Ranger', () => {
 
     it('Properties', () =>{
 
+        expect(ranger).to.have.property('maxhealth').and.to.equal(10);
+        
+        expect(ranger).to.have.property('health').and.to.equal(10);
+
+        expect(ranger).to.have.property('fireRate').and.to.equal(200);
+
+        expect(ranger).to.have.property('atkdamage').and.to.equal(2);
+
+        expect(ranger).to.have.property('skillCost').and.to.equal(6);
+
 
     })
 
     describe('Functions', () =>{
 
+        it('#gainResource()', () =>{
 
+            chai.assert.isFunction(ranger.gainResource);
+        })
+
+        it('#hitmob()', () => {
+
+            chai.assert.isFunction(ranger.hitMob);
+        })
+
+        it('#attack()', () =>{
+
+            chai.assert.isFunction(ranger.attack);
+        })
+
+        it('#skillHitMob()', () =>{
+
+            chai.assert.isFunction(ranger.skillHitMob);
+        })
+
+        it('#skill()', () =>{
+
+            chai.assert.isFunction(ranger.skill);
+        })
 
     })
 })
