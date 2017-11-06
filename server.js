@@ -6,6 +6,7 @@ let port = 80;
 Map = require('./server/map.js');
 var map = new Map(6400, 3200);
 
+
 app.set('view engine', 'ejs');
 app.use('/client', express.static('client'));
 
