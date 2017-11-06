@@ -88,11 +88,12 @@ gameState = {
 
         }
 
-        new Enemy(300, 100, 'warrior');
+        global.enemy = new Enemy(300, 100, 'warrior');
 
         new Compass(global.map, global.player);
 
         new Bar(true, global.player, 'health', 0x33cc33);
+        new Bar(true, global.enemy, 'health', 0x33cc33);
         new Label('Score: ', global.player, 'score', global.player.resColor);
         new Bar(false, global.player, 'resource', global.player.resColor);
 

@@ -106,6 +106,14 @@ class Enemy extends Player {
         super(x, y, key);
         this.anchor.setTo(0.5, 1);
 
+        switch(key) {
+
+            case 'warrior': this.health = 15; this.maxhealth = 15; break;
+            case 'ranger': this.health = 10; this.maxhealth = 10; break;
+            case 'mage': this.health = 8; this.maxhealth = 8; break;
+
+        }
+
         game.physics.enable(this, Phaser.Physics.P2JS);
         this.body.clearShapes();
         this.body.loadPolygon(key, key);
@@ -166,19 +174,12 @@ class Warrior extends Player {
             proj.body.clearShapes();
             proj.body.loadPolygon('sword', 'sword');
 
-            let range = this.range;
-
-            proj.hp = range;
-
+            proj.source = this;
+            
             proj.update = function () {
 
-                if (this.alive && this.hp > 0) {
+                if(this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
 
-                    this.hp--;
-
-                } else if (this.alive) {
-
-                    this.hp = range;
                     this.kill();
 
                 }
@@ -302,6 +303,7 @@ class Ranger extends Player {
 
         this.group = group;
         this.flag = true;
+        this.sflag = true;
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
@@ -372,19 +374,12 @@ class Ranger extends Player {
             dagger.body.clearShapes();
             dagger.body.loadPolygon('arrow', 'dagger');
 
-            let range = 10;
-            
-            dagger.hp = range;
+            dagger.source = this;
 
             dagger.update = function () {
 
-                if (this.alive && this.hp > 0) {
+                if(this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
 
-                    this.hp--;
-
-                } else if (this.alive) {
-
-                    this.hp = range;
                     this.kill();
 
                 }
@@ -457,32 +452,32 @@ class Ranger extends Player {
 
     skillHitMob(a, b) {
         
-                if (this.flag) {
-        
-                    this.flag = false;
-        
-                    game.time.events.add(10, function () {
-        
-                        this.flag = true;
-        
-                    }, this);
-        
-                    a.sprite.kill();
-                    if (b.sprite != null && b.sprite.alive) {
-        
-                        if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
-        
-                            b.sprite.damage(this.satkdamage);
-        
-                        } else if (b.sprite.class != 'warrior') {
-        
-                            b.sprite.damage(this.satkdamage);
-        
-                        }
-        
-                    }
-        
+        if (this.sflag) {
+
+            this.sflag = false;
+
+            game.time.events.add(10, function () {
+
+                this.sflag = true;
+
+            }, this);
+
+            a.sprite.kill();
+            if (b.sprite != null && b.sprite.alive) {
+
+                if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
+
+                    b.sprite.damage(this.satkdamage);
+
+                } else if (b.sprite.class != 'warrior') {
+
+                    b.sprite.damage(this.satkdamage);
+
                 }
+
+            }
+
+        }
         
             }
 
