@@ -30,6 +30,7 @@ gameState = {
         game.load.image('warrior', 'client/assets/player/warrior.png');
         game.load.physics('warrior', 'client/assets/physics/warrior.json');
         game.load.image('warrior_attack', 'client/assets/player/warrior_attack.png');
+        game.load.image('warrior_skill', 'client/assets/player/warrior_skill.png');
         game.load.physics('sword', 'client/assets/physics/sword.json');
 
         game.load.image('ranger', 'client/assets/player/ranger.png');

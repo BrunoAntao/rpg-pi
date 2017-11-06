@@ -156,7 +156,7 @@ class Warrior extends Player {
         this.resourcecd = 0;
 
         this.ignoreActive = false;
-        this.skillTimer = 0;
+        this.skillTimer = 2000;
         this.skillCost = 6;
 
         this.resColor = 0xcc3333;
@@ -201,7 +201,7 @@ class Warrior extends Player {
 
     hit(a, b){
         
-        if(this.hitflag) {
+        if(this.hitflag && !this.ignoreActive) {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
@@ -232,7 +232,6 @@ class Warrior extends Player {
 
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
-
                 this.resource += 2;
                 this.resourcecd = 200;
 
@@ -277,9 +276,15 @@ class Warrior extends Player {
 
         if (this.resource >= this.skillCost) {
 
+            this.loadTexture('warrior_skill');
             this.resource -= this.skillCost;
             this.ignoreActive = true;
-            this.skillTimer = 100;
+            game.time.events.add(this.skillTimer, function () {
+
+                this.ignoreActive = false;
+                this.loadTexture('warrior');
+
+            }, this)
 
         }
 
@@ -289,24 +294,18 @@ class Warrior extends Player {
 
         super.update();
 
-        this.dummy.body.x = this.x;
-        this.dummy.body.y = this.y - this.height/2;
+        if(this.resource >= this.maxresource) {
 
-        if (this.ignoreActive && this.skillTimer > 0) {
-
-            this.skillTimer--;
-            console.log(this.skillTimer)
-
-        } else {
-
-            this.ignoreActive = false;
+            this.resource = this.maxresource;
 
         }
+
+        this.dummy.body.x = this.x;
+        this.dummy.body.y = this.y - this.height/2;
 
         if(this.resourcecd > 0) {
             
             this.resourcecd--;
-            console.log(this.resourcecd);
 
         } else {
 
