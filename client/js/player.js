@@ -156,7 +156,7 @@ class Warrior extends Player {
         this.resourcecd = 0;
 
         this.ignoreActive = false;
-        this.skillTimer = 0;
+        this.skillTimer = 2000;
         this.skillCost = 6;
 
         this.resColor = 0xcc3333;
@@ -273,9 +273,15 @@ class Warrior extends Player {
 
         if (this.resource >= this.skillCost) {
 
+            this.loadTexture('warrior_skill');
             this.resource -= this.skillCost;
             this.ignoreActive = true;
-            this.skillTimer = 100;
+            game.time.events.add(this.skillTimer, function () {
+
+                this.ignoreActive = false;
+                this.loadTexture('warrior');
+
+            }, this)
 
         }
 
@@ -294,21 +300,9 @@ class Warrior extends Player {
         this.dummy.body.x = this.x;
         this.dummy.body.y = this.y - this.height/2;
 
-        if (this.ignoreActive && this.skillTimer > 0) {
-
-            this.skillTimer--;
-            console.log(this.skillTimer)
-
-        } else {
-
-            this.ignoreActive = false;
-
-        }
-
         if(this.resourcecd > 0) {
             
             this.resourcecd--;
-            console.log(this.resourcecd);
 
         } else {
 
