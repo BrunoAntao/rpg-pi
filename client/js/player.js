@@ -74,7 +74,7 @@ class Player extends Phaser.Sprite {
                 }
     
                 if (this.ctrls.attack.isDown) {
-    
+
                     this.attack();
     
                 }
@@ -226,6 +226,9 @@ class Warrior extends Player {
                 this.flag = true;
 
             }, this);
+
+            this.collision = game.add.audio('hurt', 0.3);
+            this.collision.play();
 
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
@@ -456,6 +459,10 @@ class Ranger extends Player {
 
             }, this);
 
+            
+            this.collision = game.add.audio('hurt', 0.3);
+            this.collision.play();
+            
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
 
@@ -491,6 +498,8 @@ class Ranger extends Player {
 
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
+            this.arrow = game.add.audio('arrow', 0.2);
+            this.arrow.play();
 
         }
 

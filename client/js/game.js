@@ -45,6 +45,8 @@ gameState = {
 
         game.load.spritesheet('slime', 'client/assets/enemies/slime.png',100, 80);
 
+        game.load.audio('hurt', 'client/assets/sounds/hurt.mp3');
+        game.load.audio('arrow', 'client/assets/sounds/arrow.mp3' );
         //game.load.audio('desert', 'client/assets/sounds/desert.mp3, client/assets/sounds/desert.ogg', true);
         //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg', true);
         //game.load.audio('fire', 'client/assets/sounds/fire.mp3, client/assets/sounds/fire.ogg', true);

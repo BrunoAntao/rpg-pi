@@ -1,7 +1,7 @@
 let express = require('express');
 let app = express();
 let http = require('http').Server(app);
-let port = 80;
+let port = 9090;
 
 Map = require('./server/map.js');
 var map = new Map(3200, 1600);
