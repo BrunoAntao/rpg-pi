@@ -371,6 +371,26 @@ class Ranger extends Player {
 
             dagger.body.clearShapes();
             dagger.body.loadPolygon('arrow', 'dagger');
+
+            let range = 10;
+            
+            dagger.hp = range;
+
+            dagger.update = function () {
+
+                if (this.alive && this.hp > 0) {
+
+                    this.hp--;
+
+                } else if (this.alive) {
+
+                    this.hp = range;
+                    this.kill();
+
+                }
+
+            }
+
             dagger.body.setCollisionGroup(global.projGroup);
             dagger.body.collides(global.enemiesGroup, this.skillHitMob, this);
             dagger.body.setMaterial(global.material);
