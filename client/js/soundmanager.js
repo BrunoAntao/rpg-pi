@@ -67,7 +67,6 @@ class soundManager extends Phaser.SoundManager{
         }
                    
     }
-
     stopAll () {
         
         if (this.noAudio) {
