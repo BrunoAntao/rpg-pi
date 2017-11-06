@@ -11,6 +11,8 @@ class CapturePoint extends Phaser.Sprite{
         this.captured = false;
         this.group = group;
 
+        this.spawnCount = 0;
+
         this.bg = game.add.graphics(0, 0);
         this.loader = game.add.graphics(0, 0);
 
@@ -26,9 +28,10 @@ class CapturePoint extends Phaser.Sprite{
 
     spawn() {
 
-        if(this.spawned.length < 14) {
+        if(this.spawnCount < 14) {
 
             this.spawned.add(new Slime(this.x + Math.random() * this.range - this.range/2, this.y + Math.random() * this.range - this.range/2, this));
+            this.spawnCount++;
 
         }
 

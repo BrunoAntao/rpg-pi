@@ -8,12 +8,19 @@ class Slime extends Phaser.Sprite {
         this.setScaleMinMax(0.4, 0.4, 1, 1);
         this.anchor.setTo(0.5, 1);
 
+        game.physics.enable(this, Phaser.Physics.P2JS);
+        this.body.setCollisionGroup(global.enemiesGroup);
+        this.body.collides(global.projGroup);
+        this.body.fixedRotation = true;
+        this.body.static = true;
+
         this.point = point;
         this.target = false;
         this.isTarget = false;
         this.isIdle = false;
         this.targetedBy = game.add.group();
 
+        this.health = 1;
         this.growth = 1;
         this.growthMax = 6;
 
@@ -28,7 +35,7 @@ class Slime extends Phaser.Sprite {
 
         let dist = game.math.distance(this.x, this.y, this.point.x + x, this.point.y + y);
 
-        this.idlemv = game.add.tween(this).to( { x:this.point.x + x, y:this.point.y + y }, dist * 100 , "Linear", true);
+        this.idlemv = game.add.tween(this.body).to( { x:this.point.x + x, y:this.point.y + y }, dist * 100 , "Linear", true);
         this.idlemv.onComplete.add(function() {
 
             this.idle();
@@ -38,6 +45,12 @@ class Slime extends Phaser.Sprite {
     }
 
     update() {
+
+        if(!this.alive) {
+
+            this.destroy();
+
+        }
 
         if(this.growth > this.growthMax) {
 
@@ -51,10 +64,11 @@ class Slime extends Phaser.Sprite {
 
                 let dist = game.math.distance(this.x, this.y, this.target.x, this.target.y);
         
-                let move = game.add.tween(this).to( { x:this.target.x, y:this.target.y }, dist * (1/100) * 1000, "Linear", true);
+                let move = game.add.tween(this.body).to( { x:this.target.x, y:this.target.y }, dist * (1/100) * 1000, "Linear", true);
                 move.onComplete.add(function() {
 
                     this.target.growth += this.growth;
+                    this.target.health = this.target.growth;
                     this.destroy();
 
                 }, this);
