@@ -3,7 +3,7 @@ gameState = {
     init: function(nclass) {
 
         this.class = nclass;
-        //console.log(map);
+        this.map = map;
 
     },
 
@@ -78,7 +78,7 @@ gameState = {
 
         this.Mgroup = game.add.group();
 
-        global.map = new Map(6400, 3200, this.Mgroup);
+        global.map = new Map(this.map.width, this.map.height, this.Mgroup, this.map);
 
         global.player = {};
 

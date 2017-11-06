@@ -26,7 +26,7 @@ describe('Server', () => {
 
     it('Routes', () =>{
 
-            //routes()
+            routes.apply(null, )
     });
 });
 
@@ -130,7 +130,6 @@ describe('Player', () => {
         
     var player = new Player(100, 100);
     
-
     it('Properties', () =>{
          
         expect(player).to.have.property('speed').and.to.equal(5);

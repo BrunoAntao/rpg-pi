@@ -5,10 +5,10 @@ module.exports = function (width, height) {
 
     this.biomes = [
 
-        {bg:0x009900, border:{x1: 0, y1: 0, x2: width/4, y2: height}, sprites: ['tree1', 'tree2', 'tree3']},
-        {bg:0xff0000, border:{x1: width*3/4, y1: 0, x2: width, y2: height}, sprites: ['magma1', 'volcano', 'tree3']},
-        {bg:0xffff00, border:{x1: width/4, y1: 0, x2: width*3/4, y2: height/2}, sprites: ['cactus1', 'cactus2', 'palm']},
-        {bg:0xffffff, border:{x1: width/4, y1: height/2, x2: width*3/4, y2: height}, sprites: ['frozen1', 'snowMan', 'cactus2']}
+        {bg:0x009900, border:{x1: 0, y1: 0, x2: width/4, y2: height}, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'},
+        {bg:0xff0000, border:{x1: width*3/4, y1: 0, x2: width, y2: height}, sprites: ['magma1', 'volcano', 'tree3'], capPoint: 'capPoint2'},
+        {bg:0xffff00, border:{x1: width/4, y1: 0, x2: width*3/4, y2: height/2}, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint3'},
+        {bg:0xffffff, border:{x1: width/4, y1: height/2, x2: width*3/4, y2: height}, sprites: ['frozen1', 'snowMan', 'cactus2'], capPoint: 'capPoint4'}
         
     ]
 
@@ -26,7 +26,7 @@ module.exports = function (width, height) {
         let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
     
-        this.capPoints.push({x:x, y:y});
+        this.capPoints.push({x:x, y:y, sprite: biome.capPoint});
         
     }
 

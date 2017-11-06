@@ -4,7 +4,7 @@ let http = require('http').Server(app);
 let port = 80;
 
 Map = require('./server/map.js');
-var map = new Map(3200, 1600);
+var map = new Map(6400, 3200);
 
 app.set('view engine', 'ejs');
 app.use('/client', express.static('client'));
