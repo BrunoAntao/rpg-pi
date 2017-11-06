@@ -15,6 +15,8 @@ class Slime extends Phaser.Sprite {
         this.body.static = true;
 
         this.point = point;
+        this.tint = this.point.biome.color;
+
         this.target = false;
         this.isTarget = false;
         this.isIdle = false;

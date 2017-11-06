@@ -28,22 +28,22 @@ class Map {
         fireBg.drawRect(width* 3/4, 0, width/4, height);
         fireBg.endFill();
 
-        let iceBg = game.add.graphics(0, 0);
-        iceBg.beginFill(0xffff00);
-        iceBg.lineStyle(2, 0xffff00, 1);
-        iceBg.drawRect(width/4, height/2, width/2, height/2);
-        iceBg.endFill();
-
         let desertBg = game.add.graphics(0, 0);
-        desertBg.beginFill(0xffffff);
-        desertBg.lineStyle(2, 0xffffff, 1);
-        desertBg.drawRect(width/4, 0, width/2, height/2);
+        desertBg.beginFill(0xffff00);
+        desertBg.lineStyle(2, 0xffff00, 1);
+        desertBg.drawRect(width/4, height/2, width/2, height/2);
         desertBg.endFill();
 
-        let forestBiome = {bg: forestBg, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'};
-        let fireBiome = {bg: fireBg, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano'], capPoint: 'capPoint2'};
-        let desertBiome =  {bg: desertBg, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint4'};
-        let iceBiome = {bg: iceBg, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan'], capPoint: 'capPoint3'};
+        let iceBg = game.add.graphics(0, 0);
+        iceBg.beginFill(0xffffff);
+        iceBg.lineStyle(2, 0xffffff, 1);
+        iceBg.drawRect(width/4, 0, width/2, height/2);
+        iceBg.endFill();
+
+        let forestBiome = {bg: forestBg, color:0x009900, border:this.forestBiomeBorders, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'};
+        let fireBiome = {bg: fireBg, color:0xff0000, border:this.fireBiomeBorders, sprites: ['magma1', 'volcano'], capPoint: 'capPoint2'};
+        let desertBiome =  {bg: desertBg, color:0xffff00, border:this.desertBiomeBorders, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint4'};
+        let iceBiome = {bg: iceBg, color:0xffffff, border:this.iceBiomeBorders, sprites: ['frozen1', 'snowMan'], capPoint: 'capPoint3'};
 
         this.biomes.push(forestBiome);
         this.biomes.push(fireBiome);
@@ -145,7 +145,7 @@ class Map {
         let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
  
-        return new CapturePoint(x, y, biome.capPoint,this.eGroup);
+        return new CapturePoint(x, y, biome.capPoint, biome, this.eGroup);
         
     }
 
