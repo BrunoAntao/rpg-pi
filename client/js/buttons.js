@@ -22,7 +22,6 @@ class Menu extends Array{
         },this)
 
     }
-
 }
 
 class Button extends Phaser.Sprite{

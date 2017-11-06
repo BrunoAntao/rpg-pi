@@ -1,13 +1,14 @@
 var expect  = require('chai').expect;
 var request = require('request');
 var chai = require('chai');
-var should = require('chai').should;
+var Player = require('./js/player.js');
+var Warrior = require('./js/warrior.js');
+var routes = require('../server/routes.js');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
 
 Map = require('../server/map.js');
-let routes = require('../server/routes.js');
 
 describe('Server', () => {
 
@@ -27,16 +28,9 @@ describe('Server', () => {
 })
 
 describe('Socket', () =>{
-
-
-
 })
 
 describe('Map', () =>{
-
-    Math.random()*12800 + 1;
-
-    Math.random()*6400 + 1;
 
     let mapSizes = [{width: Math.floor(Math.random()*(3200 - 1600 + 1) + 1600), height: Math.floor(Math.random()*(1600 - 800 + 1) + 800)}, 
                     {width: Math.floor(Math.random()*(6400 - 3200 + 1) + 3200), height: Math.floor(Math.random()*(3200 - 1600 + 1) + 1600)},
@@ -101,21 +95,63 @@ describe('Map', () =>{
 
             let random = Math.floor(Math.random()*map.entities.length);
 
-            expect(map.entities[random]).to.have.property('sprite');
-            expect(map.entities[random]).to.have.property('group');
+            expect(map.entities[random]).to.have.property('sprite').and.to.be.oneOf(['tree1', 'tree2', 'tree3','magma1', 'volcano', 'cactus1', 'cactus2', 'palm', 'frozen1', 'snowMan']);
+            expect(map.entities[random]).to.have.property('group').and.to.be.oneOf(['eGroup', null]);
         });
 
         it('#checkDistance()', () => {
 
-            let resultTrue = map.checkDistante({x: 200, y: 200}, [{x: 0, y: 0}]);
+            let resultTrue = map.checkDistante({x: Math.floor(Math.random()*(800 - 200 + 1) + 200), y: Math.floor(Math.random()*(800 - 200 + 1) + 200)}, 
+                                                [{x:0 , y: 0}]);
 
-            let resultFalse = map.checkDistante({x: 90, y: 90}, [{x: 0, y: 0}]);
+            let resultFalse = map.checkDistante({x: Math.floor(Math.random()*(100 - 50 + 1) + 50), y: Math.floor(Math.random()*(100 - 50 + 1) + 50)}, 
+                                                [{x: 0, y: 0}]);
 
             chai.assert.isFalse(resultFalse);
             chai.assert.isTrue(resultTrue);
 
         });
     });
+});
+
+describe('Player', () => {
+        
+    var player = new Player(100, 100);
+    
+
+    it('Properties', () =>{
+         
+        expect(player).to.have.property('speed').and.to.equal(5);
+
+        expect(player).to.have.property('maxhealth').and.to.equal(10);
+
+        expect(player).to.have.property('health').and.to.equal(10);
+
+        expect(player).to.have.property('maxresource').and.to.equal(10);
+
+        expect(player).to.have.property('resource').and.to.equal(10);
+
+
+    });
+
+    describe('Functions', () =>{
+
+        it('#update()', ()=>{
+
+            chai.assert.isFunction(player.kill)
+        })
+
+        it('#kill()', () =>{
+
+            chai.assert.isFunction(player.update);
+        })
+    })
+
+})
+
+describe('Warrior', () =>{
+
+
 })
 
 
