@@ -36,6 +36,11 @@ describe('Map', () =>{
                     {width: Math.floor(Math.random()*(6400 - 3200 + 1) + 3200), height: Math.floor(Math.random()*(3200 - 1600 + 1) + 1600)},
                     {width: Math.floor(Math.random()*(12800 - 6400 + 1) + 6400), height: Math.floor(Math.random()*(6400 - 3200 + 1) + 3200)}];
 
+    let biomes = [{bg:0x009900, border:{x1: 0, y1: 0, x2: 3200/4, y2: 1600}, sprites: ['tree1', 'tree2', 'tree3']},
+                    {bg:0xff0000, border:{x1: 3200*3/4, y1: 0, x2: 3200, y2: 1600}, sprites: ['magma1', 'volcano', 'tree3']},
+                    {bg:0xffff00, border:{x1: 3200/4, y1: 0, x2: 3200*3/4, y2: 1600/2}, sprites: ['cactus1', 'cactus2', 'palm']},
+                    {bg:0xffffff, border:{x1: 3200/4, y1: 1600/2, x2: 3200*3/4, y2: 1600}, sprites: ['frozen1', 'snowMan', 'cactus2']}]
+
     var map = new Map(3200, 1600);
 
     it('Properties', ()=> {
@@ -69,7 +74,7 @@ describe('Map', () =>{
 
         let cords;
 
-        let biome = {bg:0x009900, border:{x1: 0, y1: 0, x2: 800, y2: 1600}, sprites: ['tree1', 'tree2', 'tree3']};
+        let biome = biomes[Math.floor(Math.random()*3)];
 
         beforeEach( () => {
 
@@ -170,6 +175,34 @@ describe('Warrior', () =>{
         expect(warrior).to.have.property('atkdamage').and.to.equal(3);
 
         expect(warrior).to.have.property('skillCost').and.to.equal(6);
+    })
+
+    describe('Functions', () =>{
+
+        it('#hitmob()', () =>{
+
+            chai.assert.isFunction(warrior.hitMob);
+
+        })
+
+        it('#attack()', () => {
+
+            chai.assert.isFunction(warrior.attack);
+
+        })
+
+        it('#skill()', () => {
+
+            chai.assert.isFunction(warrior.skill);
+
+        })
+
+        it('#update()', () =>{
+
+            chai.assert.isFunction(warrior.update);
+
+        })
+
     })
 
 })
