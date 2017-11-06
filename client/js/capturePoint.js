@@ -89,7 +89,7 @@ class CapturePoint extends Phaser.Sprite{
                 this.loader.drawCircle(this.x, this.y, this.prog * 2);
                 this.loader.endFill();
 
-            } else {
+            } else if(global.player.alive){
 
                 global.player.score ++;
                 this.captured = true;

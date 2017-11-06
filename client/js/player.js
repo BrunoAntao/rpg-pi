@@ -74,7 +74,7 @@ class Player extends Phaser.Sprite {
                 }
     
                 if (this.ctrls.attack.isDown) {
-    
+
                     this.attack();
     
                 }
@@ -156,7 +156,7 @@ class Warrior extends Player {
         this.resourcecd = 0;
 
         this.ignoreActive = false;
-        this.skillTimer = 0;
+        this.skillTimer = 2000;
         this.skillCost = 6;
 
         this.resColor = 0xcc3333;
@@ -227,6 +227,9 @@ class Warrior extends Player {
 
             }, this);
 
+            this.collision = game.add.audio('hurt', 0.3);
+            this.collision.play();
+
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
                 this.resource += 2;
@@ -273,9 +276,15 @@ class Warrior extends Player {
 
         if (this.resource >= this.skillCost) {
 
+            this.loadTexture('warrior_skill');
             this.resource -= this.skillCost;
             this.ignoreActive = true;
-            this.skillTimer = 100;
+            game.time.events.add(this.skillTimer, function () {
+
+                this.ignoreActive = false;
+                this.loadTexture('warrior');
+
+            }, this)
 
         }
 
@@ -294,21 +303,9 @@ class Warrior extends Player {
         this.dummy.body.x = this.x;
         this.dummy.body.y = this.y - this.height/2;
 
-        if (this.ignoreActive && this.skillTimer > 0) {
-
-            this.skillTimer--;
-            console.log(this.skillTimer)
-
-        } else {
-
-            this.ignoreActive = false;
-
-        }
-
         if(this.resourcecd > 0) {
             
             this.resourcecd--;
-            console.log(this.resourcecd);
 
         } else {
 
@@ -461,6 +458,10 @@ class Ranger extends Player {
 
             }, this);
 
+            
+            this.collision = game.add.audio('hurt', 0.3);
+            this.collision.play();
+            
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
 
@@ -496,6 +497,8 @@ class Ranger extends Player {
 
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
+            this.arrow = game.add.audio('arrow', 0.2);
+            this.arrow.play();
 
         }
 

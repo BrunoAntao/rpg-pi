@@ -30,6 +30,7 @@ gameState = {
         game.load.image('warrior', 'client/assets/player/warrior.png');
         game.load.physics('warrior', 'client/assets/physics/warrior.json');
         game.load.image('warrior_attack', 'client/assets/player/warrior_attack.png');
+        game.load.image('warrior_skill', 'client/assets/player/warrior_skill.png');
         game.load.physics('sword', 'client/assets/physics/sword.json');
 
         game.load.image('ranger', 'client/assets/player/ranger.png');
@@ -45,6 +46,8 @@ gameState = {
 
         game.load.spritesheet('slime', 'client/assets/enemies/slime.png',100, 80);
 
+        game.load.audio('hurt', 'client/assets/sounds/hurt.mp3');
+        game.load.audio('arrow', 'client/assets/sounds/arrow.mp3' );
         //game.load.audio('desert', 'client/assets/sounds/desert.mp3, client/assets/sounds/desert.ogg', true);
         //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg', true);
         //game.load.audio('fire', 'client/assets/sounds/fire.mp3, client/assets/sounds/fire.ogg', true);
