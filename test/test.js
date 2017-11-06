@@ -1,13 +1,13 @@
 var expect  = require('chai').expect;
 var request = require('request');
 var chai = require('chai');
-var should = require('chai').should;
+var Player = require('./js/player.js');
+var routes = require('../server/routes.js');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
 
 Map = require('../server/map.js');
-let routes = require('../server/routes.js');
 
 describe('Server', () => {
 
@@ -27,9 +27,6 @@ describe('Server', () => {
 })
 
 describe('Socket', () =>{
-
-
-
 })
 
 describe('Map', () =>{
@@ -114,6 +111,24 @@ describe('Map', () =>{
 
         });
     });
+});
+
+describe('Player', () => {
+        
+    var player = new Player(100, 100);
+    
+
+    it('Properties', () =>{
+         
+        expect(player).to.have.property('speed').and.to.equal(5);
+
+        expect(player).to.have.property('maxhealth').and.to.equal(10);
+
+        expect(player).to.have.property('health').and.to.equal(10);
+
+
+    })
+
 })
 
 
