@@ -1,6 +1,5 @@
 module.exports = function(x, y, key, group, ctrls){
 
-
     this.smoothed = false;
     
     if (typeof ctrls != 'undefined') {

@@ -2,6 +2,7 @@ var expect  = require('chai').expect;
 var request = require('request');
 var chai = require('chai');
 var Player = require('./js/player.js');
+var Warrior = require('./js/warrior.js');
 var routes = require('../server/routes.js');
 
 chai.use(require('chai-dom'));
@@ -126,8 +127,30 @@ describe('Player', () => {
 
         expect(player).to.have.property('health').and.to.equal(10);
 
+        expect(player).to.have.property('maxresource').and.to.equal(10);
 
+        expect(player).to.have.property('resource').and.to.equal(10);
+
+
+    });
+
+    describe('Functions', () =>{
+
+        it('#update()', ()=>{
+
+            chai.assert.isFunction(player.kill)
+        })
+
+        it('#kill()', () =>{
+
+            chai.assert.isFunction(player.update);
+        })
     })
+
+})
+
+describe('Warrior', () =>{
+
 
 })
 
