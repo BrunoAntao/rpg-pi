@@ -48,6 +48,7 @@ gameState = {
         //game.load.audio('desert', 'client/assets/sounds/desert.mp3, client/assets/sounds/desert.ogg', true);
         //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg', true);
         //game.load.audio('fire', 'client/assets/sounds/fire.mp3, client/assets/sounds/fire.ogg', true);
+        //game.load.audio('forest', client/assets/sounds/forest.mp3, client/assets/sounds/forest.ogg', true)
     },
 
     create: function() {
