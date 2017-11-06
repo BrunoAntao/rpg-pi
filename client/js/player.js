@@ -267,6 +267,8 @@ class Warrior extends Player {
 
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
+            this.sword = game.add.audio('sword', 0.2);
+            this.sword.play();
 
         }
 
@@ -439,6 +441,7 @@ class Ranger extends Player {
             game.time.events.add(500, function () {
                 
                 this.hitflag = true;
+                
 
             }, this);
 
