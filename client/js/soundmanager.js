@@ -67,6 +67,50 @@ class soundManager extends Phaser.SoundManager{
         }
                    
     }
+
+    stopAll () {
+        
+        if (this.noAudio) {
+            return;
+        }
+        
+        for (var i = 0; i < this._sounds.length; i++) {
+            
+            if (this._sounds[i]) {
+                
+                this._sounds[i].stop();
+            }
+        }
+        
+    }
+         
+    addSprite (key) {
+        
+                var audioSprite = new Phaser.AudioSprite(this.game, key);
+        
+                return audioSprite;
+        
+    }      
+
+
+    destroy () {
+        
+        this.stopAll();
+            
+        for (var i = 0; i < this._sounds.length; i++) {
+            
+            if (this._sounds[i]) {
+                        
+                this._sounds[i].destroy();
+                    
+            }
+                
+        }
+            
+            this._sounds = [];
+        }
+        
+
     update (){
 
         if (this.ctrls.mute.isDown && mute != true){
