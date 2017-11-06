@@ -402,7 +402,6 @@ class Ranger extends Player {
     }
 
 }
-
 class Mage extends Player {
 
     constructor(x, y, group, ctrls) {
