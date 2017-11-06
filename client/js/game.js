@@ -45,9 +45,9 @@ gameState = {
 
         game.load.spritesheet('slime', 'client/assets/enemies/slime.png',100, 80);
 
-        //game.load.audio('desert', 'client/assets/sounds/desert.mp3, client/assets/sounds/desert.ogg');
-        //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg');
-        //game.load.audio('fire', 'client/assets/sounds/fire.mp3, client/assets/sounds/fire.ogg');
+        //game.load.audio('desert', 'client/assets/sounds/desert.mp3, client/assets/sounds/desert.ogg', true);
+        //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg', true);
+        //game.load.audio('fire', 'client/assets/sounds/fire.mp3, client/assets/sounds/fire.ogg', true);
     },
 
     create: function() {
@@ -69,7 +69,8 @@ gameState = {
             left:game.input.keyboard.addKey(keys.left),
             right:game.input.keyboard.addKey(keys.right),
             attack:game.input.activePointer.leftButton,
-            skill:game.input.activePointer.rightButton
+            skill:game.input.activePointer.rightButton,
+            mute:game.input.keyboard.addKey(Phaser.Keyboard.M),
 
         }
 

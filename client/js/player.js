@@ -92,7 +92,7 @@ class Player extends Phaser.Sprite {
                 this.skill();
 
             }
-
+            
         }
 
     }
