@@ -3,6 +3,7 @@ var request = require('request');
 var chai = require('chai');
 var Player = require('./js/player.js');
 var Warrior = require('./js/warrior.js');
+var Ranger = require('./js/ranger.js');
 var routes = require('../server/routes.js');
 
 chai.use(require('chai-dom'));
@@ -183,6 +184,7 @@ describe('Warrior', () =>{
 
             chai.assert.isFunction(warrior.hitMob);
 
+
         })
 
         it('#attack()', () => {
@@ -205,6 +207,22 @@ describe('Warrior', () =>{
 
     })
 
+})
+
+describe('Ranger', () => {
+
+    var ranger = new Ranger(100, 100);
+
+    it('Properties', () =>{
+
+
+    })
+
+    describe('Functions', () =>{
+
+
+
+    })
 })
 
 

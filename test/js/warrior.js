@@ -1,4 +1,4 @@
-module.exports = function(x, y, group, crls){
+module.exports = function(x, y, group, ctrls){
     
         this.group = group;
         this.flag = true;
