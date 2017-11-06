@@ -1,6 +1,6 @@
 class CapturePoint extends Phaser.Sprite{
 
-    constructor(x, y, key, group){
+    constructor(x, y, key, biome, group){
 
         super(game, x, y, key);
 
@@ -10,6 +10,7 @@ class CapturePoint extends Phaser.Sprite{
         this.prog = 0;
         this.captured = false;
         this.group = group;
+        this.biome = biome;
 
         this.spawnCount = 0;
 
@@ -21,6 +22,8 @@ class CapturePoint extends Phaser.Sprite{
 
         this.timer = game.time.events.loop(500, this.spawn, this);
         this.spawned = game.add.group();
+
+        console.log(this.biome)
 
         game.add.existing(this);
         group.add(this.spawned);
