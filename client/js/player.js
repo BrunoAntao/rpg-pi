@@ -1,104 +1,104 @@
 class Player extends Phaser.Sprite {
-
-    constructor(x, y, key, group, ctrls) {
-
-        super(game, x, y, key);
-        this.smoothed = false;
-
-        if (typeof ctrls != 'undefined') {
-
-            this.ctrls = ctrls;
-
+    
+        constructor(x, y, key, group, ctrls) {
+    
+            super(game, x, y, key);
+            this.smoothed = false;
+    
+            if (typeof ctrls != 'undefined') {
+    
+                this.ctrls = ctrls;
+    
+            }
+    
+            this.speed = 5;
+            this.score = 0;
+    
+            this.maxhealth = 10;
+            this.health = 10;
+    
+            this.maxresource = 10;
+            this.resource = 10;
+    
+            var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+            this.label = game.add.text(0, 0, '', style);
+            this.label.setTextBounds(0, 0, 200, 54);
+            this.label.smoothed = false;
+            this.label.visible = false;
+    
+            this.addChild(this.label);
+    
+            game.add.existing(this);
+    
+            if (typeof group != 'undefined') {
+    
+                group.add(this);
+    
+            }
         }
-
-        this.speed = 5;
-        this.score = 0;
-
-        this.maxhealth = 10;
-        this.health = 10;
-
-        this.maxresource = 10;
-        this.resource = 10;
-
-        var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-        this.label = game.add.text(0, 0, '', style);
-        this.label.setTextBounds(0, 0, 200, 54);
-        this.label.smoothed = false;
-        this.label.visible = false;
-
-        this.addChild(this.label);
-
-        game.add.existing(this);
-
-        if (typeof group != 'undefined') {
-
-            group.add(this);
-
+    
+        kill() {
+    
+            super.kill();
+    
+            if(typeof this.compass != 'undefined') {
+    
+                this.compass.forEach(function (pointer) {
+    
+                    pointer.destroy();
+    
+                })
+    
+            }
+    
         }
+    
+        update() {
+    
+            if (typeof this.ctrls != 'undefined' && this.alive) {
+    
+                if (this.ctrls.up.isDown) {
+    
+                    this.y -= this.speed;
+    
+                }
+    
+                if (this.ctrls.down.isDown) {
+    
+                    this.y += this.speed;
+    
+                }
+    
+                if (this.ctrls.left.isDown) {
+    
+                    this.x -= this.speed;
+    
+                }
+    
+                if (this.ctrls.right.isDown) {
+    
+                    this.x += this.speed;
+    
+                }
+    
+                if (this.ctrls.attack.isDown) {
+    
+                    this.attack();
+    
+                }
+    
+                if (this.ctrls.skill.isDown) {
+    
+                    this.skill();
+    
+                }
+    
+            }
+    
+        }
+    
     }
-
-    kill() {
-
-        super.kill();
-
-        if(typeof this.compass != 'undefined') {
-
-            this.compass.forEach(function (pointer) {
-
-                pointer.destroy();
-
-            })
-
-        }
-
-    }
-
-    update() {
-
-        if (typeof this.ctrls != 'undefined' && this.alive) {
-
-            if (this.ctrls.up.isDown) {
-
-                this.y -= this.speed;
-
-            }
-
-            if (this.ctrls.down.isDown) {
-
-                this.y += this.speed;
-
-            }
-
-            if (this.ctrls.left.isDown) {
-
-                this.x -= this.speed;
-
-            }
-
-            if (this.ctrls.right.isDown) {
-
-                this.x += this.speed;
-
-            }
-
-            if (this.ctrls.attack.isDown) {
-
-                this.attack();
-
-            }
-
-            if (this.ctrls.skill.isDown) {
-
-                this.skill();
-
-            }
-            
-        }
-
-    }
-
-}
-
+    
 class Enemy extends Player {
 
     constructor(x, y, key) {
@@ -120,7 +120,6 @@ class Enemy extends Player {
     }
 
 }
-
 class Warrior extends Player {
 
     constructor(x, y, group, ctrls) {
@@ -638,4 +637,3 @@ class Mage extends Player {
     }
 
 }
-
