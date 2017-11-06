@@ -7,6 +7,7 @@ chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
 
 Map = require('../server/map.js');
+let routes = require('../server/routes.js');
 
 describe('Server', () => {
 
@@ -18,11 +19,28 @@ describe('Server', () => {
                 
         });
     });
+
+    it('Routes', () =>{
+
+            //routes()
+    })
+})
+
+describe('Socket', () =>{
+
+
+
 })
 
 describe('Map', () =>{
 
-    let mapSizes = [{width: 1600, height: 800}, {width: 3200, height: 1600}, {width: 12800, height: 6400}];
+    Math.random()*12800 + 1;
+
+    Math.random()*6400 + 1;
+
+    let mapSizes = [{width: Math.floor(Math.random()*(3200 - 1600 + 1) + 1600), height: Math.floor(Math.random()*(1600 - 800 + 1) + 800)}, 
+                    {width: Math.floor(Math.random()*(6400 - 3200 + 1) + 3200), height: Math.floor(Math.random()*(3200 - 1600 + 1) + 1600)},
+                    {width: Math.floor(Math.random()*(12800 - 6400 + 1) + 6400), height: Math.floor(Math.random()*(6400 - 3200 + 1) + 3200)}];
 
     var map = new Map(3200, 1600);
 
@@ -43,10 +61,11 @@ describe('Map', () =>{
             var map1 = new Map(size.width, size.height);
 
             let numOfSprites = Math.floor(3.90625e-6*map1.width*map1.height)*4;
+            let interval = [numOfSprites - 5, numOfSprites + 5];
+
+            expect(map1.entities.length).to.be.within(numOfSprites - 5, numOfSprites + 5);
             
-            chai.assert.equal(map1.entities.length, numOfSprites);
-            
-            expect(map.capPoints).to.have.lengthOf(4);
+            expect(map1.capPoints).to.have.lengthOf(4);
 
         })
 
@@ -84,7 +103,7 @@ describe('Map', () =>{
 
             expect(map.entities[random]).to.have.property('sprite');
             expect(map.entities[random]).to.have.property('group');
-        })
+        });
 
         it('#checkDistance()', () => {
 
@@ -95,9 +114,7 @@ describe('Map', () =>{
             chai.assert.isFalse(resultFalse);
             chai.assert.isTrue(resultTrue);
 
-        })
-
-
+        });
     });
 })
 
