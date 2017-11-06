@@ -229,7 +229,6 @@ class Warrior extends Player {
 
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
-
                 this.resource += 2;
                 this.resourcecd = 200;
 
@@ -285,6 +284,12 @@ class Warrior extends Player {
     update() {
 
         super.update();
+
+        if(this.resource >= this.maxresource) {
+
+            this.resource = this.maxresource;
+
+        }
 
         this.dummy.body.x = this.x;
         this.dummy.body.y = this.y - this.height/2;
