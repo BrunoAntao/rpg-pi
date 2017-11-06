@@ -597,7 +597,43 @@ class Mage extends Player {
 
     skill() {
 
+        if (game.time.now > this.nextFire && this.projs.countDead() > 0 && this.resource >= 3) {
+            this.nextFire = game.time.now + this.fireRate;
+            this.resource -= 3;
 
+            var proj = this.projs.getFirstDead();
+
+            proj.reset(this.x + this.width / 2, this.y - this.height + (this.height / (this.height / 16)));
+
+            var proj2 = this.projs.getFirstDead();
+
+            proj2.reset(this.x + this.width / 2, this.y - this.height + (this.height / (this.height / 16)));
+
+            var proj3 = this.projs.getFirstDead();
+
+            proj3.reset(this.x + this.width / 2, this.y - this.height + (this.height / (this.height / 16)));
+
+            let speed = 50000;
+
+            proj.rotation = game.physics.arcade.angleToPointer(proj);
+            proj.body.rotation = game.physics.arcade.angleToPointer(proj);
+
+            proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
+            proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
+
+            proj2.rotation = game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180;
+            proj2.body.rotation = game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180;
+
+            proj2.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180) * speed;
+            proj2.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180) * speed;
+
+            proj3.rotation = game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180;
+            proj3.body.rotation = game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180;
+
+            proj3.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180) * speed;
+            proj3.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180) * speed;
+
+        }
 
     }
 
