@@ -54,24 +54,28 @@ describe('Map', () =>{
         chai.assert.isDefined(map.entities);
         chai.assert.isDefined(map.capPoints);
         
-    }); 
-    
-    mapSizes.forEach( (size) =>{
+    });
 
-        it('Generation for width: '+ size.width +' height: ' + size.height, () => {
+    describe('Generation', () =>{
 
-            var map1 = new Map(size.width, size.height);
-
-            let numOfSprites = Math.floor(3.90625e-6*map1.width*map1.height)*4;
-            let interval = [numOfSprites - 5, numOfSprites + 5];
-
-            expect(map1.entities.length).to.be.within(numOfSprites - 5, numOfSprites + 5);
+        mapSizes.forEach( (size) =>{
             
-            expect(map1.capPoints).to.have.lengthOf(4);
+            it('Generation for width: '+ size.width +' height: ' + size.height, () => {
+            
+                var map1 = new Map(size.width, size.height);
+            
+                let numOfSprites = Math.floor(3.90625e-6*map1.width*map1.height)*4;
+                let interval = [numOfSprites - 5, numOfSprites + 5];
+            
+                expect(map1.entities.length).to.be.within(numOfSprites - 5, numOfSprites + 5);
+                        
+                expect(map1.capPoints).to.have.lengthOf(4);
+            
+            });
+            
+        });
 
-        })
-
-    })
+    });
 
     describe('Functions', () =>{
 
@@ -251,9 +255,9 @@ describe('Ranger', () => {
 
         it('#skill()', () =>{
 
-            expect(ranger).to.have.property('sfireRate').and.to.equal(500);
+            expect(ranger).to.have.ownProperty('sfireRate').and.to.equal(500);
 
-            expect(ranger).to.have.property('satkdamage').and.to.equal(3);
+            expect(ranger).to.have.ownProperty('satkdamage').and.to.equal(3);
 
             chai.assert.isFunction(ranger.skill);
         });
@@ -266,14 +270,35 @@ describe('Mage', () =>{
 
     it('Properties', () =>{
 
+        expect(mage).to.have.property('maxhealth').and.to.equal(8);
 
-    })
+        expect(mage).to.have.property('health').and.to.equal(8);
+
+        expect(mage).to.have.property('fireRate').and.to.equal(200);
+
+        expect(mage).to.have.property('atkdamage').and.to.equal(3);
+
+
+    });
 
     describe('Functions', () =>{
 
+        it('#hitMob()', () =>{
 
-    })
-})
+            chai.assert.isFunction(mage.hitMob);
+        });
+
+        it('#attack()', () =>{
+
+            chai.assert.isFunction(mage.attack);
+        });
+
+        it('#skill', () =>{
+
+            chai.assert.isFunction(mage.skill)
+        });
+    });
+});
 
 
 
