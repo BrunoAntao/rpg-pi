@@ -144,7 +144,6 @@ class Warrior extends Player {
         this.dummy.body.fixedRotation = true;
         this.dummy.source = this;
 
-
         this.fireRate = 200;
         this.nextFire = 0;
         this.range = 10;
@@ -286,6 +285,9 @@ class Warrior extends Player {
     update() {
 
         super.update();
+
+        this.dummy.body.x = this.x;
+        this.dummy.body.y = this.y - this.height/2;
 
         if (this.ignoreActive && this.skillTimer > 0) {
 
@@ -726,6 +728,14 @@ class Mage extends Player {
             proj3.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180) * speed;
 
         }
+
+    }
+
+    update() {
+        
+        super.update();
+        this.dummy.body.x = this.x;
+        this.dummy.body.y = this.y - this.height/2;
 
     }
 
