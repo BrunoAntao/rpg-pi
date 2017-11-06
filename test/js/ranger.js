@@ -26,11 +26,6 @@ module.exports = function(x, y, group, ctrls){
         }
     
     }
-    
-    this.timer = game.time.create(false);
-    this.timer.loop(5000, this.gainResource, this);
-    this.timer.start();
-    
             
     this.hitMob = function(a, b) {
     

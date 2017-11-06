@@ -1,13 +1,15 @@
 var expect  = require('chai').expect;
 var request = require('request');
 var chai = require('chai');
-var Player = require('./js/player.js');
-var Warrior = require('./js/warrior.js');
-var Ranger = require('./js/ranger.js');
-var routes = require('../server/routes.js');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
+
+var Player = require('./js/player.js');
+var Warrior = require('./js/warrior.js');
+var Ranger = require('./js/ranger.js');
+var Mage = require('./js/mage.js');
+var routes = require('../server/routes.js');
 
 Map = require('../server/map.js');
 
@@ -18,18 +20,18 @@ describe('Server', () => {
             request('http://localhost:80' , function(error, response, body) {
 
                 expect(response.statusCode).to.equal(200);
-                
+
         });
     });
 
     it('Routes', () =>{
 
             //routes()
-    })
-})
+    });
+});
 
 describe('Socket', () =>{
-})
+});
 
 describe('Map', () =>{
 
@@ -153,7 +155,7 @@ describe('Player', () => {
         })
     })
 
-})
+});
 
 describe('Warrior', () =>{
 
@@ -207,7 +209,7 @@ describe('Warrior', () =>{
 
     })
 
-})
+});
 
 describe('Ranger', () => {
 
@@ -223,37 +225,52 @@ describe('Ranger', () => {
 
         expect(ranger).to.have.property('atkdamage').and.to.equal(2);
 
-        expect(ranger).to.have.property('skillCost').and.to.equal(6);
-
-
-    })
+    });
 
     describe('Functions', () =>{
 
         it('#gainResource()', () =>{
 
             chai.assert.isFunction(ranger.gainResource);
-        })
+        });
 
         it('#hitmob()', () => {
 
             chai.assert.isFunction(ranger.hitMob);
-        })
+        });
 
         it('#attack()', () =>{
 
             chai.assert.isFunction(ranger.attack);
-        })
+        });
 
         it('#skillHitMob()', () =>{
 
             chai.assert.isFunction(ranger.skillHitMob);
-        })
+        });
 
         it('#skill()', () =>{
 
+            expect(ranger).to.have.property('sfireRate').and.to.equal(500);
+
+            expect(ranger).to.have.property('satkdamage').and.to.equal(3);
+
             chai.assert.isFunction(ranger.skill);
-        })
+        });
+    });
+});
+
+describe('Mage', () =>{
+
+    var mage = new Mage(100, 100);
+
+    it('Properties', () =>{
+
+
+    })
+
+    describe('Functions', () =>{
+
 
     })
 })
