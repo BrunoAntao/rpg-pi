@@ -23,8 +23,6 @@ class CapturePoint extends Phaser.Sprite{
         this.timer = game.time.events.loop(500, this.spawn, this);
         this.spawned = game.add.group();
 
-        console.log(this.biome)
-
         game.add.existing(this);
         group.add(this.spawned);
     }

@@ -10,7 +10,7 @@ class Slime extends Phaser.Sprite {
 
         game.physics.enable(this, Phaser.Physics.P2JS);
         this.body.setCollisionGroup(global.enemiesGroup);
-        this.body.collides(global.projGroup);
+        this.body.collides([global.projGroup, global.playerGroup]);
         this.body.fixedRotation = true;
         this.body.static = true;
 

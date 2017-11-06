@@ -20,14 +20,6 @@ class Player extends Phaser.Sprite {
             this.maxresource = 10;
             this.resource = 10;
     
-            var style = { font: "bold 18px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
-            this.label = game.add.text(0, 0, '', style);
-            this.label.setTextBounds(0, 0, 200, 54);
-            this.label.smoothed = false;
-            this.label.visible = false;
-    
-            this.addChild(this.label);
-    
             game.add.existing(this);
     
             if (typeof group != 'undefined') {
@@ -138,9 +130,20 @@ class Warrior extends Player {
 
         this.group = group;
         this.flag = true;
+        this.hitflag = true;
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
+
+        this.dummy = game.add.sprite(0, 0);
+        game.physics.enable(this.dummy, Phaser.Physics.P2JS);
+        this.dummy.body.clearShapes();
+        this.dummy.body.addRectangle(this.width, this.height);
+        this.dummy.body.setCollisionGroup(global.playerGroup);
+        this.dummy.body.collides(global.enemiesGroup, this.hit, this);
+        this.dummy.body.fixedRotation = true;
+        this.dummy.source = this;
+
 
         this.fireRate = 200;
         this.nextFire = 0;
@@ -194,6 +197,22 @@ class Warrior extends Player {
         this.group.add(this.projs);
 
         game.camera.follow(this);
+
+    }
+
+    hit(a, b){
+        
+        if(this.hitflag) {
+
+            this.hitflag = false;
+            a.sprite.source.damage(1);
+            game.time.events.add(500, function () {
+                
+                this.hitflag = true;
+
+            }, this);
+
+        }
 
     }
 
@@ -304,9 +323,19 @@ class Ranger extends Player {
         this.group = group;
         this.flag = true;
         this.sflag = true;
+        this.hitflag = true;
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
+
+        this.dummy = game.add.sprite(0, 0);
+        game.physics.enable(this.dummy, Phaser.Physics.P2JS);
+        this.dummy.body.clearShapes();
+        this.dummy.body.addRectangle(this.width, this.height);
+        this.dummy.body.setCollisionGroup(global.playerGroup);
+        this.dummy.body.collides(global.enemiesGroup, this.hit, this);
+        this.dummy.body.fixedRotation = true;
+        this.dummy.source = this;
 
         this.fireRate = 200;
         this.nextFire = 0;
@@ -358,7 +387,6 @@ class Ranger extends Player {
 
         this.group.add(this.projs);
 
-
         this.daggers = game.add.group();
         this.daggers.enableBody = true;
         this.daggers.physicsBodyType = Phaser.Physics.P2JS;
@@ -395,6 +423,22 @@ class Ranger extends Player {
         this.group.add(this.daggers);
 
         game.camera.follow(this);
+
+    }
+
+    hit(a, b){
+
+        if(this.hitflag) {
+
+            this.hitflag = false;
+            a.sprite.source.damage(1);
+            game.time.events.add(500, function () {
+                
+                this.hitflag = true;
+
+            }, this);
+
+        }
 
     }
 
@@ -479,7 +523,7 @@ class Ranger extends Player {
 
         }
         
-            }
+    }
 
     skill() {
 
@@ -503,6 +547,14 @@ class Ranger extends Player {
 
     }
 
+    update() {
+
+        super.update();
+        this.dummy.body.x = this.x;
+        this.dummy.body.y = this.y - this.height/2;
+
+    }
+
 }
 class Mage extends Player {
 
@@ -514,9 +566,19 @@ class Mage extends Player {
 
         this.group = group;
         this.flag = true;
+        this.hitflag = true;
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
+
+        this.dummy = game.add.sprite(0, 0);
+        game.physics.enable(this.dummy, Phaser.Physics.P2JS);
+        this.dummy.body.clearShapes();
+        this.dummy.body.addRectangle(this.width, this.height);
+        this.dummy.body.setCollisionGroup(global.playerGroup);
+        this.dummy.body.collides(global.enemiesGroup, this.hit, this);
+        this.dummy.body.fixedRotation = true;
+        this.dummy.source = this;
 
         this.fireRate = 200;
         this.nextFire = 0;
@@ -554,6 +616,22 @@ class Mage extends Player {
         this.group.add(this.projs);
 
         game.camera.follow(this);
+
+    }
+
+    hit(a, b){
+        
+        if(this.hitflag) {
+
+            this.hitflag = false;
+            a.sprite.source.damage(1);
+            game.time.events.add(500, function () {
+                
+                this.hitflag = true;
+
+            }, this);
+
+        }
 
     }
 
