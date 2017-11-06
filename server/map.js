@@ -5,11 +5,11 @@ module.exports = function (width, height) {
 
     this.biomes = [
 
-        {bg:0x009900, border:{x1: 0, y1: 0, x2: width/4, y2: height}, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'},
-        {bg:0xff0000, border:{x1: width*3/4, y1: 0, x2: width, y2: height}, sprites: ['magma1', 'volcano', 'tree3'], capPoint: 'capPoint2'},
-        {bg:0xffff00, border:{x1: width/4, y1: 0, x2: width*3/4, y2: height/2}, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint3'},
-        {bg:0xffffff, border:{x1: width/4, y1: height/2, x2: width*3/4, y2: height}, sprites: ['frozen1', 'snowMan', 'cactus2'], capPoint: 'capPoint4'}
-        
+        {color:0x009900, border:{x1: 0, y1: 0, x2: width/4, y2: height}, sprites: ['tree1', 'tree2', 'tree3'], capPoint: 'capPoint1'},
+        {color:0xff0000, border:{x1: width*3/4, y1: 0, x2: width, y2: height}, sprites: ['magma1', 'volcano'], capPoint: 'capPoint2'},
+        {color:0xffffff, border:{x1: width/4, y1: 0, x2: width*3/4, y2: height/2}, sprites: ['frozen1', 'snowMan'], capPoint: 'capPoint3'},
+        {color:0xffff00, border:{x1: width/4, y1: height/2, x2: width*3/4, y2: height}, sprites: ['cactus1', 'cactus2', 'palm'], capPoint: 'capPoint4'},
+
     ]
 
     this.entities = [];
@@ -21,12 +21,12 @@ module.exports = function (width, height) {
         let maxX = Math.max(biome.border.x1, biome.border.x2) - 64 - 150;
 
         let minY = Math.min(biome.border.y1, biome.border.y2) + 64 + 150;
-        let maxY = Math.max(biome.border.y1, biome.border.y2) - 64 - 150;
+        let maxY = Math.max(biome.border.x1, biome.border.x2) - 64 - 150;
 
         let x = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
         let y = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
     
-        this.capPoints.push({x:x, y:y, sprite: biome.capPoint});
+        this.capPoints.push({x:x, y:y, sprite: biome.capPoint, biome: biome});
         
     }
 
@@ -40,7 +40,7 @@ module.exports = function (width, height) {
         let maxX = Math.max(biomes.border.x1, biomes.border.x2) - 64;
                 
         let minY = Math.min(biomes.border.y1, biomes.border.y2) + 32; //+ spriteHeight;
-        let maxY = Math.max(biomes.border.y1, biomes.border.y2) - 32;
+        let maxY = Math.max(biomes.border.x1, biomes.border.x2) - 32;
                 
         let area = 0;
             

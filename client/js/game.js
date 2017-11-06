@@ -3,9 +3,9 @@ gameState = {
     init: function(nclass) {
 
         this.class = nclass;
-        this.map = map;
 
     },
+    
 
     preload: function() {
 
@@ -81,7 +81,7 @@ gameState = {
 
         this.Mgroup = game.add.group();
 
-        global.map = new Map(this.map.width, this.map.height, this.Mgroup, this.map);
+        global.map = new Map(map.width, map.height, this.Mgroup, map);
 
         global.player = {};
 

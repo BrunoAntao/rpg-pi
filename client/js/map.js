@@ -6,7 +6,7 @@ class Map {
         game.world.setBounds(0, 0, width, height);
 
         this.map = map;
-
+        
         this.width = width;
         this.height = height;
         this.bg = game.add.group();
@@ -52,10 +52,10 @@ class Map {
         this.biomes.push(iceBiome);
         this.biomes.push(desertBiome);
 
-        this.bg.add(forestBiome.bg);
+        /*this.bg.add(forestBiome.bg);
         this.bg.add(fireBiome.bg);
         this.bg.add(iceBiome.bg);
-        this.bg.add(desertBiome.bg);
+        this.bg.add(desertBiome.bg);*/
 
         this.entities = map.entities;
         this.capPoints = map.capPoints;
@@ -86,11 +86,13 @@ class Map {
 
     loadCapPoints(capPoint){
 
+        //console.log(this.capPoints);
+
         for(let i = 0; i < capPoint.length; i++){
 
-            console.log(capPoint[i])
+            console.log(capPoint[i].biome)
 
-            new CapturePoint(capPoint[i].x, capPoint[i].x, capPoint.sprite, this.eGroup);
+            new CapturePoint(capPoint[i].x, capPoint[i].x, capPoint[i].sprite, capPoint[i].biome, this.eGroup);
 
         }
         //return new CapturePoint(x, y, biome.capPoint, biome, this.eGroup);
