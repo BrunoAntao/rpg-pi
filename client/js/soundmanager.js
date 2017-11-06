@@ -1,6 +1,6 @@
-Phaser.SoundManager = {
-        
-    add: function (key, volume, loop, connect) {
+class soundManager{
+
+    add (key, volume, loop, connect) {
         
         if (typeof volume === 'undefined') {
             
@@ -24,9 +24,9 @@ Phaser.SoundManager = {
         
         return sound;
         
-},
+}
 
-    play: function (key, volume, loop) {
+    play  (key, volume, loop) {
     
         if (this.noAudio){
 
@@ -39,6 +39,31 @@ Phaser.SoundManager = {
     
         return sound;
     
-    },
+    }
 
+    pauseAll () {
+        
+        for (var i = 0; i < this._sounds.length; i++) {
+
+            if (this._sounds[i]) {
+                        
+                this._sounds[i].pause();
+            }
+        }
+        
+    }
+
+    resumeAll () {
+                
+        for (var i = 0; i < this._sounds.length; i++) {
+            
+            if (this._sounds[i]) {
+            
+                this._sounds[i].resume();
+            }
+        }
+                   
+    }
+                
 }
+

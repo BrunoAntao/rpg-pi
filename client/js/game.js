@@ -69,7 +69,8 @@ gameState = {
             left:game.input.keyboard.addKey(keys.left),
             right:game.input.keyboard.addKey(keys.right),
             attack:game.input.activePointer.leftButton,
-            skill:game.input.activePointer.rightButton
+            skill:game.input.activePointer.rightButton,
+            mute:game.input.keyboard.addKey(Phaser.Keyboard.M),
 
         }
 
