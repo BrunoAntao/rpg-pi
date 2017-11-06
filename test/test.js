@@ -80,14 +80,21 @@ describe('Map', () =>{
 
             let sprites = map.applySprite(biome, cords);
 
-            expect(map.entities).to.include({sprite: 'tree1', group: 'eGroup'});
+            let random = Math.floor(Math.random()*map.entities.length);
 
+            expect(map.entities[random]).to.have.property('sprite');
+            expect(map.entities[random]).to.have.property('group');
         })
 
         it('#checkDistance()', () => {
 
+            let resultTrue = map.checkDistante({x: 200, y: 200}, [{x: 0, y: 0}]);
 
-            
+            let resultFalse = map.checkDistante({x: 90, y: 90}, [{x: 0, y: 0}]);
+
+            chai.assert.isFalse(resultFalse);
+            chai.assert.isTrue(resultTrue);
+
         })
 
 
