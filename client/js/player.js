@@ -201,7 +201,7 @@ class Warrior extends Player {
 
     hit(a, b){
         
-        if(this.hitflag) {
+        if(this.hitflag && !this.ignoreActive) {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
