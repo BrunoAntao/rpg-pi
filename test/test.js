@@ -103,10 +103,11 @@ describe('Map', () =>{
 
         it('#checkDistance()', () => {
 
+            let resultTrue = map.checkDistante({x: Math.floor(Math.random()*(800 - 200 + 1) + 200), y: Math.floor(Math.random()*(800 - 200 + 1) + 200)}, 
+                                                [{x:0 , y: 0}]);
 
-            let resultTrue = map.checkDistante({x: 200, y: 200}, [{x: 0, y: 0}]);
-
-            let resultFalse = map.checkDistante({x: 90, y: 90}, [{x: 0, y: 0}]);
+            let resultFalse = map.checkDistante({x: Math.floor(Math.random()*(100 - 50 + 1) + 50), y: Math.floor(Math.random()*(100 - 50 + 1) + 50)}, 
+                                                [{x: 0, y: 0}]);
 
             chai.assert.isFalse(resultFalse);
             chai.assert.isTrue(resultTrue);
