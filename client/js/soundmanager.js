@@ -1,6 +1,9 @@
-class soundManager{
+class soundManager extends Phaser.SoundManager{
 
+   
     add (key, volume, loop, connect) {
+     
+        var sounds = []    
         
         if (typeof volume === 'undefined') {
             
@@ -64,6 +67,43 @@ class soundManager{
         }
                    
     }
+    update (){
+
+        if (this.ctrls.mute.isDown && mute != true){
+
+            this.pauseAll();
+        }
+        else {
+            this.resumeAll();
+        }
+
+        if (global.player.x > forestBiomeBorders.x1 && global.player.x < forestBiomeBorders.x2
+            && global.player.y > forestBiomeBorders.y1 && global.player.y < forestBiomeBorders) {
+
+                this.play('forest');
+        }
+        
+        else if (global.player.x > fireBiomeBorders.x1 && global.player.x < fireBiomeBorders.x2
+            && global.player.y > fireBiomeBorders.y1 && global.player.y < fireBiomeBorders) {
+    
+                this.play('fire');
+            }
+        
+        else if (global.player.x > desertBiomeBorders.x1 && global.player.x < desertBiomeBorders.x2
+            && global.player.y > desertBiomeBorders.y1 && global.player.y < desertBiomeBorders) {
+        
+              this.play('desert');
+        
+        }
+        
+        else if (global.player.x > iceBiomeBorders.x1 && global.player.x < iceBiomeBorders.x2
+            && global.player.y > iceBiomeBorders.y1 && global.player.y < iceBiomeBorders) {
+            
+                this.play('ice');
+    }
+            
+    }
+
                 
 }
 
