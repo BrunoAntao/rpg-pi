@@ -311,10 +311,28 @@ class Ranger extends Player {
         this.nextFire = 0;
         this.atkdamage = 2;
 
+        this.sfireRate = 500;
+        this.snextFire = 0;
+        this.satkdamage = 3;
+
         this.health = 10;
         this.maxhealth = 10;
 
         this.resColor = 0xcccc33;
+
+        this.gainResource = function () {
+
+            if(this.resource < this.maxresource) {
+
+                this.resource++;
+
+            }
+
+        }
+
+        this.timer = game.time.create(false);
+        this.timer.loop(5000, this.gainResource, this);
+        this.timer.start();
 
         this.projs = game.add.group();
         this.projs.enableBody = true;
@@ -338,6 +356,29 @@ class Ranger extends Player {
         }, this)
 
         this.group.add(this.projs);
+
+
+        this.daggers = game.add.group();
+        this.daggers.enableBody = true;
+        this.daggers.physicsBodyType = Phaser.Physics.P2JS;
+
+        this.daggers.createMultiple(50, 'ranger_skill');
+        this.daggers.setAll('checkWorldBounds', true);
+        this.daggers.setAll('outOfBoundsKill', true);
+        this.daggers.setAll('anchor', { x: 0.5, y: 0.5 });
+        this.daggers.setAll('smoothed', false);
+
+        this.daggers.forEach(function (dagger) {
+
+            dagger.body.clearShapes();
+            dagger.body.loadPolygon('arrow', 'dagger');
+            dagger.body.setCollisionGroup(global.projGroup);
+            dagger.body.collides(global.enemiesGroup, this.skillHitMob, this);
+            dagger.body.setMaterial(global.material);
+
+        }, this)
+
+        this.group.add(this.daggers);
 
         game.camera.follow(this);
 
@@ -395,9 +436,56 @@ class Ranger extends Player {
 
     }
 
+    skillHitMob(a, b) {
+        
+                if (this.flag) {
+        
+                    this.flag = false;
+        
+                    game.time.events.add(10, function () {
+        
+                        this.flag = true;
+        
+                    }, this);
+        
+                    a.sprite.kill();
+                    if (b.sprite != null && b.sprite.alive) {
+        
+                        if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
+        
+                            b.sprite.damage(this.satkdamage);
+        
+                        } else if (b.sprite.class != 'warrior') {
+        
+                            b.sprite.damage(this.satkdamage);
+        
+                        }
+        
+                    }
+        
+                }
+        
+            }
+
     skill() {
 
+        if (game.time.now > this.snextFire && this.daggers.countDead() > 0 && this.resource >= 5) {
+            this.snextFire = game.time.now + this.sfireRate;
+            this.resource -= 5;
 
+            var dagger = this.daggers.getFirstDead();
+
+            dagger.reset(this.x + this.width / 2, this.y - this.height / 2);
+
+            let speed = 50000;
+
+            dagger.rotation = game.physics.arcade.angleToPointer(dagger);
+            dagger.body.rotation = game.physics.arcade.angleToPointer(dagger);
+
+            dagger.body.force.x = Math.cos(game.physics.arcade.angleToPointer(dagger)) * speed;
+            dagger.body.force.y = Math.sin(game.physics.arcade.angleToPointer(dagger)) * speed;
+
+        }
 
     }
 

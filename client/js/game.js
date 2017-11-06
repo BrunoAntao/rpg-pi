@@ -35,6 +35,7 @@ gameState = {
         game.load.image('ranger', 'client/assets/player/ranger.png');
         game.load.physics('ranger', 'client/assets/physics/ranger.json');
         game.load.image('ranger_attack', 'client/assets/player/ranger_attack.png');
+        game.load.image('ranger_skill', 'client/assets/player/ranger_skill.png');
         game.load.physics('arrow', 'client/assets/physics/arrow.json');
 
         game.load.image('mage', 'client/assets/player/mage.png');
@@ -74,7 +75,7 @@ gameState = {
 
         this.Mgroup = game.add.group();
 
-        global.map = new Map(3200, 1600, this.Mgroup);
+        global.map = new Map(6400, 3200, this.Mgroup);
 
         global.player = {};
 
