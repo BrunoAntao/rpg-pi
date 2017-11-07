@@ -4,37 +4,72 @@ let http = require('http').Server(app);
 var io = require('socket.io')(http);
 let readline = require('readline');
 let fs = require('fs');
+var commands = JSON.parse(fs.readFileSync('./server/commands.json'));
 var Map = require('./server/map.js');
 var rl = readline.createInterface(process.stdin, process.stdout);
 let port = 80;
 
 console.log('\033c');
 
-var server = {};
+var server = {
+
+    console: {
+
+        color: 7
+
+    }
+
+};
 
 app.set('view engine', 'ejs');
 app.use('/client', express.static('client'));
 
-console.log = function (str, color = 7) {
+console.log = function (str, color = server.console.color) {
 
     process.stdout.write('\x1b[3' + color + 'm' + str + '\n' + '\x1b[0m');
     rl.prompt();
 
 }
 
-generateMap = function () {
+functions = {
 
-    console.log('Creating Map file');
+    setConsoleColor: function (color = 7) {
 
-    let map = new Map(6400, 3200);
+        if(color > 1 && color < 7) {
 
-    console.log('Generating Map');
+            server.console.color = color;
+            console.log('Console color set');
 
-    fs.writeFileSync('./server/map.json', JSON.stringify(map));
+        } else {
 
-    console.log('Map file created');
+            server.console.color = 7;
+            console.log('Console color reset');
 
-    server.map = JSON.parse(fs.readFileSync('./server/map.json'));
+        }
+
+    },
+
+    generateMap: function () {
+
+        console.log('Creating Map file');
+
+        let map = new Map(6400, 3200);
+
+        console.log('Generating Map');
+
+        fs.writeFileSync('./server/map.json', JSON.stringify(map));
+
+        console.log('Map file created');
+
+        server.map = JSON.parse(fs.readFileSync('./server/map.json'));
+
+    },
+
+    clear: function () {
+
+        console.log('\033c');
+
+    }
 
 }
 
@@ -63,21 +98,63 @@ http.listen(port, function () {
 
         let c = line.trim().split(' ');
 
-        switch (c[0]) {
+        if (typeof commands[c[0]] != 'undefined') {
 
-            case 'map':
-                switch (c[1]) {
+            var com = commands[c[0]];
+            var param;
 
-                    case 'generate': generateMap(); break;
-                    default: console.log('Invalid command'); break;
+            for(i = 1; i < c.length; i++) {
+
+                if(!c[i].startsWith('-') && typeof com[c[i]] != 'undefined') {
+
+                    com = com[c[i]];
+
+                } else if (c[i].startsWith('-')){
+
+                    param = i;
+                    break;
+
+                } else {
+
+                    break;
 
                 }
-                break;
 
-            case 'cls': console.log('\033c'); break;
+            }
 
-            default: console.log('Invalid command'); break;
+            if(typeof com != 'object' && typeof com != 'undefined' && typeof c[param] != 'undefined') {
+
+                functions[com](c[param].replace('-', ''));
+
+            } else {
+
+                console.log('Invalid command');
+
+            }
+
+        } else {
+
+            console.log('Invalid command');
+
         }
+
+        // switch (c[0]) {
+
+        //     case 'map':
+        //         switch (c[1]) {
+
+        //             case 'generate': generateMap(); break;
+        //             default: console.log('Invalid command'); break;
+
+        //         }
+        //         break;
+
+        //     case 'console'
+
+        //     case 'cls': console.log('\033c'); break;
+
+        //     default: console.log('Invalid command'); break;
+        // }
         rl.prompt();
     }).on('close', function () {
 

@@ -1,0 +1,18 @@
+{
+
+    "console": {
+
+        "color": "setConsoleColor"
+
+
+    },
+
+    "map": {
+
+        "generate": "generateMap"
+
+    },
+
+    "cls": "clear"
+
+}
