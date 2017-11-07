@@ -95,7 +95,7 @@ class CapturePoint extends Phaser.Sprite{
                 this.captured = true;
 
             }
-
+        
         } else {
 
             this.loader.clear();

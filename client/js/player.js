@@ -205,6 +205,10 @@ class Warrior extends Player {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
+
+            this.collision = game.add.audio('hurt', 0.3);
+            this.collision.play();
+
             game.time.events.add(500, function () {
                 
                 this.hitflag = true;
@@ -226,9 +230,6 @@ class Warrior extends Player {
                 this.flag = true;
 
             }, this);
-
-            this.collision = game.add.audio('hurt', 0.3);
-            this.collision.play();
 
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
@@ -438,10 +439,13 @@ class Ranger extends Player {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
+           
             game.time.events.add(500, function () {
                 
                 this.hitflag = true;
-                
+                this.collision = game.add.audio('hurtran', 0.3);
+                this.collision.play();
+              
 
             }, this);
 
@@ -461,9 +465,6 @@ class Ranger extends Player {
 
             }, this);
 
-            
-            this.collision = game.add.audio('hurt', 0.3);
-            this.collision.play();
             
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
@@ -638,6 +639,10 @@ class Mage extends Player {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
+          
+            this.collision = game.add.audio('hurtmag', 0.5);
+           
+            this.collision.play();
             game.time.events.add(500, function () {
                 
                 this.hitflag = true;
@@ -696,6 +701,9 @@ class Mage extends Player {
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
 
+            this.spell = game.add.audio('spell', 0.2);
+            this.spell.play();
+
         }
 
     }
@@ -741,6 +749,7 @@ class Mage extends Player {
         }
 
     }
+
 
     update() {
         

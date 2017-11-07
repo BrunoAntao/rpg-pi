@@ -47,14 +47,16 @@ gameState = {
 
         game.load.spritesheet('slime', 'client/assets/enemies/slime.png',100, 80);
 
+        game.load.audio('spell', 'client/assets/sounds/spell.mp3');
+        game.load.audio('hurtmag', 'client/assets/sounds/hurtmage.mp3');        
         game.load.audio('hurt', 'client/assets/sounds/hurt.mp3');
         game.load.audio('hurtran', 'client/assets/sounds/hurtwar.mp3');        
         game.load.audio('arrow', 'client/assets/sounds/arrow.mp3' );
         game.load.audio('sword', 'client/assets/sounds/sword.mp3');
-        //game.load.audio('desert', 'client/assets/sounds/desert.mp3, client/assets/sounds/desert.ogg', true);
+        game.load.audio('desert', 'client/assets/sounds/desert.mp3');
         //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg', true);
-        //game.load.audio('fire', 'client/assets/sounds/fire.mp3, client/assets/sounds/fire.ogg', true);
-        //game.load.audio('forest', client/assets/sounds/forest.mp3, client/assets/sounds/forest.ogg', true)
+        game.load.audio('fire', 'client/assets/sounds/fire.mp3', true);
+        game.load.audio('forest', 'client/assets/sounds/jungle.mp3')
     },
 
     create: function() {
@@ -97,6 +99,9 @@ gameState = {
         }
 
         global.enemy = new Enemy(300, 100, 'warrior');
+        global.enemy = new Enemy(300, 200, 'ranger');
+        global.enemy = new Enemy(300, 300, 'mage');
+        
 
         new Compass(global.map, global.player);
 
