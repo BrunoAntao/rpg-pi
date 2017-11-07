@@ -88,11 +88,11 @@ http.listen(port, function () {
 
 io.on('connection', function (socket) {
 
-    console.log('A user connected');
+    console.log('User ' + socket.id + ' connected');
 
     socket.on('fetch map', function () {
 
-        console.log('map fetch');
+        console.log('User ' + socket.id + ': Fectched map');
 
         socket.emit('map', server.map);
 
@@ -100,7 +100,7 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
 
-        console.log('A user disconected');
+        console.log('User ' + socket.id + ' disconected');
 
     });
 
