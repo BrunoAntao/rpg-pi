@@ -1,5 +1,7 @@
 var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, 'game');
 
+var socket = io();
+
 window.addEventListener('resize', function () {
 
     game.scale.setGameSize(window.innerWidth, window.innerHeight);

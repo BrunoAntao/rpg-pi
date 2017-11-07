@@ -63,8 +63,6 @@ class Map {
 
     loadCapPoints(capPoint){
 
-        console.log(this.capPoints);
-
         for(let i = 0; i < capPoint.length; i++){
 
             new CapturePoint(capPoint[i].x, capPoint[i].y, capPoint[i].sprite, capPoint[i].biome, this.eGroup);
