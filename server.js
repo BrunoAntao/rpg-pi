@@ -109,7 +109,7 @@ http.listen(port, function () {
 
                     com = com[c[i]];
 
-                } else if (c[i].startsWith('-')){
+                } else if (c[i].startsWith('-')) {
 
                     param = i;
                     break;
@@ -126,6 +126,10 @@ http.listen(port, function () {
 
                 functions[com](c[param].replace('-', ''));
 
+            } else if(typeof com != 'object' && typeof com != 'undefined') {
+
+                functions[com]();
+
             } else {
 
                 console.log('Invalid command');
@@ -137,24 +141,7 @@ http.listen(port, function () {
             console.log('Invalid command');
 
         }
-
-        // switch (c[0]) {
-
-        //     case 'map':
-        //         switch (c[1]) {
-
-        //             case 'generate': generateMap(); break;
-        //             default: console.log('Invalid command'); break;
-
-        //         }
-        //         break;
-
-        //     case 'console'
-
-        //     case 'cls': console.log('\033c'); break;
-
-        //     default: console.log('Invalid command'); break;
-        // }
+        
         rl.prompt();
     }).on('close', function () {
 
