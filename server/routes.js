@@ -2,7 +2,7 @@ module.exports = function(app, map) {
 
     app.get('/', function(req, res) {
 
-        res.render('index.ejs', {map:map});
+        res.render('index.ejs');
 
     });
 

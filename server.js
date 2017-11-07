@@ -10,6 +10,8 @@ let port = 80;
 
 console.log('\033c');
 
+var server = {};
+
 app.set('view engine', 'ejs');
 app.use('/client', express.static('client'));
 
@@ -32,12 +34,15 @@ generateMap = function () {
 
     console.log('Map file created');
 
+    server.map = JSON.parse(fs.readFileSync('./server/map.json'));
+
 }
 
 let svFolder = fs.readdirSync('./server');
 if (svFolder.indexOf('map.json') > -1) {
 
     console.log('Map file exists');
+    server.map = JSON.parse(fs.readFileSync('./server/map.json'));
 
 } else {
 
@@ -46,10 +51,7 @@ if (svFolder.indexOf('map.json') > -1) {
 
 }
 
-map = JSON.parse(fs.readFileSync('./server/map.json'));
-
-require('./server/routes.js')(app, map);
-require('./server/socket.js')(io, map);
+require('./server/routes.js')(app);
 
 http.listen(port, function () {
     console.log('listening on: ' + port);
@@ -72,12 +74,34 @@ http.listen(port, function () {
                 }
                 break;
 
+            case 'cls': console.log('\033c'); break;
+
             default: console.log('Invalid command'); break;
         }
         rl.prompt();
-    }).on('close', function () {   
+    }).on('close', function () {
 
         process.exit(0);
+    });
+
+});
+
+io.on('connection', function (socket) {
+
+    console.log('A user connected');
+
+    socket.on('fetch map', function () {
+
+        console.log('map fetch');
+
+        socket.emit('map', server.map);
+
+    });
+
+    socket.on('disconnect', function () {
+
+        console.log('A user disconected');
+
     });
 
 });
