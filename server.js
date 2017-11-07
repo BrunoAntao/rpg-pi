@@ -15,9 +15,9 @@ var server = {};
 app.set('view engine', 'ejs');
 app.use('/client', express.static('client'));
 
-console.log = function (str) {
+console.log = function (str, color = 7) {
 
-    process.stdout.write(str + '\n');
+    process.stdout.write('\x1b[3' + color + 'm' + str + '\n' + '\x1b[0m');
     rl.prompt();
 
 }
@@ -88,11 +88,13 @@ http.listen(port, function () {
 
 io.on('connection', function (socket) {
 
-    console.log('User ' + socket.id + ' connected');
+    let color = Math.floor(Math.random() * 7 + 1);
+
+    console.log('User ' + socket.id + ' connected', color);
 
     socket.on('fetch map', function () {
 
-        console.log('User ' + socket.id + ': Fectched map');
+        console.log('User ' + socket.id + ': Fectched map', color);
 
         socket.emit('map', server.map);
 
@@ -100,7 +102,7 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
 
-        console.log('User ' + socket.id + ' disconected');
+        console.log('User ' + socket.id + ' disconected', color);
 
     });
 
