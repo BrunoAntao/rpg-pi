@@ -143,9 +143,11 @@ http.listen(port, function () {
         }
         
         rl.prompt();
+        
     }).on('close', function () {
 
         process.exit(0);
+
     });
 
 });

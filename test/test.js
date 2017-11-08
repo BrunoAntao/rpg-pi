@@ -24,10 +24,6 @@ describe('Server', () => {
         });
     });
 
-    it('Routes', () =>{
-
-            routes.apply(null, )
-    });
 });
 
 describe('Socket', () =>{
