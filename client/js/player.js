@@ -53,7 +53,7 @@ class Player extends Phaser.Sprite {
             
             biome = 0; //forest
         }
-        
+
         else if (this.x > 4800 && this.y > 0 && this.x <6400 && this.y < 3200){
             
             biome = 1; //fire
@@ -69,17 +69,10 @@ class Player extends Phaser.Sprite {
             biome = 3; //desert
         }
 
-
+        
     }
 }
 
-    musicUpdate(){
-
-        if (this.biome = 0) {
-            let music = game.add.audio('ice');
-            music.play();
-        }
-    }
 
     update() {
 
@@ -124,8 +117,7 @@ class Player extends Phaser.Sprite {
         }
 
         this.checkBounds();
-        this.musicUpdate();
-    }
+        }
 
 }
     
