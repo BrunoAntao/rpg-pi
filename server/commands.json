@@ -2,8 +2,8 @@
 
     "console": {
 
-        "color": "setConsoleColor"
-
+        "color": "setConsoleColor",
+        "verbose": "setConsoleVerbose"
 
     },
 

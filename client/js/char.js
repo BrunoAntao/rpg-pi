@@ -17,9 +17,23 @@ charState = {
             game.stage.smoothed = false;
             game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
-            options = [{name:'Warrior', display:'warrior', down:function(){ socket.emit('fetch map'); socket.on('map', function (map) { game.state.start('Game', true, false, 0, map); }); }},
-                       {name:'Ranger', display:'ranger', down:function(){ socket.emit('fetch map'); socket.on('map', function (map) { game.state.start('Game', true, false, 1, map); }) }},
-                       {name:'Mage', display:'mage', down:function(){ socket.emit('fetch map'); socket.on('map', function (map) { game.state.start('Game', true, false, 2, map); }) }}];
+            options = [{name:'Warrior', display:'warrior', down:function(){
+                            socket.emit('fetch map'); 
+                            socket.on('map', function (map) { 
+                                game.state.start('Game', true, false, 0, map); 
+                            }); }},
+
+                       {name:'Ranger', display:'ranger', down:function(){
+                            socket.emit('fetch map'); 
+                            socket.on('map', function (map) { 
+                                game.state.start('Game', true, false, 1, map); 
+                            }) }},
+                            
+                       {name:'Mage', display:'mage', down:function(){
+                            socket.emit('fetch map'); 
+                            socket.on('map', function (map) { 
+                                game.state.start('Game', true, false, 2, map); 
+                            }) }}];
 
             new Menu(game.width/2, game.height/2, options, false);
             

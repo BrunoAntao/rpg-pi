@@ -1,14 +1,14 @@
 gameState = {
 
-    init: function(nclass, map) {
+    init: function (nclass, map) {
 
         this.class = nclass;
         this.map = map;
 
     },
-    
 
-    preload: function() {
+
+    preload: function () {
 
         game.load.image('tree1', 'client/assets/entities/tree1.png');
         game.load.image('tree2', 'client/assets/entities/tree2.png');
@@ -45,13 +45,13 @@ gameState = {
         game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
         game.load.physics('magic', 'client/assets/physics/magic.json');
 
-        game.load.spritesheet('slime', 'client/assets/enemies/slime.png',100, 80);
+        game.load.spritesheet('slime', 'client/assets/enemies/slime.png', 100, 80);
 
         game.load.audio('spell', 'client/assets/sounds/spell.mp3');
-        game.load.audio('hurtmag', 'client/assets/sounds/hurtmage.mp3');        
+        game.load.audio('hurtmag', 'client/assets/sounds/hurtmage.mp3');
         game.load.audio('hurt', 'client/assets/sounds/hurt.mp3');
-        game.load.audio('hurtran', 'client/assets/sounds/hurtwar.mp3');        
-        game.load.audio('arrow', 'client/assets/sounds/arrow.mp3' );
+        game.load.audio('hurtran', 'client/assets/sounds/hurtwar.mp3');
+        game.load.audio('arrow', 'client/assets/sounds/arrow.mp3');
         game.load.audio('sword', 'client/assets/sounds/sword.mp3');
         game.load.audio('desert', 'client/assets/sounds/desert.mp3');
         //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg', true);
@@ -59,10 +59,11 @@ gameState = {
         game.load.audio('forest', 'client/assets/sounds/jungle.mp3')
     },
 
-    create: function() {
+    create: function () {
 
         game.stage.backgroundColor = "#212121";
         game.stage.smoothed = false;
+        game.stage.disableVisibilityChange = true;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
         game.physics.startSystem(Phaser.Physics.P2JS);
@@ -74,48 +75,73 @@ gameState = {
 
         ctrls = {
 
-            up:game.input.keyboard.addKey(keys.up),
-            down:game.input.keyboard.addKey(keys.down),
-            left:game.input.keyboard.addKey(keys.left),
-            right:game.input.keyboard.addKey(keys.right),
-            attack:game.input.activePointer.leftButton,
-            skill:game.input.activePointer.rightButton,
-            mute:game.input.keyboard.addKey(Phaser.Keyboard.M),
+            up: game.input.keyboard.addKey(keys.up),
+            down: game.input.keyboard.addKey(keys.down),
+            left: game.input.keyboard.addKey(keys.left),
+            right: game.input.keyboard.addKey(keys.right),
+            attack: game.input.activePointer.leftButton,
+            skill: game.input.activePointer.rightButton,
+            mute: game.input.keyboard.addKey(Phaser.Keyboard.M),
 
         }
 
         this.Mgroup = game.add.group();
+        global.enemies = [];
+        socket.emit('fetch players');
 
-        global.map = new Map(this.map.width, this.map.height, this.Mgroup, this.map);
+        socket.on('players', function (players) {
 
-        global.player = {};
+            global.map = new Map(gameState.map.width, gameState.map.height, gameState.Mgroup, gameState.map);
 
-        switch (this.class) {
+            switch (gameState.class) {
 
-            case 0: global.player = new Warrior(100, 100, this.Mgroup, ctrls); break;
-            case 1: global.player = new Ranger(100, 100, this.Mgroup, ctrls); break;
-            case 2: global.player = new Mage(100, 100, this.Mgroup, ctrls); break;
+                case 0: global.player = new Warrior(100, 100, gameState.Mgroup, ctrls); break;
+                case 1: global.player = new Ranger(100, 100, gameState.Mgroup, ctrls); break;
+                case 2: global.player = new Mage(100, 100, gameState.Mgroup, ctrls); break;
 
-        }
+            }
 
-        global.enemy = new Enemy(300, 100, 'warrior');
-        global.enemy = new Enemy(300, 200, 'ranger');
-        global.enemy = new Enemy(300, 300, 'mage');
-        
+            socket.emit('new player', { x: global.player.x, y: global.player.y, class: gameState.class });
 
-        new Compass(global.map, global.player);
+            new Compass(global.map, global.player);
 
-        new Bar(true, global.player, 'health', 0x33cc33);
-        new Label('Score: ', global.player, 'score', global.player.resColor);
-        new Bar(false, global.player, 'resource', global.player.resColor);
-    },  
+            new Bar(true, global.player, 'health', 0x33cc33);
+            new Label('Score: ', global.player, 'score', global.player.resColor);
+            new Bar(false, global.player, 'resource', global.player.resColor);
 
-    update: function() {       
+            players.forEach(function (player) {
+
+                new Enemy(player.x, player.y, player.class, player.id, global.enemies);
+
+            }, this);
+
+        });
+
+        socket.on('new player', function (player) {
+
+            new Enemy(player.x, player.y, player.class, player.id, global.enemies);
+
+        })
+
+        socket.on('move enemy', function (player) {
+
+            if(global.enemies[player.id] !== undefined) {
+
+                global.enemies[player.id].body.x = player.x;
+                global.enemies[player.id].body.y = player.y - global.enemies[player.id].height/2;
+
+            }
+
+        })
+
+    },
+
+    update: function () {
 
         //game.world.bringToTop(this.map.bg);
         game.world.bringToTop(this.Mgroup);
 
-        this.Mgroup.customSort(function(a, b) {
+        this.Mgroup.customSort(function (a, b) {
 
             return a.y - b.y;
 
@@ -123,7 +149,7 @@ gameState = {
 
     },
 
-    render: function() {
+    render: function () {
     },
 
 }

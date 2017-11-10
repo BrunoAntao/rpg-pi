@@ -1,104 +1,110 @@
 class Player extends Phaser.Sprite {
-    
-        constructor(x, y, key, group, ctrls) {
-    
-            super(game, x, y, key);
-            this.smoothed = false;
-    
-            if (typeof ctrls != 'undefined') {
-    
-                this.ctrls = ctrls;
-    
-            }
-    
-            this.speed = 5;
-            this.score = 0;
-    
-            this.maxhealth = 10;
-            this.health = 10;
-    
-            this.maxresource = 10;
-            this.resource = 10;
-    
-            game.add.existing(this);
-    
-            if (typeof group != 'undefined') {
-    
-                group.add(this);
-    
-            }
-        }
-    
-        kill() {
-    
-            super.kill();
-    
-            if(typeof this.compass != 'undefined') {
-    
-                this.compass.forEach(function (pointer) {
-    
-                    pointer.destroy();
-    
-                })
-    
-            }
-    
-        }
-    
-        update() {
-    
-            if (typeof this.ctrls != 'undefined' && this.alive) {
-    
-                if (this.ctrls.up.isDown) {
-    
-                    this.y -= this.speed;
-    
-                }
-    
-                if (this.ctrls.down.isDown) {
-    
-                    this.y += this.speed;
-    
-                }
-    
-                if (this.ctrls.left.isDown) {
-    
-                    this.x -= this.speed;
-    
-                }
-    
-                if (this.ctrls.right.isDown) {
-    
-                    this.x += this.speed;
-    
-                }
-    
-                if (this.ctrls.attack.isDown) {
 
-                    this.attack();
-    
-                }
-    
-                if (this.ctrls.skill.isDown) {
-    
-                    this.skill();
-    
-                }
-    
-            }
-    
+    constructor(x, y, key, group, ctrls) {
+
+        super(game, x, y, key);
+        this.smoothed = false;
+
+        if (typeof ctrls != 'undefined') {
+
+            this.ctrls = ctrls;
+
         }
-    
+
+        this.speed = 5;
+        this.score = 0;
+
+        this.maxhealth = 10;
+        this.health = 10;
+
+        this.maxresource = 10;
+        this.resource = 10;
+
+        game.add.existing(this);
+
+        if (typeof group != 'undefined') {
+
+            group.add(this);
+
+        }
     }
-    
+
+    kill() {
+
+        super.kill();
+
+        if (typeof this.compass != 'undefined') {
+
+            this.compass.forEach(function (pointer) {
+
+                pointer.destroy();
+
+            })
+
+        }
+
+    }
+
+    update() {
+
+        if (typeof this.ctrls != 'undefined' && this.alive) {
+
+            if (this.ctrls.up.isDown) {
+
+                this.y -= this.speed;
+
+            }
+
+            if (this.ctrls.down.isDown) {
+
+                this.y += this.speed;
+
+            }
+
+            if (this.ctrls.left.isDown) {
+
+                this.x -= this.speed;
+
+            }
+
+            if (this.ctrls.right.isDown) {
+
+                this.x += this.speed;
+
+            }
+
+            if (this.ctrls.attack.isDown) {
+
+                this.attack();
+
+            }
+
+            if (this.ctrls.skill.isDown) {
+
+                this.skill();
+
+            }
+
+        }
+
+        if(!(this instanceof Enemy)) {
+
+            socket.emit('move player', {x:this.x, y:this.y});
+
+        }
+
+    }
+
+}
+
 class Enemy extends Player {
 
-    constructor(x, y, key) {
+    constructor(x, y, key, id, group) {
 
         super(x, y, key);
         this.anchor.setTo(0.5, 1);
 
-        switch(key) {
+        switch (key) {
 
             case 'warrior': this.health = 15; this.maxhealth = 15; break;
             case 'ranger': this.health = 10; this.maxhealth = 10; break;
@@ -114,8 +120,10 @@ class Enemy extends Player {
         this.body.fixedRotation = true;
         this.body.static = true;
         this.body.angle = 180;
-
         this.class = key;
+        this.id = id;
+        this.group = group;
+        this.group[id] = this;
 
     }
 
@@ -177,10 +185,10 @@ class Warrior extends Player {
             proj.body.loadPolygon('sword', 'sword');
 
             proj.source = this;
-            
+
             proj.update = function () {
 
-                if(this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
+                if (this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
 
                     this.kill();
 
@@ -199,9 +207,9 @@ class Warrior extends Player {
 
     }
 
-    hit(a, b){
-        
-        if(this.hitflag && !this.ignoreActive) {
+    hit(a, b) {
+
+        if (this.hitflag && !this.ignoreActive) {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
@@ -210,7 +218,7 @@ class Warrior extends Player {
             this.collision.play();
 
             game.time.events.add(500, function () {
-                
+
                 this.hitflag = true;
 
             }, this);
@@ -297,17 +305,17 @@ class Warrior extends Player {
 
         super.update();
 
-        if(this.resource >= this.maxresource) {
+        if (this.resource >= this.maxresource) {
 
             this.resource = this.maxresource;
 
         }
 
         this.dummy.body.x = this.x;
-        this.dummy.body.y = this.y - this.height/2;
+        this.dummy.body.y = this.y - this.height / 2;
 
-        if(this.resourcecd > 0) {
-            
+        if (this.resourcecd > 0) {
+
             this.resourcecd--;
 
         } else {
@@ -359,7 +367,7 @@ class Ranger extends Player {
 
         this.gainResource = function () {
 
-            if(this.resource < this.maxresource) {
+            if (this.resource < this.maxresource) {
 
                 this.resource++;
 
@@ -413,7 +421,7 @@ class Ranger extends Player {
 
             dagger.update = function () {
 
-                if(this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
+                if (this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
 
                     this.kill();
 
@@ -433,19 +441,19 @@ class Ranger extends Player {
 
     }
 
-    hit(a, b){
+    hit(a, b) {
 
-        if(this.hitflag) {
+        if (this.hitflag) {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
-           
+
             game.time.events.add(500, function () {
-                
+
                 this.hitflag = true;
                 this.collision = game.add.audio('hurtran', 0.3);
                 this.collision.play();
-              
+
 
             }, this);
 
@@ -465,7 +473,7 @@ class Ranger extends Player {
 
             }, this);
 
-            
+
             a.sprite.kill();
             if (b.sprite != null && b.sprite.alive) {
 
@@ -509,7 +517,7 @@ class Ranger extends Player {
     }
 
     skillHitMob(a, b) {
-        
+
         if (this.sflag) {
 
             this.sflag = false;
@@ -536,7 +544,7 @@ class Ranger extends Player {
             }
 
         }
-        
+
     }
 
     skill() {
@@ -565,7 +573,7 @@ class Ranger extends Player {
 
         super.update();
         this.dummy.body.x = this.x;
-        this.dummy.body.y = this.y - this.height/2;
+        this.dummy.body.y = this.y - this.height / 2;
 
     }
 
@@ -633,18 +641,18 @@ class Mage extends Player {
 
     }
 
-    hit(a, b){
-        
-        if(this.hitflag) {
+    hit(a, b) {
+
+        if (this.hitflag) {
 
             this.hitflag = false;
             a.sprite.source.damage(1);
-          
+
             this.collision = game.add.audio('hurtmag', 0.5);
-           
+
             this.collision.play();
             game.time.events.add(500, function () {
-                
+
                 this.hitflag = true;
 
             }, this);
@@ -734,17 +742,17 @@ class Mage extends Player {
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
 
-            proj2.rotation = game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180;
-            proj2.body.rotation = game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180;
+            proj2.rotation = game.physics.arcade.angleToPointer(proj2) - 45 * Math.PI / 180;
+            proj2.body.rotation = game.physics.arcade.angleToPointer(proj2) - 45 * Math.PI / 180;
 
-            proj2.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180) * speed;
-            proj2.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj2) - 45*Math.PI/180) * speed;
+            proj2.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj2) - 45 * Math.PI / 180) * speed;
+            proj2.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj2) - 45 * Math.PI / 180) * speed;
 
-            proj3.rotation = game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180;
-            proj3.body.rotation = game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180;
+            proj3.rotation = game.physics.arcade.angleToPointer(proj3) + 45 * Math.PI / 180;
+            proj3.body.rotation = game.physics.arcade.angleToPointer(proj3) + 45 * Math.PI / 180;
 
-            proj3.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180) * speed;
-            proj3.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj3) + 45*Math.PI/180) * speed;
+            proj3.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj3) + 45 * Math.PI / 180) * speed;
+            proj3.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj3) + 45 * Math.PI / 180) * speed;
 
         }
 
@@ -752,10 +760,10 @@ class Mage extends Player {
 
 
     update() {
-        
+
         super.update();
         this.dummy.body.x = this.x;
-        this.dummy.body.y = this.y - this.height/2;
+        this.dummy.body.y = this.y - this.height / 2;
 
     }
 

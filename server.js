@@ -6,6 +6,7 @@ let readline = require('readline');
 let fs = require('fs');
 var commands = JSON.parse(fs.readFileSync('./server/commands.json'));
 var Map = require('./server/map.js');
+var Player = require('./server/player.js');
 var rl = readline.createInterface(process.stdin, process.stdout);
 let port = 80;
 
@@ -15,7 +16,8 @@ var server = {
 
     console: {
 
-        color: 7
+        color: 7,
+        verbose: false
 
     }
 
@@ -27,7 +29,18 @@ app.use('/client', express.static('client'));
 console.log = function (str, color = server.console.color) {
 
     process.stdout.write('\x1b[3' + color + 'm' + str + '\n' + '\x1b[0m');
-    rl.prompt();
+    //rl.prompt();
+
+}
+
+console.verbose = function (str, color = server.console.color) {
+
+    if(server.console.verbose) {
+
+        process.stdout.write('\x1b[3' + color + 'm' + str + '\n' + '\x1b[0m');
+        //rl.prompt();
+
+    }
 
 }
 
@@ -35,7 +48,7 @@ functions = {
 
     setConsoleColor: function (color = 7) {
 
-        if(color > 1 && color < 7) {
+        if (color > 1 && color < 7) {
 
             server.console.color = color;
             console.log('Console color set');
@@ -46,6 +59,12 @@ functions = {
             console.log('Console color reset');
 
         }
+
+    },
+
+    setConsoleVerbose: function (flag) {
+
+        server.console.verbose = !!flag;
 
     },
 
@@ -103,9 +122,9 @@ http.listen(port, function () {
             var com = commands[c[0]];
             var param;
 
-            for(i = 1; i < c.length; i++) {
+            for (i = 1; i < c.length; i++) {
 
-                if(!c[i].startsWith('-') && typeof com[c[i]] != 'undefined') {
+                if (!c[i].startsWith('-') && typeof com[c[i]] != 'undefined') {
 
                     com = com[c[i]];
 
@@ -122,11 +141,11 @@ http.listen(port, function () {
 
             }
 
-            if(typeof com != 'object' && typeof com != 'undefined' && typeof c[param] != 'undefined') {
+            if (typeof com != 'object' && typeof com != 'undefined' && typeof c[param] != 'undefined') {
 
                 functions[com](c[param].replace('-', ''));
 
-            } else if(typeof com != 'object' && typeof com != 'undefined') {
+            } else if (typeof com != 'object' && typeof com != 'undefined') {
 
                 functions[com]();
 
@@ -141,9 +160,9 @@ http.listen(port, function () {
             console.log('Invalid command');
 
         }
-        
+
         rl.prompt();
-        
+
     }).on('close', function () {
 
         process.exit(0);
@@ -152,9 +171,13 @@ http.listen(port, function () {
 
 });
 
+server.players = [];
+classes = ['warrior', 'ranger', 'mage'];
+
 io.on('connection', function (socket) {
 
     let color = Math.floor(Math.random() * 7 + 1);
+    let player = new Player(socket.id);
 
     console.log('User ' + socket.id + ' connected', color);
 
@@ -166,9 +189,48 @@ io.on('connection', function (socket) {
 
     });
 
+    socket.on('new player', function (data) {
+
+        console.log('User ' + socket.id + ': Started playing', color);
+
+        player.x = data.x;
+        player.y = data.y;
+        player.class = classes[data.class];
+
+        server.players.push(player);
+
+        socket.broadcast.emit('new player', player);
+
+    });
+
+    socket.on('fetch players', function () {
+
+        console.log('User ' + socket.id + ': Fectched players', color);
+
+        socket.emit('players', server.players);
+
+    });
+
+    socket.on('move player', function (data) {
+
+        console.verbose('User ' + socket.id + ': moved to: ' + JSON.stringify(data), color);
+
+        player.x = data.x;
+        player.y = data.y;
+
+        socket.broadcast.emit('move enemy', player);
+
+    });
+
     socket.on('disconnect', function () {
 
         console.log('User ' + socket.id + ' disconected', color);
+
+        if (server.players.indexOf(player) > -1) {
+
+            server.players.splice(server.players.indexOf(player), 1)
+
+        }
 
     });
 
