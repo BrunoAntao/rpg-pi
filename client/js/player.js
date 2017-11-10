@@ -1,5 +1,5 @@
 class Player extends Phaser.Sprite {
-
+    
     constructor(x, y, key, group, ctrls) {
 
         super(game, x, y, key);
@@ -44,6 +44,35 @@ class Player extends Phaser.Sprite {
         }
 
     }
+
+    checkBounds() {
+
+        if (this instanceof Enemy){
+
+        if (this.x > 0 && this.y > 0 && this.x <1600 && this.y < 3200){
+            
+            biome = 0; //forest
+        }
+
+        else if (this.x > 4800 && this.y > 0 && this.x <6400 && this.y < 3200){
+            
+            biome = 1; //fire
+        }
+
+        else if (this.x > 1600 && this.y > 0 && this.x <4800 && this.y < 1600){
+            
+            biome = 2; //ice
+        }
+
+        else if (this.x > 1600 && this.y > 1600 && this.x <4800 && this.y < 3200){
+            
+            biome = 3; //desert
+        }
+
+        
+    }
+}
+
 
     update() {
 
@@ -90,6 +119,7 @@ class Player extends Phaser.Sprite {
         if(!(this instanceof Enemy)) {
 
             socket.emit('move player', {x:this.x, y:this.y});
+            this.checkBounds();
 
         }
 
@@ -97,6 +127,7 @@ class Player extends Phaser.Sprite {
 
 }
 
+    
 class Enemy extends Player {
 
     constructor(x, y, key, id, group) {
