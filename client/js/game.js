@@ -53,14 +53,14 @@ gameState = {
         game.load.audio('hurtran', 'client/assets/sounds/hurtwar.mp3');        
         game.load.audio('arrow', 'client/assets/sounds/arrow.mp3' );
         game.load.audio('sword', 'client/assets/sounds/sword.mp3');
-        game.load.audio('desert', 'client/assets/sounds/desert.mp3');
-        //game.load.audio('ice', 'client/assets/sounds/ice.mp3, client/assets/sounds/ice.ogg', true);
-        game.load.audio('fire', 'client/assets/sounds/fire.mp3', true);
-        game.load.audio('forest', 'client/assets/sounds/jungle.mp3')
+        game.load.audio('desert', ['client/assets/sounds/desert.mp3', 'client/assets/sounds/desert.ogg']);
+        game.load.audio('ice', ['client/assets/sounds/ice.mp3', 'client/assets/sounds/ice.ogg']);
+        game.load.audio('fire', ['client/assets/sounds/fire.mp3', 'client/assets/sounds/fire.ogg']);
+        game.load.audio('forest', ['client/assets/sounds/jungle.mp3', 'client/assets/sounds/jungle.ogg'])
     },
 
     create: function() {
-
+    
         game.stage.backgroundColor = "#212121";
         game.stage.smoothed = false;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
@@ -103,6 +103,7 @@ gameState = {
         global.enemy = new Enemy(300, 300, 'mage');
         
 
+        console.log(global.map);
         new Compass(global.map, global.player);
 
         new Bar(true, global.player, 'health', 0x33cc33);

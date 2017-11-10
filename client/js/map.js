@@ -36,7 +36,8 @@ class Map {
 
         this.entities = map.entities;
         this.capPoints = map.capPoints;
-            
+        this.biomes = map.biomes;
+
         this.loadSprite(this.entities);
 
         this.loadCapPoints(this.capPoints);

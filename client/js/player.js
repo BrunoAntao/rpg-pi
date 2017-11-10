@@ -1,95 +1,133 @@
 class Player extends Phaser.Sprite {
     
-        constructor(x, y, key, group, ctrls) {
-    
-            super(game, x, y, key);
-            this.smoothed = false;
-    
-            if (typeof ctrls != 'undefined') {
-    
-                this.ctrls = ctrls;
-    
-            }
-    
-            this.speed = 5;
-            this.score = 0;
-    
-            this.maxhealth = 10;
-            this.health = 10;
-    
-            this.maxresource = 10;
-            this.resource = 10;
-    
-            game.add.existing(this);
-    
-            if (typeof group != 'undefined') {
-    
-                group.add(this);
-    
-            }
-        }
-    
-        kill() {
-    
-            super.kill();
-    
-            if(typeof this.compass != 'undefined') {
-    
-                this.compass.forEach(function (pointer) {
-    
-                    pointer.destroy();
-    
-                })
-    
-            }
-    
-        }
-    
-        update() {
-    
-            if (typeof this.ctrls != 'undefined' && this.alive) {
-    
-                if (this.ctrls.up.isDown) {
-    
-                    this.y -= this.speed;
-    
-                }
-    
-                if (this.ctrls.down.isDown) {
-    
-                    this.y += this.speed;
-    
-                }
-    
-                if (this.ctrls.left.isDown) {
-    
-                    this.x -= this.speed;
-    
-                }
-    
-                if (this.ctrls.right.isDown) {
-    
-                    this.x += this.speed;
-    
-                }
-    
-                if (this.ctrls.attack.isDown) {
+    constructor(x, y, key, group, ctrls) {
 
-                    this.attack();
-    
-                }
-    
-                if (this.ctrls.skill.isDown) {
-    
-                    this.skill();
-    
-                }
-    
-            }
-    
+        super(game, x, y, key);
+        this.smoothed = false;
+
+        if (typeof ctrls != 'undefined') {
+
+            this.ctrls = ctrls;
+
         }
-    
+
+        this.speed = 5;
+        this.score = 0;
+
+        this.maxhealth = 10;
+        this.health = 10;
+
+        this.maxresource = 10;
+        this.resource = 10;
+
+        game.add.existing(this);
+
+        if (typeof group != 'undefined') {
+
+            group.add(this);
+
+        }
     }
+
+    kill() {
+
+        super.kill();
+
+        if(typeof this.compass != 'undefined') {
+
+            this.compass.forEach(function (pointer) {
+
+                pointer.destroy();
+
+            })
+
+        }
+
+    }
+
+    checkBounds() {
+
+        if (this instanceof Enemy){
+
+        if (this.x > 0 && this.y > 0 && this.x <1600 && this.y < 3200){
+            
+            biome = 0; //forest
+        }
+        
+        else if (this.x > 4800 && this.y > 0 && this.x <6400 && this.y < 3200){
+            
+            biome = 1; //fire
+        }
+
+        else if (this.x > 1600 && this.y > 0 && this.x <4800 && this.y < 1600){
+            
+            biome = 2; //ice
+        }
+
+        else if (this.x > 1600 && this.y > 1600 && this.x <4800 && this.y < 3200){
+            
+            biome = 3; //desert
+        }
+
+
+    }
+}
+
+    musicUpdate(){
+
+        if (this.biome = 0) {
+            let music = game.add.audio('ice');
+            music.play();
+        }
+    }
+
+    update() {
+
+        if (typeof this.ctrls != 'undefined' && this.alive) {
+
+            if (this.ctrls.up.isDown) {
+
+                this.y -= this.speed;
+
+            }
+
+            if (this.ctrls.down.isDown) {
+
+                this.y += this.speed;
+
+            }
+
+            if (this.ctrls.left.isDown) {
+
+                this.x -= this.speed;
+
+            }
+
+            if (this.ctrls.right.isDown) {
+
+                this.x += this.speed;
+
+            }
+
+            if (this.ctrls.attack.isDown) {
+
+                this.attack();
+
+            }
+
+            if (this.ctrls.skill.isDown) {
+
+                this.skill();
+
+            }
+
+        }
+
+        this.checkBounds();
+        this.musicUpdate();
+    }
+
+}
     
 class Enemy extends Player {
 
