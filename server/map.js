@@ -118,7 +118,7 @@ module.exports = function (width, height) {
 
             let result = Math.sqrt(Math.pow((cords.x - center.a), 2) + Math.pow((cords.y - center.b), 2));
 
-            if(result < 200) return false;
+            if(result < 250) return false;
         }
                     
         return true;
