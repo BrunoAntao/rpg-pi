@@ -39,7 +39,7 @@ module.exports = function (width, height) {
         let minX = Math.min(biomes.border.x1, biomes.border.x2) + 64;
         let maxX = Math.max(biomes.border.x1, biomes.border.x2) - 64;
                 
-        let minY = Math.min(biomes.border.y1, biomes.border.y2) + 32; //+ spriteHeight;
+        let minY = Math.min(biomes.border.y1, biomes.border.y2) + 32; 
         let maxY = Math.max(biomes.border.y1, biomes.border.y2) - 32;
                 
         let area = 0;
@@ -111,18 +111,27 @@ module.exports = function (width, height) {
             if(result < 200) return false;
                     
         }
+
+        for(let i = 0; i < this.capPoints.length; i++){
+
+            let center = {a: this.capPoints[i].x, b: this.capPoints[i].y};
+
+            let result = Math.sqrt(Math.pow((cords.x - center.a), 2) + Math.pow((cords.y - center.b), 2));
+
+            if(result < 200) return false;
+        }
                     
         return true;
         
     }
 
     this.biomes.forEach(  function(biome) {
+
+        this.generateCapPoint(biome);
         
         let cords = this.genCords(biome);
         
         this.applySprite(biome, cords);
-        
-        this.generateCapPoint(biome);
         
     }, this);
 
