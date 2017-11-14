@@ -1,5 +1,5 @@
 class Player extends Phaser.Sprite {
-    
+
     constructor(x, y, key, group, ctrls) {
 
         super(game, x, y, key);
@@ -47,31 +47,31 @@ class Player extends Phaser.Sprite {
 
     checkBounds() {
 
-        if (this instanceof Enemy){
+        if (this instanceof Enemy) {
 
-        if (this.x > 0 && this.y > 0 && this.x <1600 && this.y < 3200){
-            
-            biome = 0; //forest
+            if (this.x > 0 && this.y > 0 && this.x < 1600 && this.y < 3200) {
+
+                biome = 0; //forest
+            }
+
+            else if (this.x > 4800 && this.y > 0 && this.x < 6400 && this.y < 3200) {
+
+                biome = 1; //fire
+            }
+
+            else if (this.x > 1600 && this.y > 0 && this.x < 4800 && this.y < 1600) {
+
+                biome = 2; //ice
+            }
+
+            else if (this.x > 1600 && this.y > 1600 && this.x < 4800 && this.y < 3200) {
+
+                biome = 3; //desert
+            }
+
+
         }
-
-        else if (this.x > 4800 && this.y > 0 && this.x <6400 && this.y < 3200){
-            
-            biome = 1; //fire
-        }
-
-        else if (this.x > 1600 && this.y > 0 && this.x <4800 && this.y < 1600){
-            
-            biome = 2; //ice
-        }
-
-        else if (this.x > 1600 && this.y > 1600 && this.x <4800 && this.y < 3200){
-            
-            biome = 3; //desert
-        }
-
-        
     }
-}
 
 
     update() {
@@ -116,9 +116,9 @@ class Player extends Phaser.Sprite {
 
         }
 
-        if(!(this instanceof Enemy)) {
+        if (!(this instanceof Enemy)) {
 
-            socket.emit('move player', {x:this.x, y:this.y});
+            socket.emit('move player', { x: this.x, y: this.y });
             this.checkBounds();
 
         }
@@ -127,7 +127,7 @@ class Player extends Phaser.Sprite {
 
 }
 
-    
+
 class Enemy extends Player {
 
     constructor(x, y, key, id, group) {
@@ -260,34 +260,39 @@ class Warrior extends Player {
 
     hitMob(a, b) {
 
-        if (this.flag) {
+        a.sprite.kill();
+        a.sprite.destroy();
+        b.sprite.damage(this.atkdamage);
+        console.log(b.sprite.health);
 
-            this.flag = false;
+        // if (this.flag) {
 
-            game.time.events.add(10, function () {
+        //     this.flag = false;
 
-                this.flag = true;
+        //     game.time.events.add(10, function () {
 
-            }, this);
+        //         this.flag = true;
 
-            a.sprite.kill();
-            if (b.sprite != null && b.sprite.alive) {
-                this.resource += 2;
-                this.resourcecd = 200;
+        //     }, this);
 
-                if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
+        //     a.sprite.kill();
+        //     if (b.sprite != null && b.sprite.alive) {
+        //         this.resource += 2;
+        //         this.resourcecd = 200;
 
-                    b.sprite.damage(this.atkdamage);
+        //         if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
 
-                } else if (b.sprite.class != 'warrior') {
+        //             b.sprite.damage(this.atkdamage);
 
-                    b.sprite.damage(this.atkdamage);
+        //         } else if (b.sprite.class != 'warrior') {
 
-                }
+        //             b.sprite.damage(this.atkdamage);
 
-            }
+        //         }
 
-        }
+        //     }
+
+        // }
 
     }
 

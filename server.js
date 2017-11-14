@@ -8,6 +8,7 @@ var commands = JSON.parse(fs.readFileSync('./server/commands.json'));
 var Map = require('./server/map.js');
 var Player = require('./server/player.js');
 var rl = readline.createInterface(process.stdin, process.stdout);
+rl.setPrompt('');
 let port = 80;
 
 console.log('\033c');
@@ -17,7 +18,7 @@ var server = {
     console: {
 
         color: 7,
-        verbose: false
+        verbose: false,
 
     }
 
@@ -29,7 +30,7 @@ app.use('/client', express.static('client'));
 console.log = function (str, color = server.console.color) {
 
     process.stdout.write('\x1b[3' + color + 'm' + str + '\n' + '\x1b[0m');
-    //rl.prompt();
+    rl.prompt();
 
 }
 
@@ -38,7 +39,6 @@ console.verbose = function (str, color = server.console.color) {
     if(server.console.verbose) {
 
         process.stdout.write('\x1b[3' + color + 'm' + str + '\n' + '\x1b[0m');
-        //rl.prompt();
 
     }
 
@@ -51,11 +51,13 @@ functions = {
         if (color > 1 && color < 7) {
 
             server.console.color = color;
+            rl.setPrompt('\x1b[3' + server.console.color + 'mServer> \x1b[0m');
             console.log('Console color set');
 
         } else {
 
             server.console.color = 7;
+            rl.setPrompt('\x1b[37mServer> \x1b[0m');
             console.log('Console color reset');
 
         }
@@ -110,7 +112,7 @@ require('./server/routes.js')(app);
 http.listen(port, function () {
     console.log('listening on: ' + port);
 
-    rl.setPrompt('Server> ');
+    rl.setPrompt('\x1b[3' + server.console.color + 'mServer> \x1b[0m');
     rl.prompt();
 
     rl.on('line', function (line) {
@@ -179,7 +181,7 @@ io.on('connection', function (socket) {
     let color = Math.floor(Math.random() * 7 + 1);
     let player = new Player(socket.id);
 
-    console.log('User ' + socket.id + ' connected', color);
+    console.log('User ' + socket.id + ': connected', color);
 
     socket.on('fetch map', function () {
 
@@ -224,7 +226,7 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
 
-        console.log('User ' + socket.id + ' disconected', color);
+        console.log('User ' + socket.id + ': disconected', color);
 
         if (server.players.indexOf(player) > -1) {
 

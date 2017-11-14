@@ -168,6 +168,7 @@ class Display extends Phaser.Sprite{
 
             this.x = this.button.x;
             this.y = this.button.y - game.height/3;
+            this.height = game.height/2;
             
         }
     

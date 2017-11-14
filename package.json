@@ -1,6 +1,5 @@
 {
   "name":"str-dex-int",
-  "version": "1.0",
   "dependencies": {
     "@types/socket.io-client": "^1.4.31",
     "chai": "^4.1.2",
