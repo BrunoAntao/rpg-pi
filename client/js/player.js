@@ -47,26 +47,26 @@ class Player extends Phaser.Sprite {
 
     checkBounds() {
 
-        if (this instanceof Enemy) {
+        if (!(this instanceof Enemy)) {
 
             if (this.x > 0 && this.y > 0 && this.x < 1600 && this.y < 3200) {
 
-                biome = 0; //forest
+                this.biome = 0; //forest
             }
 
             else if (this.x > 4800 && this.y > 0 && this.x < 6400 && this.y < 3200) {
 
-                biome = 1; //fire
+                this.biome = 1; //fire
             }
 
             else if (this.x > 1600 && this.y > 0 && this.x < 4800 && this.y < 1600) {
 
-                biome = 2; //ice
+                this.biome = 2; //ice
             }
 
             else if (this.x > 1600 && this.y > 1600 && this.x < 4800 && this.y < 3200) {
 
-                biome = 3; //desert
+                this.biome = 3; //desert
             }
 
 
@@ -118,7 +118,7 @@ class Player extends Phaser.Sprite {
 
         if (!(this instanceof Enemy)) {
 
-            socket.emit('move player', { x: this.x, y: this.y });
+            socket.emit('move player', { x: this.x, y: this.y - this.height/2});
             this.checkBounds();
 
         }
@@ -126,11 +126,9 @@ class Player extends Phaser.Sprite {
     }
 
 }
-
-
 class Enemy extends Player {
 
-    constructor(x, y, key, id, group) {
+    constructor(x, y, key, id, index, group) {
 
         super(x, y, key);
         this.anchor.setTo(0.5, 1);
@@ -154,7 +152,9 @@ class Enemy extends Player {
         this.class = key;
         this.id = id;
         this.group = group;
-        this.group[id] = this;
+        this.index = index;
+        this.index[id] = this;
+        this.group.add(this);
 
     }
 
@@ -277,11 +277,11 @@ class Warrior extends Player {
 
                 if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
 
-                    b.sprite.damage(this.atkdamage);
+                    b.sprite.damage(this.atkdamage, this);
 
                 } else if (b.sprite.class != 'warrior') {
 
-                    b.sprite.damage(this.atkdamage);
+                    b.sprite.damage(this.atkdamage, this);
 
                 }
 
@@ -510,11 +510,11 @@ class Ranger extends Player {
 
                 if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
 
-                    b.sprite.damage(this.atkdamage);
+                    b.sprite.damage(this.atkdamage, this);
 
                 } else if (b.sprite.class != 'warrior') {
 
-                    b.sprite.damage(this.atkdamage);
+                    b.sprite.damage(this.atkdamage, this);
 
                 }
 
@@ -564,11 +564,11 @@ class Ranger extends Player {
 
                 if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
 
-                    b.sprite.damage(this.satkdamage);
+                    b.sprite.damage(this.satkdamage, this);
 
                 } else if (b.sprite.class != 'warrior') {
 
-                    b.sprite.damage(this.satkdamage);
+                    b.sprite.damage(this.satkdamage, this);
 
                 }
 
@@ -635,7 +635,7 @@ class Mage extends Player {
 
         this.fireRate = 200;
         this.nextFire = 0;
-        this.atkdamage = 3;
+        this.atkdamage = 2;
 
         this.health = 8;
         this.maxhealth = 8;
@@ -709,11 +709,11 @@ class Mage extends Player {
 
                 if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
 
-                    b.sprite.damage(this.atkdamage);
+                    b.sprite.damage(this.atkdamage, this);
 
                 } else if (b.sprite.class != 'warrior') {
 
-                    b.sprite.damage(this.atkdamage);
+                    b.sprite.damage(this.atkdamage, this);
 
                 }
 

@@ -111,7 +111,7 @@ gameState = {
 
             players.forEach(function (player) {
 
-                new Enemy(player.x, player.y, player.class, player.id, global.enemies);
+                new Enemy(player.x, player.y, player.class, player.id, global.enemies, gameState.Mgroup);
 
             }, this);
 
@@ -119,7 +119,7 @@ gameState = {
 
         socket.on('new player', function (player) {
 
-            new Enemy(player.x, player.y, player.class, player.id, global.enemies);
+            new Enemy(player.x, player.y, player.class, player.id, global.enemies, gameState.Mgroup);
 
         })
 
@@ -128,7 +128,7 @@ gameState = {
             if(global.enemies[player.id] !== undefined) {
 
                 global.enemies[player.id].body.x = player.x;
-                global.enemies[player.id].body.y = player.y - global.enemies[player.id].height/2;
+                global.enemies[player.id].body.y = player.y;
 
             }
 
@@ -138,7 +138,6 @@ gameState = {
 
     update: function () {
 
-        //game.world.bringToTop(this.map.bg);
         game.world.bringToTop(this.Mgroup);
 
         this.Mgroup.customSort(function (a, b) {

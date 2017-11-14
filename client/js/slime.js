@@ -46,12 +46,13 @@ class Slime extends Phaser.Sprite {
 
     }
 
-    damage(damage) {
+    damage(damage, source) {
 
         this.growth -= damage;
         if(this.growth < 1) {
 
             this.kill();
+            source.score += 500;
 
         }
 
