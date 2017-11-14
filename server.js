@@ -2,9 +2,12 @@ let express = require('express');
 let app = express();
 let http = require('http').Server(app);
 var io = require('socket.io')(http);
+
 let readline = require('readline');
 let fs = require('fs');
+
 var commands = JSON.parse(fs.readFileSync('./server/commands.json'));
+
 var Map = require('./server/map.js');
 var Player = require('./server/player.js');
 var rl = readline.createInterface(process.stdin, process.stdout);
