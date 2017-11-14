@@ -260,39 +260,34 @@ class Warrior extends Player {
 
     hitMob(a, b) {
 
-        a.sprite.kill();
-        a.sprite.destroy();
-        b.sprite.damage(this.atkdamage);
-        console.log(b.sprite.health);
+        if (this.flag) {
 
-        // if (this.flag) {
+            this.flag = false;
 
-        //     this.flag = false;
+            game.time.events.add(10, function () {
 
-        //     game.time.events.add(10, function () {
+                this.flag = true;
 
-        //         this.flag = true;
+            }, this);
 
-        //     }, this);
+            a.sprite.kill();
+            if (b.sprite != null && b.sprite.alive) {
+                this.resource += 2;
+                this.resourcecd = 200;
 
-        //     a.sprite.kill();
-        //     if (b.sprite != null && b.sprite.alive) {
-        //         this.resource += 2;
-        //         this.resourcecd = 200;
+                if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
 
-        //         if (b.sprite.class == 'warrior' && !b.sprite.ignoreActive) {
+                    b.sprite.damage(this.atkdamage);
 
-        //             b.sprite.damage(this.atkdamage);
+                } else if (b.sprite.class != 'warrior') {
 
-        //         } else if (b.sprite.class != 'warrior') {
+                    b.sprite.damage(this.atkdamage);
 
-        //             b.sprite.damage(this.atkdamage);
+                }
 
-        //         }
+            }
 
-        //     }
-
-        // }
+        }
 
     }
 
