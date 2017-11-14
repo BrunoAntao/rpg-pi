@@ -46,6 +46,17 @@ class Slime extends Phaser.Sprite {
 
     }
 
+    damage(damage) {
+
+        this.growth -= damage;
+        if(this.growth < 1) {
+
+            this.kill();
+
+        }
+
+    }
+
     update() {
 
         if(!this.alive) {

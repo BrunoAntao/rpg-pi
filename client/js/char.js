@@ -15,6 +15,7 @@ charState = {
     
             game.stage.backgroundColor = "#212121";
             game.stage.smoothed = false;
+            game.stage.disableVisibilityChange = true;
             game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
             options = [{name:'Warrior', display:'warrior', down:function(){
