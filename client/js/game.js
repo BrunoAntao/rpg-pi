@@ -125,12 +125,18 @@ gameState = {
 
         socket.on('move enemy', function (player) {
 
-            if(global.enemies[player.id] !== undefined) {
+            if (global.enemies[player.id] !== undefined) {
 
                 global.enemies[player.id].body.x = player.x;
                 global.enemies[player.id].body.y = player.y;
 
             }
+
+        })
+
+        socket.on('remove enemy', function (player) {
+
+            global.enemies[player.id].destroy();
 
         })
 

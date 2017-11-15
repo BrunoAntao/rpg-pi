@@ -234,6 +234,7 @@ io.on('connection', function (socket) {
         if (server.players.indexOf(player) > -1) {
 
             server.players.splice(server.players.indexOf(player), 1)
+            socket.broadcast.emit('remove enemy', player);
 
         }
 
