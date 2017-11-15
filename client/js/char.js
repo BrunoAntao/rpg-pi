@@ -5,10 +5,11 @@ charState = {
             game.load.spritesheet('button', 'client/assets/buttons/btn.png', 128, 32);
             game.load.image('display', 'client/assets/buttons/dsp.png');
         
-            game.load.image('warrior', 'client/assets/player/warrior.png');
-            game.load.image('ranger', 'client/assets/player/ranger.png');
-            game.load.image('mage', 'client/assets/player/mage.png');
 
+            game.load.spritesheet('warrior', 'client/assets/player/warrior.png', 79, 65);
+            game.load.spritesheet('ranger', 'client/assets/player/ranger.png', 65, 65);
+            game.load.spritesheet('mage', 'client/assets/player/mage.png', 78, 75);
+            
         },
     
         create: function() {

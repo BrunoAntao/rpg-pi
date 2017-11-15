@@ -121,6 +121,16 @@ class Player extends Phaser.Sprite {
             socket.emit('move player', { x: this.x, y: this.y - this.height/2});
             this.checkBounds();
 
+            if(game.physics.arcade.angleToPointer(this) * 180/Math.PI > 90 || game.physics.arcade.angleToPointer(this) * 180/Math.PI < -90) {
+
+                this.frame = 1;
+
+            } else {
+
+                this.frame = 0;
+
+            }
+
         }
 
     }
@@ -298,7 +308,7 @@ class Warrior extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x + this.width / 2, this.y - this.height / 2);
+            proj.reset(this.x, this.y - this.height/2);
 
             let speed = 50000;
 
@@ -531,7 +541,7 @@ class Ranger extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x + this.width / 2, this.y - this.height / 2);
+            proj.reset(this.x, this.y - this.height/2);
 
             let speed = 50000;
 
@@ -586,7 +596,7 @@ class Ranger extends Player {
 
             var dagger = this.daggers.getFirstDead();
 
-            dagger.reset(this.x + this.width / 2, this.y - this.height / 2);
+            dagger.reset(this.x, this.y - this.height/2);
 
             let speed = 50000;
 
@@ -730,7 +740,7 @@ class Mage extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x + this.width / 2, this.y - this.height + (this.height / (this.height / 16)));
+            proj.reset(this.x, this.y - this.height/2);
 
             let speed = 50000;
 
@@ -755,15 +765,15 @@ class Mage extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x + this.width / 2, this.y - this.height + (this.height / (this.height / 16)));
+            proj.reset(this.x, this.y - this.height/2);
 
             var proj2 = this.projs.getFirstDead();
 
-            proj2.reset(this.x + this.width / 2, this.y - this.height + (this.height / (this.height / 16)));
+            proj2.reset(this.x, this.y - this.height/2);
 
             var proj3 = this.projs.getFirstDead();
 
-            proj3.reset(this.x + this.width / 2, this.y - this.height + (this.height / (this.height / 16)));
+            proj3.reset(this.x, this.y - this.height/2);
 
             let speed = 50000;
 

@@ -28,19 +28,19 @@ gameState = {
         game.load.image('capPoint3', 'client/assets/capturePoints/cp3.png');
         game.load.image('capPoint4', 'client/assets/capturePoints/cp4.png');
 
-        game.load.image('warrior', 'client/assets/player/warrior.png');
+        game.load.spritesheet('warrior', 'client/assets/player/warrior.png', 79, 65);
         game.load.physics('warrior', 'client/assets/physics/warrior.json');
         game.load.image('warrior_attack', 'client/assets/player/warrior_attack.png');
-        game.load.image('warrior_skill', 'client/assets/player/warrior_skill.png');
+        game.load.spritesheet('warrior_skill', 'client/assets/player/warrior_skill.png', 79, 65);
         game.load.physics('sword', 'client/assets/physics/sword.json');
 
-        game.load.image('ranger', 'client/assets/player/ranger.png');
+        game.load.spritesheet('ranger', 'client/assets/player/ranger.png', 65, 65);
         game.load.physics('ranger', 'client/assets/physics/ranger.json');
         game.load.image('ranger_attack', 'client/assets/player/ranger_attack.png');
         game.load.image('ranger_skill', 'client/assets/player/ranger_skill.png');
         game.load.physics('arrow', 'client/assets/physics/arrow.json');
 
-        game.load.image('mage', 'client/assets/player/mage.png');
+        game.load.spritesheet('mage', 'client/assets/player/mage.png', 78, 75);
         game.load.physics('mage', 'client/assets/physics/mage.json');
         game.load.spritesheet('mage_attack', 'client/assets/player/mage_attack.png', 53, 16);
         game.load.physics('magic', 'client/assets/physics/magic.json');
