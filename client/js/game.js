@@ -115,30 +115,27 @@ gameState = {
 
             }, this);
 
-        });
+            socket.on('new player', function (player) {
 
-        socket.on('new player', function (player) {
+                new Enemy(player.x, player.y, player.class, player.id, global.enemies, gameState.Mgroup);
 
-            new Enemy(player.x, player.y, player.class, player.id, global.enemies, gameState.Mgroup);
+            })
 
-        })
+            socket.on('move enemy', function (player) {
 
-        socket.on('move enemy', function (player) {
-
-            if (global.enemies[player.id] !== undefined) {
 
                 global.enemies[player.id].body.x = player.x;
                 global.enemies[player.id].body.y = player.y;
 
-            }
+            })
 
-        })
+            socket.on('remove enemy', function (player) {
 
-        socket.on('remove enemy', function (player) {
+                global.enemies[player.id].destroy();
 
-            global.enemies[player.id].destroy();
+            })
 
-        })
+        });
 
     },
 
