@@ -3,7 +3,7 @@ let assert = require('assert');
 let request = require('request');
 let chai = require('chai');
 let fs = require('fs');
-let serverFunctions = require('../server.js');
+let serverFunctions = require('./js/server_functions');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
