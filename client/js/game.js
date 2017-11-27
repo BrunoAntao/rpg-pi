@@ -53,10 +53,10 @@ gameState = {
         game.load.audio('hurtran', 'client/assets/sounds/hurtwar.mp3');
         game.load.audio('arrow', 'client/assets/sounds/arrow.mp3');
         game.load.audio('sword', 'client/assets/sounds/sword.mp3');
-        game.load.audio('desert', ['client/assets/sounds/desert.mp3', 'client/assets/sounds/desert.ogg']);
-        game.load.audio('ice', ['client/assets/sounds/ice.mp3', 'client/assets/sounds/ice.ogg']);
-        game.load.audio('fire', ['client/assets/sounds/fire.mp3', 'client/assets/sounds/fire.ogg']);
-        game.load.audio('forest', ['client/assets/sounds/jungle.mp3', 'client/assets/sounds/jungle.ogg'])
+        game.load.audio('desert', ['client/assets/sounds/desert.m4a', 'client/assets/sounds/desert.ogg']);
+        game.load.audio('ice', ['client/assets/sounds/ice.m4a', 'client/assets/sounds/ice.ogg']);
+        game.load.audio('fire', ['client/assets/sounds/fire.m4a', 'client/assets/sounds/fire.ogg']);
+        game.load.audio('forest', ['client/assets/sounds/jungle.m4a', 'client/assets/sounds/jungle.ogg'])
     },
 
     create: function () {

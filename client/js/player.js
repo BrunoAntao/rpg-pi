@@ -47,26 +47,33 @@ class Player extends Phaser.Sprite {
 
     checkBounds() {
 
+        let biome;
+
         if (!(this instanceof Enemy)) {
 
             if (this.x > 0 && this.y > 0 && this.x < 1600 && this.y < 3200) {
 
                 this.biome = 0; //forest
+
             }
 
             else if (this.x > 4800 && this.y > 0 && this.x < 6400 && this.y < 3200) {
 
-                this.biome = 1; //fire
+                this.biome = 1; //fire 
+                
+                                             
             }
 
             else if (this.x > 1600 && this.y > 0 && this.x < 4800 && this.y < 1600) {
 
                 this.biome = 2; //ice
+                
             }
 
             else if (this.x > 1600 && this.y > 1600 && this.x < 4800 && this.y < 3200) {
 
                 this.biome = 3; //desert
+
             }
 
 
@@ -120,6 +127,7 @@ class Player extends Phaser.Sprite {
 
             socket.emit('move player', { x: this.x, y: this.y - this.height/2});
             this.checkBounds();
+            this.UpdateMusic();
 
             if(game.physics.arcade.angleToPointer(this) * 180/Math.PI > 90 || game.physics.arcade.angleToPointer(this) * 180/Math.PI < -90) {
 
