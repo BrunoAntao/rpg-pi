@@ -20,6 +20,20 @@ class Player extends Phaser.Sprite {
         this.maxresource = 10;
         this.resource = 10;
 
+        this.music = {
+
+            forest: game.add.audio('forest', 0.4, true),
+            fire: game.add.audio('fire', 0.4, true),
+            ice: game.add.audio('ice', 0.4, true),
+            desert: game.add.audio('desert', 0.4, true),
+
+        }
+
+        this.music.forest.play();
+        this.music.fire.play();
+        this.music.ice.play();
+        this.music.desert.play();
+
         game.add.existing(this);
 
         if (typeof group != 'undefined') {
@@ -60,14 +74,14 @@ class Player extends Phaser.Sprite {
             else if (this.x > 4800 && this.y > 0 && this.x < 6400 && this.y < 3200) {
 
                 this.biome = 1; //fire 
-                
-                                             
+
+
             }
 
             else if (this.x > 1600 && this.y > 0 && this.x < 4800 && this.y < 1600) {
 
                 this.biome = 2; //ice
-                
+
             }
 
             else if (this.x > 1600 && this.y > 1600 && this.x < 4800 && this.y < 3200) {
@@ -80,43 +94,45 @@ class Player extends Phaser.Sprite {
         }
     }
 
-    UpdateMusic(){
-        
-                let music;
-                
-                      
-                if (this.biome == 0){
-                    
-                    music = game.add.audio('forest',0.4,true)
-                    music.play();
-        
-                }
-        
-                else if (this.biome == 1){
-                    
-                    music = game.add.audio('fire', 0.4, true);
-                    music.play();
-        
-                }
-        
-                else if (this.biome == 2){
-                                
-                    music = game.add.audio('ice',0.4,true);
-                    music.play();
-        
-                }
-        
-                else if (this.biome == 3){
-                    
-                    music = game.add.audio('desert', 0.4, true);
-                    music.play();
-        
-                }
-        
-        
-        
-        
-            }
+    UpdateMusic() {
+
+        switch (this.biome) {
+
+            case 0:
+
+                this.music.forest.mute = false;
+                this.music.fire.mute = true;
+                this.music.ice.mute = true;
+                this.music.desert.mute = true;
+                break;
+
+            case 1:
+
+                this.music.forest.mute = true;
+                this.music.fire.mute = false;
+                this.music.ice.mute = true;
+                this.music.desert.mute = true;
+                break;
+
+            case 2:
+
+                this.music.forest.mute = true;
+                this.music.fire.mute = true;
+                this.music.ice.mute = false;
+                this.music.desert.mute = true;
+                break;
+
+            case 3:
+
+                this.music.forest.mute = true;
+                this.music.fire.mute = true;
+                this.music.ice.mute = true;
+                this.music.desert.mute = false;
+                break;
+
+        }
+
+    }
 
     update() {
 
@@ -162,11 +178,11 @@ class Player extends Phaser.Sprite {
 
         if (!(this instanceof Enemy)) {
 
-            socket.emit('move player', { x: this.x, y: this.y - this.height/2});
+            socket.emit('move player', { x: this.x, y: this.y - this.height / 2 });
             this.checkBounds();
             this.UpdateMusic();
 
-            if(game.physics.arcade.angleToPointer(this) * 180/Math.PI > 90 || game.physics.arcade.angleToPointer(this) * 180/Math.PI < -90) {
+            if (game.physics.arcade.angleToPointer(this) * 180 / Math.PI > 90 || game.physics.arcade.angleToPointer(this) * 180 / Math.PI < -90) {
 
                 this.frame = 1;
 
@@ -353,7 +369,7 @@ class Warrior extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x, this.y - this.height/2);
+            proj.reset(this.x, this.y - this.height / 2);
 
             let speed = 50000;
 
@@ -586,7 +602,7 @@ class Ranger extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x, this.y - this.height/2);
+            proj.reset(this.x, this.y - this.height / 2);
 
             let speed = 50000;
 
@@ -641,7 +657,7 @@ class Ranger extends Player {
 
             var dagger = this.daggers.getFirstDead();
 
-            dagger.reset(this.x, this.y - this.height/2);
+            dagger.reset(this.x, this.y - this.height / 2);
 
             let speed = 50000;
 
@@ -785,7 +801,7 @@ class Mage extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x, this.y - this.height/2);
+            proj.reset(this.x, this.y - this.height / 2);
 
             let speed = 50000;
 
@@ -810,15 +826,15 @@ class Mage extends Player {
 
             var proj = this.projs.getFirstDead();
 
-            proj.reset(this.x, this.y - this.height/2);
+            proj.reset(this.x, this.y - this.height / 2);
 
             var proj2 = this.projs.getFirstDead();
 
-            proj2.reset(this.x, this.y - this.height/2);
+            proj2.reset(this.x, this.y - this.height / 2);
 
             var proj3 = this.projs.getFirstDead();
 
-            proj3.reset(this.x, this.y - this.height/2);
+            proj3.reset(this.x, this.y - this.height / 2);
 
             let speed = 50000;
 
