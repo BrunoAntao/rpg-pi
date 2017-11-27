@@ -80,6 +80,43 @@ class Player extends Phaser.Sprite {
         }
     }
 
+    UpdateMusic(){
+        
+                let music;
+                
+                      
+                if (this.biome == 0){
+                    
+                    music = game.add.audio('forest',0.4,true)
+                    music.play();
+        
+                }
+        
+                else if (this.biome == 1){
+                    
+                    music = game.add.audio('fire', 0.4, true);
+                    music.play();
+        
+                }
+        
+                else if (this.biome == 2){
+                                
+                    music = game.add.audio('ice',0.4,true);
+                    music.play();
+        
+                }
+        
+                else if (this.biome == 3){
+                    
+                    music = game.add.audio('desert', 0.4, true);
+                    music.play();
+        
+                }
+        
+        
+        
+        
+            }
 
     update() {
 
