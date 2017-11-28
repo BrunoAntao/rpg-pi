@@ -231,7 +231,23 @@ io.on('connection', function (socket) {
 
         console.verbose('User ' + socket.id + ': attacked: ' + JSON.stringify(angle), color);
 
-        socket.broadcast.emit('player attack', {id:socket.id, angle:angle});
+        socket.broadcast.emit('player attack', { id: socket.id, angle: angle });
+
+    });
+
+    socket.on('player skill', function (angle) {
+
+        console.log('User ' + socket.id + ': used Skill: ' + JSON.stringify(angle), color);
+
+        if(angle) {
+
+            socket.broadcast.emit('player skill', { id: socket.id, angle: angle });
+
+        } else {
+
+            socket.broadcast.emit('player skill', { id:socket.id });
+
+        }
 
     });
 
