@@ -190,8 +190,25 @@ describe('Socket', () =>{
 
     it('Remove Player', (done) =>{
 
+        let id;
 
-        
+        player2.on('remove enemy', (enemy) =>{   
+            
+            expect(enemy).to.equal(id);
+            
+            done();
+          
+        });
+            
+        player1.on('connect', () =>{
+
+            id = player1.id;
+            
+            player1.emit('remove enemy');
+
+                      
+        });
+
     })
 
 });
