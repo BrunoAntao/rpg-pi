@@ -5,7 +5,6 @@ let fs = require('fs');
 
 let io = require('socket.io-client');
 let socketURL = 'http://localhost:80';
-let Player = require('../server/player');
 
 let options = {
 
@@ -31,7 +30,7 @@ describe('Socket', () =>{
         player1.disconnect();
     })
 
-    it('Map fetch', () =>{
+    it('Map fetch', (done) =>{
 
         player1.on('map', (map) =>{
             
@@ -51,7 +50,22 @@ describe('Socket', () =>{
 
     })
 
-    it('New Player', () =>{
+    it('New Player', (done) =>{
+
+        player1.on('new player', (player) =>{
+            
+            
+            console.log(player1);
+            
+            done();
+        })
+
+        player1.on('connect', () =>{
+
+            let data = { x: 200, y: 200, class: 'mage'}
+
+            player1.emit('new player', data);
+        })
 
 
     })
