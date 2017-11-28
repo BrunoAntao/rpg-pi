@@ -15,5 +15,40 @@ chai.use(require('chai-http'));
 
 describe('Socket', () =>{
 
+    it('Connection', () =>{
+
+
+    })
+
+    it('Map fetch', () =>{
+
+
+    })
+
+    it('New Player', () =>{
+
+
+    })
+
+    it('Player Fetch', () =>{
+
+
+    })
+
+    it('Player Move', () =>{
+
+
+    })
+
+    it('Player attack', () =>{
+
+
+    })
+
+    it('Disconnect', () =>{
+
+        
+    })
+
   
 });
