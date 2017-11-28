@@ -1,5 +1,7 @@
 let expect  = require('chai').expect;
 let chai = require('chai');
+let assert = require('assert');
+let fs = require('fs');
 
 let io = require('socket.io-client');
 let socketURL = 'http://localhost:80';
@@ -14,17 +16,30 @@ let options = {
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
 
-var player1;
-
 describe('Socket', () =>{
 
-    it('Connection', (done) =>{
+    let player1;
+
+    beforeEach( () =>{
 
         player1 = io.connect(socketURL, options);
 
+    })
+
+    afterEach( () =>{
+
+        player1.disconnect();
+    })
+
+    it('Connection', (done) =>{
+
+
         player1.on('map', (map) =>{
 
-            console.log(map);
+            let testMap = JSON.parse(fs.readFileSync('./server/map.json'));
+
+            //assert(testMap === map);
+
             done();
         })
 
@@ -63,10 +78,4 @@ describe('Socket', () =>{
 
     })
 
-    it('Disconnect', () =>{
-
-
-    })
-
-  
 });
