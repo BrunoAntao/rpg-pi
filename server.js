@@ -12,7 +12,7 @@ var Map = require('./server/map.js');
 var Player = require('./server/player.js');
 var rl = readline.createInterface(process.stdin, process.stdout);
 rl.setPrompt('');
-let port = 9090;
+let port = 80;
 
 console.log('\033c');
 
