@@ -17,12 +17,31 @@ chai.use(require('chai-http'));
 
 describe('Socket', () =>{
 
-    let player1, player2;
+    let player1, player2, player3;
+
+    before( () =>{
+
+        player3 = io.connect(socketURL, options);
+
+        player3.on('connect', () =>{
+            
+            let data = { x: 200, y: 200, class: 1};
+            
+            player3.emit('new player', data);
+        })
+
+    })
+
+    after( () =>{
+
+        player3.disconnect();
+    })
 
     beforeEach( () =>{
 
         player1 = io.connect(socketURL, options);
         player2 = io.connect(socketURL, options);
+        
 
     })
 
@@ -78,7 +97,7 @@ describe('Socket', () =>{
 
         player1.on('players', (players) =>{
         
-            expect(players).to.have.lengthOf(0);
+            expect(players).to.have.lengthOf(1);
             
             done();
         })
