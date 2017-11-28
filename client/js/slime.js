@@ -40,6 +40,10 @@ class Slime extends Phaser.Sprite {
         this.idlemv = game.add.tween(this.body).to( { x:this.point.x + x, y:this.point.y + y }, dist * 100 , "Linear", true);
         this.idlemv.onComplete.add(function() {
 
+            /* this.slime = game.add.audio('slime', 0.5)
+            slime.play();
+            */
+            
             this.idle();
 
         }, this);
