@@ -196,9 +196,9 @@ class Enemy extends Player {
 
         switch (key) {
 
-            case 'warrior': this.health = 15; this.maxhealth = 15; break;
-            case 'ranger': this.health = 10; this.maxhealth = 10; break;
-            case 'mage': this.health = 8; this.maxhealth = 8; break;
+            case 'warrior': this.health = 15; this.maxhealth = 15; this.atkdamage = 3; break;
+            case 'ranger': this.health = 10; this.maxhealth = 10; this.atkdamage = 2; break;
+            case 'mage': this.health = 8; this.maxhealth = 8; this.atkdamage = 2; break;
 
         }
 
@@ -261,12 +261,19 @@ class Enemy extends Player {
 
             }
 
-            proj.body.setCollisionGroup(global.projGroup);
+            proj.body.setCollisionGroup(global.enemiesProjGroup);
+            proj.body.collides(global.playerGroup, this.hit, this);
 
         }, this)
 
         this.group.add(this.projs);
         this.group.add(this);
+
+    }
+
+    hit(a, b) {
+
+        a.sprite.kill();
 
     }
 
@@ -316,7 +323,7 @@ class Warrior extends Player {
         this.dummy.body.clearShapes();
         this.dummy.body.addRectangle(this.width, this.height);
         this.dummy.body.setCollisionGroup(global.playerGroup);
-        this.dummy.body.collides(global.enemiesGroup, this.hit, this);
+        this.dummy.body.collides([global.enemiesGroup, global.enemiesProjGroup], this.hit, this);
         this.dummy.body.fixedRotation = true;
         this.dummy.source = this;
 
@@ -394,7 +401,16 @@ class Warrior extends Player {
         if (this.hitflag && !this.ignoreActive) {
 
             this.hitflag = false;
-            a.sprite.source.damage(1);
+
+            if (b.sprite.source instanceof Enemy) {
+
+                a.sprite.source.damage(b.sprite.source.atkdamage);
+
+            } else {
+
+                a.sprite.source.damage(1);
+
+            }
 
             this.collision = game.add.audio('hurt', 0.3);
             this.collision.play();
@@ -548,7 +564,7 @@ class Ranger extends Player {
         this.dummy.body.clearShapes();
         this.dummy.body.addRectangle(this.width, this.height);
         this.dummy.body.setCollisionGroup(global.playerGroup);
-        this.dummy.body.collides(global.enemiesGroup, this.hit, this);
+        this.dummy.body.collides([global.enemiesGroup, global.enemiesProjGroup], this.hit, this);
         this.dummy.body.fixedRotation = true;
         this.dummy.source = this;
 
@@ -646,7 +662,16 @@ class Ranger extends Player {
         if (this.hitflag) {
 
             this.hitflag = false;
-            a.sprite.source.damage(1);
+
+            if (b.sprite.source instanceof Enemy) {
+
+                a.sprite.source.damage(b.sprite.source.atkdamage);
+
+            } else {
+
+                a.sprite.source.damage(1);
+
+            }
 
             game.time.events.add(500, function () {
 
@@ -815,7 +840,7 @@ class Mage extends Player {
         this.dummy.body.clearShapes();
         this.dummy.body.addRectangle(this.width, this.height);
         this.dummy.body.setCollisionGroup(global.playerGroup);
-        this.dummy.body.collides(global.enemiesGroup, this.hit, this);
+        this.dummy.body.collides([global.enemiesGroup, global.enemiesProjGroup], this.hit, this);
         this.dummy.body.fixedRotation = true;
         this.dummy.source = this;
 
@@ -863,7 +888,16 @@ class Mage extends Player {
         if (this.hitflag) {
 
             this.hitflag = false;
-            a.sprite.source.damage(1);
+
+            if (b.sprite.source instanceof Enemy) {
+
+                a.sprite.source.damage(b.sprite.source.atkdamage);
+
+            } else {
+
+                a.sprite.source.damage(1);
+
+            }
 
             this.collision = game.add.audio('hurtmag', 0.5);
 

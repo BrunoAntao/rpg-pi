@@ -70,6 +70,7 @@ gameState = {
         game.physics.p2.setImpactEvents(true);
 
         global.projGroup = game.physics.p2.createCollisionGroup();
+        global.enemiesProjGroup = game.physics.p2.createCollisionGroup();
         global.playerGroup = game.physics.p2.createCollisionGroup();
         global.enemiesGroup = game.physics.p2.createCollisionGroup();
 
