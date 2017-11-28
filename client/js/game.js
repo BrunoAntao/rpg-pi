@@ -123,7 +123,6 @@ gameState = {
 
             socket.on('move enemy', function (player) {
 
-
                 global.enemies[player.id].body.x = player.x;
                 global.enemies[player.id].body.y = player.y;
 
@@ -132,6 +131,12 @@ gameState = {
             socket.on('remove enemy', function (player) {
 
                 global.enemies[player.id].destroy();
+
+            })
+
+            socket.on('player attack', function (data) {
+
+                global.enemies[data.id].attack(data.angle);
 
             })
 

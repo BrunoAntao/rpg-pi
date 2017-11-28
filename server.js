@@ -39,7 +39,7 @@ console.log = function (str, color = server.console.color) {
 
 console.verbose = function (str, color = server.console.color) {
 
-    if(server.console.verbose) {
+    if (server.console.verbose) {
 
         process.stdout.write('\x1b[3' + color + 'm' + str + '\n' + '\x1b[0m');
 
@@ -224,6 +224,14 @@ io.on('connection', function (socket) {
         player.y = data.y;
 
         socket.broadcast.emit('move enemy', player);
+
+    });
+
+    socket.on('player attack', function (angle) {
+
+        console.verbose('User ' + socket.id + ': attacked: ' + JSON.stringify(angle), color);
+
+        socket.broadcast.emit('player attack', {id:socket.id, angle:angle});
 
     });
 
