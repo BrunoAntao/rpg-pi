@@ -20,20 +20,6 @@ class Player extends Phaser.Sprite {
         this.maxresource = 10;
         this.resource = 10;
 
-        this.music = {
-
-            forest: game.add.audio('forest', 0.4, true),
-            fire: game.add.audio('fire', 0.4, true),
-            ice: game.add.audio('ice', 0.4, true),
-            desert: game.add.audio('desert', 0.4, true),
-
-        }
-
-        this.music.forest.play();
-        this.music.fire.play();
-        this.music.ice.play();
-        this.music.desert.play();
-
         game.add.existing(this);
 
         if (typeof group != 'undefined') {
@@ -96,39 +82,43 @@ class Player extends Phaser.Sprite {
 
     UpdateMusic() {
 
-        switch (this.biome) {
+        if (!(this instanceof Enemy)) {
 
-            case 0:
+            switch (this.biome) {
 
-                this.music.forest.mute = false;
-                this.music.fire.mute = true;
-                this.music.ice.mute = true;
-                this.music.desert.mute = true;
-                break;
+                case 0:
 
-            case 1:
+                    this.music.forest.mute = false;
+                    this.music.fire.mute = true;
+                    this.music.ice.mute = true;
+                    this.music.desert.mute = true;
+                    break;
 
-                this.music.forest.mute = true;
-                this.music.fire.mute = false;
-                this.music.ice.mute = true;
-                this.music.desert.mute = true;
-                break;
+                case 1:
 
-            case 2:
+                    this.music.forest.mute = true;
+                    this.music.fire.mute = false;
+                    this.music.ice.mute = true;
+                    this.music.desert.mute = true;
+                    break;
 
-                this.music.forest.mute = true;
-                this.music.fire.mute = true;
-                this.music.ice.mute = false;
-                this.music.desert.mute = true;
-                break;
+                case 2:
 
-            case 3:
+                    this.music.forest.mute = true;
+                    this.music.fire.mute = true;
+                    this.music.ice.mute = false;
+                    this.music.desert.mute = true;
+                    break;
 
-                this.music.forest.mute = true;
-                this.music.fire.mute = true;
-                this.music.ice.mute = true;
-                this.music.desert.mute = false;
-                break;
+                case 3:
+
+                    this.music.forest.mute = true;
+                    this.music.fire.mute = true;
+                    this.music.ice.mute = true;
+                    this.music.desert.mute = false;
+                    break;
+
+            }
 
         }
 
@@ -225,7 +215,83 @@ class Enemy extends Player {
         this.group = group;
         this.index = index;
         this.index[id] = this;
+
+        this.projs = game.add.group();
+        this.projs.enableBody = true;
+        this.projs.physicsBodyType = Phaser.Physics.P2JS;
+        switch (this.class) {
+
+            case 'warrior': this.projs.createMultiple(50, 'warrior_attack'); break;
+            case 'ranger': this.projs.createMultiple(50, 'ranger_attack');
+                this.projs.setAll('scale', { x: 2, y: 2 }); break;
+            case 'mage': this.projs.createMultiple(50, 'mage_attack');
+                this.projs.setAll('scale', { x: 2, y: 2 }); break;
+
+        }
+        this.projs.setAll('checkWorldBounds', true);
+        this.projs.setAll('outOfBoundsKill', true);
+        this.projs.setAll('anchor', { x: 0.5, y: 0.5 });
+        this.projs.setAll('smoothed', false);
+
+        this.projs.forEach(function (proj) {
+
+            proj.body.clearShapes();
+
+            switch (this.class) {
+
+                case 'warrior': proj.body.loadPolygon('sword', 'sword'); break;
+                case 'ranger': proj.body.loadPolygon('arrow', 'arrow'); break;
+                case 'mage': proj.body.loadPolygon('magic', 'magic'); break;
+
+            }
+
+            proj.source = this;
+
+            if (this.class == 'warrior') {
+
+                proj.update = function () {
+
+                    if (this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
+
+                        this.kill();
+
+                    }
+
+                }
+
+            }
+
+            proj.body.setCollisionGroup(global.projGroup);
+
+        }, this)
+
+        this.group.add(this.projs);
         this.group.add(this);
+
+    }
+
+    attack(angle) {
+
+        var proj = this.projs.getFirstDead();
+
+        proj.reset(this.x, this.y);
+
+        let speed = 50000;
+
+        proj.rotation = angle;
+        proj.body.rotation = angle;
+
+        proj.body.force.x = Math.cos(angle) * speed;
+        proj.body.force.y = Math.sin(angle) * speed;
+
+
+        switch (this.class) {
+
+            case 'warrior': this.sound = game.add.audio('sword', 0.2); this.sound.play(); break;
+            case 'ranger': this.sound = game.add.audio('arrow', 0.2); this.sound.play(); break;
+            case 'mage': this.sound = game.add.audio('spell', 0.2); this.sound.play(); break;
+
+        }
 
     }
 
@@ -274,6 +340,20 @@ class Warrior extends Player {
         this.projs = game.add.group();
         this.projs.enableBody = true;
         this.projs.physicsBodyType = Phaser.Physics.P2JS;
+
+        this.music = {
+
+            forest: game.add.audio('forest', 0.4, true),
+            fire: game.add.audio('fire', 0.4, true),
+            ice: game.add.audio('ice', 0.4, true),
+            desert: game.add.audio('desert', 0.4, true),
+
+        }
+
+        this.music.forest.play();
+        this.music.fire.play();
+        this.music.ice.play();
+        this.music.desert.play();
 
         this.projs.createMultiple(50, 'warrior_attack');
         this.projs.setAll('checkWorldBounds', true);
@@ -365,6 +445,7 @@ class Warrior extends Player {
     attack() {
 
         if (game.time.now > this.nextFire && this.projs.countDead() > 0) {
+
             this.nextFire = game.time.now + this.fireRate;
 
             var proj = this.projs.getFirstDead();
@@ -378,6 +459,9 @@ class Warrior extends Player {
 
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
+
+            socket.emit('player attack', game.physics.arcade.angleToPointer(proj));
+
             this.sword = game.add.audio('sword', 0.2);
             this.sword.play();
 
@@ -441,6 +525,20 @@ class Ranger extends Player {
         this.flag = true;
         this.sflag = true;
         this.hitflag = true;
+
+        this.music = {
+
+            forest: game.add.audio('forest', 0.4, true),
+            fire: game.add.audio('fire', 0.4, true),
+            ice: game.add.audio('ice', 0.4, true),
+            desert: game.add.audio('desert', 0.4, true),
+
+        }
+
+        this.music.forest.play();
+        this.music.fire.play();
+        this.music.ice.play();
+        this.music.desert.play();
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
@@ -611,6 +709,9 @@ class Ranger extends Player {
 
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
+
+            socket.emit('player attack', game.physics.arcade.angleToPointer(proj));
+
             this.arrow = game.add.audio('arrow', 0.2);
             this.arrow.play();
 
@@ -694,6 +795,20 @@ class Mage extends Player {
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
+
+        this.music = {
+
+            forest: game.add.audio('forest', 0.4, true),
+            fire: game.add.audio('fire', 0.4, true),
+            ice: game.add.audio('ice', 0.4, true),
+            desert: game.add.audio('desert', 0.4, true),
+
+        }
+
+        this.music.forest.play();
+        this.music.fire.play();
+        this.music.ice.play();
+        this.music.desert.play();
 
         this.dummy = game.add.sprite(0, 0);
         game.physics.enable(this.dummy, Phaser.Physics.P2JS);
@@ -810,6 +925,8 @@ class Mage extends Player {
 
             proj.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj)) * speed;
             proj.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj)) * speed;
+
+            socket.emit('player attack', game.physics.arcade.angleToPointer(proj));
 
             this.spell = game.add.audio('spell', 0.2);
             this.spell.play();
