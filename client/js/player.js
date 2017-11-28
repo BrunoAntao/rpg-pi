@@ -27,7 +27,7 @@ class Player extends Phaser.Sprite {
             group.add(this);
 
         }
-
+        
         game.input.keyboard.onDownCallback = function (e) {
 
             if(e.key == 'm') {

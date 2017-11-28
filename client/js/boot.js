@@ -56,7 +56,7 @@ function codeToKey(code) {
 
 var global = {
 
-    mute:false
+    mute:false,
 
 };
 
