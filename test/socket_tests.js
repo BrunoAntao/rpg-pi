@@ -39,9 +39,8 @@ describe('Socket', () =>{
 
     beforeEach( () =>{
 
-        player1 = io.connect(socketURL, options);
         player2 = io.connect(socketURL, options);
-        
+        player1 = io.connect(socketURL, options); 
 
     })
 
