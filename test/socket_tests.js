@@ -18,11 +18,22 @@ var player1;
 
 describe('Socket', () =>{
 
-    it('Connection', () =>{
+    it('Connection', (done) =>{
 
         player1 = io.connect(socketURL, options);
 
-        
+        player1.on('map', (map) =>{
+
+            console.log(map);
+            done();
+        })
+
+        player1.on('connect', () =>{
+
+            player1.emit('fetch map');
+
+
+        })
 
 
     })
