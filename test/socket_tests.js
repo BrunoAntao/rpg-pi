@@ -31,30 +31,23 @@ describe('Socket', () =>{
         player1.disconnect();
     })
 
-    it('Connection', (done) =>{
-
-
-        player1.on('map', (map) =>{
-
-            let testMap = JSON.parse(fs.readFileSync('./server/map.json'));
-
-            //assert(testMap === map);
-
-            done();
-        })
-
-        player1.on('connect', () =>{
-
-            player1.emit('fetch map');
-
-
-        })
-
-
-    })
-
     it('Map fetch', () =>{
 
+        player1.on('map', (map) =>{
+            
+            let testMap = JSON.parse(fs.readFileSync('./server/map.json'));
+            
+            //assert(testMap === map);
+            
+            done();
+        })
+            
+        player1.on('connect', () =>{
+            
+            player1.emit('fetch map');
+            
+            
+        })
 
     })
 
