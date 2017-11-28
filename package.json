@@ -14,6 +14,6 @@
     "socket.io": "latest"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --timeout 10000"
   }
 }
