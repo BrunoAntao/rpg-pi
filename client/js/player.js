@@ -938,6 +938,9 @@ class Ranger extends Player {
 
             socket.emit('player skill', game.physics.arcade.angleToPointer(dagger));
 
+            this.knife = game.add.audio('knife', 0.2);
+            this.knife.play();
+
         }
 
     }
