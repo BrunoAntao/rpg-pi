@@ -41,8 +41,8 @@ describe('Socket', () =>{
 
         player1 = io.connect(socketURL, options);
         player2 = io.connect(socketURL, options);
+     
         
-
     })
 
     afterEach( () =>{
@@ -64,11 +64,11 @@ describe('Socket', () =>{
             done();
 
         })
-            
-            
+          
+        
         player1.emit('fetch map');
-            
-
+      
+        
     })
 
     it('New Player', (done) =>{
@@ -100,8 +100,8 @@ describe('Socket', () =>{
             
         })
 
-        player1.emit('fetch players');
-        
+        player1.emit('fetch players');    
+
 
     })
 
@@ -118,8 +118,8 @@ describe('Socket', () =>{
 
         let data = { x: 300, y: 400};
 
-        player1.emit('move player', data);
-        
+        player1.emit('move player', data);      
+
 
     })
 
