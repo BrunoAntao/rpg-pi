@@ -58,6 +58,8 @@ gameState = {
         game.load.audio('fire', ['client/assets/sounds/fire.m4a', 'client/assets/sounds/fire.ogg']);
         game.load.audio('forest', ['client/assets/sounds/jungle.m4a', 'client/assets/sounds/jungle.ogg']);
         game.load.audio('slime', 'client/assets/sounds/slime.m4a');
+        game.load.audio('knife', 'client/assets/sounds/knife.m4a');
+        
         
     },
 
@@ -140,6 +142,12 @@ gameState = {
             socket.on('player attack', function (data) {
 
                 global.enemies[data.id].attack(data.angle);
+
+            })
+
+            socket.on('player skill', function (data) {
+
+                global.enemies[data.id].skill(data.angle);
 
             })
 
