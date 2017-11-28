@@ -6,6 +6,9 @@ let fs = require('fs');
 let io = require('socket.io-client');
 let socketURL = 'http://localhost:80';
 
+let testMap = JSON.parse(fs.readFileSync('./server/map.json'));
+
+
 let options = {
 
     transports: ['websocket'],
@@ -17,26 +20,26 @@ chai.use(require('chai-http'));
 
 describe('Socket', () =>{
 
-    let player1;
+    let player1, player2;
 
     beforeEach( () =>{
 
         player1 = io.connect(socketURL, options);
+        player2 = io.connect(socketURL, options);
 
     })
 
     afterEach( () =>{
 
         player1.disconnect();
+        player2.disconnect();
     })
 
     it('Map fetch', (done) =>{
 
         player1.on('map', (map) =>{
-            
-            let testMap = JSON.parse(fs.readFileSync('./server/map.json'));
-            
-            //assert(testMap === map);
+                    
+            assert(testMap === map);
             
             done();
         })
@@ -52,17 +55,18 @@ describe('Socket', () =>{
 
     it('New Player', (done) =>{
 
-        player1.on('new player', (player) =>{
-            
-            
-            console.log(player);
+        player2.on('new player', (player) =>{
+                    
+            expect(player).to.haveOwnProperty('x').and.to.equal(200);
+            expect(player).to.haveOwnProperty('y').and.to.equal(200);
+            expect(player).to.haveOwnProperty('class').and.to.equal('warrior');
             
             done();
         })
 
         player1.on('connect', () =>{
 
-            let data = { x: 200, y: 200, class: 'mage'}
+            let data = { x: 200, y: 200, class: 0};
 
             player1.emit('new player', data);
         })
@@ -71,7 +75,6 @@ describe('Socket', () =>{
     })
 
     it('Player Fetch', (done) =>{
-
 
         player1.on('players', (players) =>{
         
@@ -88,7 +91,22 @@ describe('Socket', () =>{
 
     })
 
-    it('Player Move', () =>{
+    it('Player Move', (done) =>{
+
+        player2.on('move enemy', (player) =>{
+            
+            
+            console.log(player);
+            
+            done();
+        })
+
+        player1.on('connect', () =>{
+
+            let data = { x: 200, y: 200};
+
+            player1.emit('move player', data);
+        })
 
 
     })
