@@ -27,10 +27,10 @@ class Player extends Phaser.Sprite {
             group.add(this);
 
         }
-        
+
         game.input.keyboard.onDownCallback = function (e) {
 
-            if(e.key == 'm') {
+            if (e.key == 'm') {
 
                 global.mute = !global.mute;
                 game.sound.mute = global.mute;
@@ -138,7 +138,7 @@ class Player extends Phaser.Sprite {
 
     update() {
 
-        if(!this.alive && !(this instanceof Enemy)){
+        if (!this.alive && !(this instanceof Enemy)) {
 
             this.destroy();
             Object.keys(this.music).forEach(function (key) {
@@ -224,7 +224,8 @@ class Enemy extends Player {
 
             case 'warrior': this.health = 15; this.maxhealth = 15; this.atkdamage = 3;
 
-            this.ignoreActive = false;
+                this.ignoreActive = false;
+                this.skillTimer = 2000;
 
                 this.skill = function () {
 
@@ -470,6 +471,29 @@ class Warrior extends Player {
         this.dummy.body.collides([global.enemiesGroup, global.enemiesProjGroup], this.hit, this);
         this.dummy.body.fixedRotation = true;
         this.dummy.source = this;
+
+        this.dashCd = 1500;
+        this.dashFlag = true;
+
+        let p = this;
+
+        document.addEventListener('keydown', function (e) {
+
+            if (e.key == 'Shift' && p.dashFlag) {
+
+                p.x += Math.cos(game.physics.arcade.angleToPointer(p)) * 250;
+                p.y += Math.sin(game.physics.arcade.angleToPointer(p)) * 250;
+                p.dashFlag = false;
+
+                game.time.events.add(p.dashCd, function () {
+
+                    p.dashFlag = true;
+
+                }, this)
+
+            }
+
+        })
 
         this.fireRate = 200;
         this.nextFire = 0;
@@ -732,7 +756,7 @@ class Ranger extends Player {
         this.dummy.body.fixedRotation = true;
         this.dummy.source = this;
 
-        this.fireRate = 200;
+        this.fireRate = 400;
         this.nextFire = 0;
         this.atkdamage = 2;
 
@@ -1026,7 +1050,7 @@ class Mage extends Player {
         this.dummy.body.fixedRotation = true;
         this.dummy.source = this;
 
-        this.fireRate = 200;
+        this.fireRate = 500;
         this.nextFire = 0;
         this.atkdamage = 2;
 
