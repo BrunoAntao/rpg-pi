@@ -17,12 +17,31 @@ chai.use(require('chai-http'));
 
 describe('Socket', () =>{
 
-    let player1, player2;
+    let player1, player2, player3;
+
+    before( () =>{
+
+        player3 = io.connect(socketURL, options);
+
+        player3.on('connect', () =>{
+            
+            let data = { x: 200, y: 200, class: 1};
+            
+            player3.emit('new player', data);
+        })
+
+    })
+
+    after( () =>{
+
+        player3.disconnect();
+    })
 
     beforeEach( () =>{
 
         player1 = io.connect(socketURL, options);
         player2 = io.connect(socketURL, options);
+        
 
     })
 
@@ -71,14 +90,13 @@ describe('Socket', () =>{
             player1.emit('new player', data);
         })
 
-
     })
 
     it('Player Fetch', (done) =>{
 
         player1.on('players', (players) =>{
         
-            expect(players).to.have.lengthOf(0);
+            expect(players).to.have.lengthOf(1);
             
             done();
         })
@@ -93,25 +111,102 @@ describe('Socket', () =>{
     it('Player Move', (done) =>{
 
         player2.on('move enemy', (player) =>{
-            
-            
-            console.log(player);
-            
+                      
+            expect(player).to.haveOwnProperty('x').and.to.equal(300);
+            expect(player).to.haveOwnProperty('y').and.to.equal(400);
+         
             done();
         })
 
         player1.on('connect', () =>{
 
-            let data = { x: 200, y: 200};
+            let data = { x: 300, y: 400};
 
             player1.emit('move player', data);
+        })
+
+    })
+
+    it('Player attack', (done) =>{
+
+        player2.on('player attack', (attack) =>{
+            
+            expect(attack).to.haveOwnProperty('id');
+            expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/4);
+            
+            done();
+            
+        })
+             
+        player1.on('connect', () =>{
+                     
+            player1.emit('player attack', Math.PI/4);
+            
         })
 
 
     })
 
-    it('Player attack', () =>{
+    describe('Player skill', () =>{
+        
+        it('Skill with angle', (done) =>{
+        
+            player2.on('player skill', (attack) =>{
+        
+                expect(attack).to.haveOwnProperty('id');
+                expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/6);
+        
+                done();
+        
+            })
+         
+            player1.on('connect', () =>{
+                 
+                player1.emit('player skill', Math.PI/6);
+        
+            })
+        })
+        
+        it('Skill with no angle', (done) =>{
+        
+            player2.on('player skill', (attack) =>{      
+        
+                expect(attack).to.haveOwnProperty('id')
+                expect(attack).to.not.haveOwnProperty('angle')
+        
+                done();
+        
+            })
+        
+            player1.on('connect', () =>{
+        
+                player1.emit('player skill');
+                  
+            })
+        
+        })
+         
+    })
 
+    it('Remove Player', (done) =>{
+
+        let id;
+
+        player2.on('remove enemy', (enemy) =>{   
+            
+            expect(enemy).to.equal(id);
+            
+            done();
+          
+        });
+            
+        player1.on('connect', () =>{
+
+            id = player1.id;
+            
+            player1.emit('remove enemy');
+                 
+        });
 
     })
 
