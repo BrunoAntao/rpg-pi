@@ -91,6 +91,8 @@ gameState = {
 
         }
 
+        game.sound.mute = global.mute;
+
         this.Mgroup = game.add.group();
         global.enemies = [];
         socket.emit('fetch players');

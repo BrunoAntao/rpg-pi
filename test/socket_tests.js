@@ -111,79 +111,26 @@ describe('Socket', () =>{
 
     it('Player Move', (done) =>{
 
-        player2.on('new player', (player) =>{
-
-            expect(player).to.haveOwnProperty('x').and.to.equal(300);
-            expect(player).to.haveOwnProperty('y').and.to.equal(300);
+        player2.on('move enemy', (player) =>{
+            
+            
+            console.log(player);
             
             done();
         })
 
         player1.on('connect', () =>{
 
-            let data = { x: 300, y: 300};
+            let data = { x: 200, y: 200};
 
-            player1.emit('new player', data);
-
-        })
-    })
-
-    it('Player attack', (done) =>{
-
-        player2.on('player attack', (attack) =>{
-            
-            expect(attack).to.haveOwnProperty('id')
-            expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/4);
-                        
-            done();
-        })
-            
-        player1.on('connect', () =>{
-            
-            player1.emit('player attack', Math.PI/4);
-            
+            player1.emit('move player', data);
         })
 
 
     })
 
-    describe('Player skill', () =>{
+    it('Player attack', () =>{
 
-        it('Skill with angle', (done) =>{
-
-            player2.on('player skill', (attack) =>{
-                
-                expect(attack).to.haveOwnProperty('id')
-                expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/6);
-                            
-                done();
-            })
-                
-            player1.on('connect', () =>{
-                
-                player1.emit('player skill', Math.PI/6);
-                
-            })
-
-        })
-
-        it('Skill with no angle', (done) =>{
-
-            player2.on('player skill', (attack) =>{
-                
-                expect(attack).to.haveOwnProperty('id')
-                expect(attack).to.not.haveOwnProperty('angle')
-                            
-                done();
-            })
-                
-            player1.on('connect', () =>{
-                
-                player1.emit('player skill');
-                
-            })
-
-        })
 
     })
 
