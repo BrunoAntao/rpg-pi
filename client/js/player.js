@@ -199,12 +199,122 @@ class Enemy extends Player {
 
         super(x, y, key);
         this.anchor.setTo(0.5, 1);
+        this.group = group;
 
         switch (key) {
 
-            case 'warrior': this.health = 15; this.maxhealth = 15; this.atkdamage = 3; break;
-            case 'ranger': this.health = 10; this.maxhealth = 10; this.atkdamage = 2; break;
-            case 'mage': this.health = 8; this.maxhealth = 8; this.atkdamage = 2; break;
+            case 'warrior': this.health = 15; this.maxhealth = 15; this.atkdamage = 3;
+
+                this.skill = function () {
+
+                    this.loadTexture('warrior_skill');
+                    this.resource -= this.skillCost;
+                    this.ignoreActive = true;
+                    game.time.events.add(this.skillTimer, function () {
+
+                        this.ignoreActive = false;
+                        this.loadTexture('warrior');
+
+                    }, this)
+
+                }
+
+                break;
+            case 'ranger': this.health = 10; this.maxhealth = 10; this.atkdamage = 2;
+
+                this.satkdamage = 3;
+
+                this.daggers = game.add.group();
+                this.daggers.enableBody = true;
+                this.daggers.physicsBodyType = Phaser.Physics.P2JS;
+
+                this.daggers.createMultiple(50, 'ranger_skill');
+                this.daggers.setAll('checkWorldBounds', true);
+                this.daggers.setAll('outOfBoundsKill', true);
+                this.daggers.setAll('anchor', { x: 0.5, y: 0.5 });
+                this.daggers.setAll('smoothed', false);
+
+                this.daggers.forEach(function (dagger) {
+
+                    dagger.body.clearShapes();
+                    dagger.body.loadPolygon('arrow', 'dagger');
+
+                    dagger.source = this;
+
+                    dagger.update = function () {
+
+                        if (this.alive && game.math.distance(this.x, this.y, this.source.x, this.source.y) > 150) {
+
+                            this.kill();
+
+                        }
+
+                    }
+
+                    dagger.body.setCollisionGroup(global.enemiesProjGroup);
+                    dagger.body.collides(global.playerGroup, this.hit, this);
+
+                }, this)
+
+                this.group.add(this.daggers);
+
+                this.skill = function (angle) {
+
+                    var dagger = this.daggers.getFirstDead();
+
+                    dagger.reset(this.x, this.y);
+
+                    let speed = 50000;
+
+                    dagger.rotation = angle;
+                    dagger.body.rotation = angle;
+
+                    dagger.body.force.x = Math.cos(angle) * speed;
+                    dagger.body.force.y = Math.sin(angle) * speed;
+
+
+                }
+
+                break;
+            case 'mage': this.health = 8; this.maxhealth = 8; this.atkdamage = 2;
+
+                this.skill = function (angle) {
+
+                    var proj = this.projs.getFirstDead();
+
+                    proj.reset(this.x, this.y);
+
+                    var proj2 = this.projs.getFirstDead();
+
+                    proj2.reset(this.x, this.y);
+
+                    var proj3 = this.projs.getFirstDead();
+
+                    proj3.reset(this.x, this.y);
+
+                    let speed = 50000;
+
+                    proj.rotation = angle;
+                    proj.body.rotation = angle;
+
+                    proj.body.force.x = Math.cos(angle) * speed;
+                    proj.body.force.y = Math.sin(angle) * speed;
+
+                    proj2.rotation = angle - 45 * Math.PI / 180;
+                    proj2.body.rotation = angle - 45 * Math.PI / 180;
+
+                    proj2.body.force.x = Math.cos(angle - 45 * Math.PI / 180) * speed;
+                    proj2.body.force.y = Math.sin(angle - 45 * Math.PI / 180) * speed;
+
+                    proj3.rotation = angle + 45 * Math.PI / 180;
+                    proj3.body.rotation = angle + 45 * Math.PI / 180;
+
+                    proj3.body.force.x = Math.cos(angle + 45 * Math.PI / 180) * speed;
+                    proj3.body.force.y = Math.sin(angle + 45 * Math.PI / 180) * speed;
+
+                }
+
+                break;
 
         }
 
@@ -218,7 +328,6 @@ class Enemy extends Player {
         this.body.angle = 180;
         this.class = key;
         this.id = id;
-        this.group = group;
         this.index = index;
         this.index[id] = this;
 
@@ -427,7 +536,15 @@ class Warrior extends Player {
 
             }, this);
 
-            a.sprite.source.damage(b.sprite.source.atkdamage);
+            if (b.sprite.key == 'ranger_skill') {
+
+                a.sprite.source.damage(b.sprite.source.satkdamage);
+
+            } else {
+
+                a.sprite.source.damage(b.sprite.source.atkdamage);
+
+            }
 
         }
 
@@ -499,6 +616,8 @@ class Warrior extends Player {
     skill() {
 
         if (this.resource >= this.skillCost) {
+
+            socket.emit('player skill');
 
             this.loadTexture('warrior_skill');
             this.resource -= this.skillCost;
@@ -693,7 +812,15 @@ class Ranger extends Player {
 
             }, this);
 
-            a.sprite.source.damage(b.sprite.source.atkdamage);
+            if (b.sprite.key == 'ranger_skill') {
+
+                a.sprite.source.damage(b.sprite.source.satkdamage);
+
+            } else {
+
+                a.sprite.source.damage(b.sprite.source.atkdamage);
+
+            }
 
         }
 
@@ -808,6 +935,8 @@ class Ranger extends Player {
 
             dagger.body.force.x = Math.cos(game.physics.arcade.angleToPointer(dagger)) * speed;
             dagger.body.force.y = Math.sin(game.physics.arcade.angleToPointer(dagger)) * speed;
+
+            socket.emit('player skill', game.physics.arcade.angleToPointer(dagger));
 
         }
 
@@ -924,7 +1053,15 @@ class Mage extends Player {
 
             }, this);
 
-            a.sprite.source.damage(b.sprite.source.atkdamage);
+            if (b.sprite.key == 'ranger_skill') {
+
+                a.sprite.source.damage(b.sprite.source.satkdamage);
+
+            } else {
+
+                a.sprite.source.damage(b.sprite.source.atkdamage);
+
+            }
 
         }
 
@@ -1027,6 +1164,8 @@ class Mage extends Player {
 
             proj3.body.force.x = Math.cos(game.physics.arcade.angleToPointer(proj3) + 45 * Math.PI / 180) * speed;
             proj3.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj3) + 45 * Math.PI / 180) * speed;
+
+            socket.emit('player skill', game.physics.arcade.angleToPointer(proj));
 
         }
 

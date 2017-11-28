@@ -143,6 +143,12 @@ gameState = {
 
             })
 
+            socket.on('player skill', function (data) {
+
+                global.enemies[data.id].skill(data.angle);
+
+            })
+
         });
 
     },
