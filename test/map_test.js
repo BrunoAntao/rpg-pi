@@ -86,11 +86,9 @@ describe('Map', () =>{
 
         it('#checkDistance()', () => {
 
-            let resultTrue = map.checkDistante({x: Math.floor(Math.random()*(800 - 700 + 1) + 700), y: Math.floor(Math.random()*(800 - 700 + 1) + 700)},
-                                                [{x:0 , y: 0}]);
+            let resultTrue = map.checkDistante({x: 251, y: 251}, [{x:0 , y: 0}]);
 
-            let resultFalse = map.checkDistante({x: Math.floor(Math.random()*(60 - 50 + 1) + 50), y: Math.floor(Math.random()*(60 - 50 + 1) + 50)},
-                                                [{x: 0, y: 0}]);
+            let resultFalse = map.checkDistante({x: 1, y: 1}, [{x: 0, y: 0}]);
 
             chai.assert.isFalse(resultFalse);
             chai.assert.isTrue(resultTrue);
