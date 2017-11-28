@@ -51,7 +51,7 @@ describe('Socket', () =>{
         player2.disconnect();
     })
 
-    it('Map fetch', (done) =>{
+    it('Map fetch', () =>{
 
         player1.on('map', (map) =>{
 
@@ -61,7 +61,6 @@ describe('Socket', () =>{
             expect(map).to.haveOwnProperty('entities');
             expect(map).to.haveOwnProperty('capPoints');
 
-            done();
         })
             
         player1.on('connect', () =>{
@@ -72,7 +71,7 @@ describe('Socket', () =>{
 
     })
 
-    it('New Player', (done) =>{
+    it('New Player', () =>{
 
         player2.on('new player', (player) =>{
                     
@@ -80,7 +79,6 @@ describe('Socket', () =>{
             expect(player).to.haveOwnProperty('y').and.to.equal(200);
             expect(player).to.haveOwnProperty('class').and.to.equal('warrior');
             
-            done();
         })
 
         player1.on('connect', () =>{
@@ -92,13 +90,12 @@ describe('Socket', () =>{
 
     })
 
-    it('Player Fetch', (done) =>{
+    it('Player Fetch', () =>{
 
         player1.on('players', (players) =>{
         
             expect(players).to.have.lengthOf(1);
             
-            done();
         })
 
         player1.on('connect', () =>{
@@ -108,14 +105,13 @@ describe('Socket', () =>{
 
     })
 
-    it('Player Move', (done) =>{
+    it('Player Move', () =>{
 
         player2.on('move enemy', (player) =>{
                       
             expect(player).to.haveOwnProperty('x').and.to.equal(300);
             expect(player).to.haveOwnProperty('y').and.to.equal(400);
          
-            done();
         })
 
         player1.on('connect', () =>{
@@ -127,14 +123,13 @@ describe('Socket', () =>{
 
     })
 
-    it('Player attack', (done) =>{
+    it('Player attack', () =>{
 
         player2.on('player attack', (attack) =>{
             
             expect(attack).to.haveOwnProperty('id');
             expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/4);
             
-            done();
             
         })
              
@@ -149,14 +144,12 @@ describe('Socket', () =>{
 
     describe('Player skill', () =>{
         
-        it('Skill with angle', (done) =>{
+        it('Skill with angle', () =>{
         
             player2.on('player skill', (attack) =>{
         
                 expect(attack).to.haveOwnProperty('id');
                 expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/6);
-        
-                done();
         
             })
          
@@ -167,14 +160,13 @@ describe('Socket', () =>{
             })
         })
         
-        it('Skill with no angle', (done) =>{
+        it('Skill with no angle', () =>{
         
             player2.on('player skill', (attack) =>{      
         
                 expect(attack).to.haveOwnProperty('id')
                 expect(attack).to.not.haveOwnProperty('angle')
         
-                done();
         
             })
         
@@ -188,7 +180,7 @@ describe('Socket', () =>{
          
     })
 
-    it('Remove Player', (done) =>{
+    it('Remove Player', () =>{
 
         let id;
 
@@ -196,7 +188,6 @@ describe('Socket', () =>{
             
             expect(enemy).to.equal(id);
             
-            done();
           
         });
             
