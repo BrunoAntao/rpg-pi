@@ -6,9 +6,12 @@ let fs = require('fs');
 let io = require('socket.io-client');
 let socketURL = 'http://localhost:80';
 
+<<<<<<< HEAD
 let testMap = JSON.parse(fs.readFileSync('./server/map.json'));
 
 
+=======
+>>>>>>> 1507191ec2518e035cbfd4cb5b15cc3aa0525b5f
 let options = {
 
     transports: ['websocket'],
@@ -38,16 +41,25 @@ describe('Socket', () =>{
     it('Map fetch', (done) =>{
 
         player1.on('map', (map) =>{
+<<<<<<< HEAD
                     
             assert(testMap === map);
             
+=======
+
+            expect(map).to.haveOwnProperty('width').and.to.equal(6400);
+            expect(map).to.haveOwnProperty('height').and.to.equal(3200);
+            expect(map).to.haveOwnProperty('biomes');
+            expect(map).to.haveOwnProperty('entities');
+            expect(map).to.haveOwnProperty('capPoints');
+
+>>>>>>> 1507191ec2518e035cbfd4cb5b15cc3aa0525b5f
             done();
         })
             
         player1.on('connect', () =>{
             
             player1.emit('fetch map');
-            
             
         })
 
@@ -87,7 +99,6 @@ describe('Socket', () =>{
 
             player1.emit('fetch players');
         })
-
 
     })
 
