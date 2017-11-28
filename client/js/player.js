@@ -140,6 +140,12 @@ class Player extends Phaser.Sprite {
 
             }
 
+            if (this.ctrls.mute.isDown) {
+
+                game.sound.mute = true;
+
+            }
+
             if (this.ctrls.left.isDown) {
 
                 this.x -= this.speed;
