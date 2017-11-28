@@ -128,8 +128,43 @@ describe('Socket', () =>{
 
     })
 
-    it('Player skill', () =>{
+    describe('Player skill', () =>{
 
+        it('Skill with angle', (done) =>{
+
+            player2.on('player skill', (attack) =>{
+                
+                expect(attack).to.haveOwnProperty('id')
+                expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/6);
+                            
+                done();
+            })
+                
+            player1.on('connect', () =>{
+                
+                player1.emit('player skill', Math.PI/6);
+                
+            })
+
+        })
+
+        it('Skill with no angle', (done) =>{
+
+            player2.on('player skill', (attack) =>{
+                
+                expect(attack).to.haveOwnProperty('id')
+                expect(attack).to.not.haveOwnProperty('angle')
+                            
+                done();
+            })
+                
+            player1.on('connect', () =>{
+                
+                player1.emit('player skill');
+                
+            })
+
+        })
 
     })
 
