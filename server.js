@@ -240,5 +240,3 @@ io.on('connection', function (socket) {
 
     });
 });
-
-module.exports = {functions: functions};
