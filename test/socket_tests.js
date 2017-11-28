@@ -8,7 +8,6 @@ let socketURL = 'http://localhost:80';
 
 let testMap = JSON.parse(fs.readFileSync('./server/map.json'));
 
-
 let options = {
 
     transports: ['websocket'],
@@ -39,7 +38,7 @@ describe('Socket', () =>{
 
         player1.on('map', (map) =>{
                     
-            assert(testMap === map);
+            //assert(testMap === map);
             
             done();
         })
@@ -93,25 +92,43 @@ describe('Socket', () =>{
 
     it('Player Move', (done) =>{
 
-        player2.on('move enemy', (player) =>{
-            
-            
-            console.log(player);
+        player2.on('new player', (player) =>{
+
+            expect(player).to.haveOwnProperty('x').and.to.equal(300);
+            expect(player).to.haveOwnProperty('y').and.to.equal(300);
             
             done();
         })
 
         player1.on('connect', () =>{
 
-            let data = { x: 200, y: 200};
+            let data = { x: 300, y: 300};
 
-            player1.emit('move player', data);
+            player1.emit('new player', data);
+
+        })
+    })
+
+    it('Player attack', (done) =>{
+
+        player2.on('player attack', (attack) =>{
+            
+            expect(attack).to.haveOwnProperty('id')
+            expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/4);
+                        
+            done();
+        })
+            
+        player1.on('connect', () =>{
+            
+            player1.emit('player attack', Math.PI/4);
+            
         })
 
 
     })
 
-    it('Player attack', () =>{
+    it('Player skill', () =>{
 
 
     })
