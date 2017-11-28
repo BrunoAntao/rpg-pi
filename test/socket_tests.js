@@ -55,7 +55,7 @@ describe('Socket', () =>{
         player1.on('new player', (player) =>{
             
             
-            console.log(player1);
+            console.log(player);
             
             done();
         })
@@ -70,7 +70,20 @@ describe('Socket', () =>{
 
     })
 
-    it('Player Fetch', () =>{
+    it('Player Fetch', (done) =>{
+
+
+        player1.on('players', (players) =>{
+        
+            expect(players).to.have.lengthOf(0);
+            
+            done();
+        })
+
+        player1.on('connect', () =>{
+
+            player1.emit('fetch players');
+        })
 
 
     })
