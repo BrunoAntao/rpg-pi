@@ -320,6 +320,7 @@ class Warrior extends Player {
         this.group = group;
         this.flag = true;
         this.hitflag = true;
+        this.pflag = true;
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
@@ -404,22 +405,11 @@ class Warrior extends Player {
 
     hit(a, b) {
 
-        if (this.hitflag && !this.ignoreActive) {
+        if (this.hitflag && !this.ignoreActive && !(b.sprite.source instanceof Enemy)) {
 
             this.hitflag = false;
 
-            if (b.sprite.source instanceof Enemy) {
-
-                a.sprite.source.damage(b.sprite.source.atkdamage);
-
-            } else {
-
-                a.sprite.source.damage(1);
-
-            }
-
-            this.collision = game.add.audio('hurt', 0.3);
-            this.collision.play();
+            a.sprite.source.damage(1);
 
             game.time.events.add(500, function () {
 
@@ -427,7 +417,22 @@ class Warrior extends Player {
 
             }, this);
 
+        } else if (this.pflag) {
+
+            this.pflag = false;
+
+            game.time.events.add(10, function () {
+
+                this.pflag = true;
+
+            }, this);
+
+            a.sprite.source.damage(b.sprite.source.atkdamage);
+
         }
+
+        this.collision = game.add.audio('hurt', 0.3);
+        this.collision.play();
 
     }
 
@@ -547,6 +552,7 @@ class Ranger extends Player {
         this.flag = true;
         this.sflag = true;
         this.hitflag = true;
+        this.pflag = true;
 
         this.music = {
 
@@ -665,30 +671,34 @@ class Ranger extends Player {
 
     hit(a, b) {
 
-        if (this.hitflag) {
+        if (this.hitflag && !(b.sprite.source instanceof Enemy)) {
 
             this.hitflag = false;
 
-            if (b.sprite.source instanceof Enemy) {
-
-                a.sprite.source.damage(b.sprite.source.atkdamage);
-
-            } else {
-
-                a.sprite.source.damage(1);
-
-            }
+            a.sprite.source.damage(1);
 
             game.time.events.add(500, function () {
 
                 this.hitflag = true;
-                this.collision = game.add.audio('hurtran', 0.3);
-                this.collision.play();
-
 
             }, this);
 
+        } else if (this.pflag) {
+
+            this.pflag = false;
+
+            game.time.events.add(10, function () {
+
+                this.pflag = true;
+
+            }, this);
+
+            a.sprite.source.damage(b.sprite.source.atkdamage);
+
         }
+
+        this.collision = game.add.audio('hurt', 0.3);
+        this.collision.play();
 
     }
 
@@ -823,6 +833,7 @@ class Mage extends Player {
         this.group = group;
         this.flag = true;
         this.hitflag = true;
+        this.pflag = true;
 
         game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
@@ -891,30 +902,34 @@ class Mage extends Player {
 
     hit(a, b) {
 
-        if (this.hitflag) {
+        if (this.hitflag && !(b.sprite.source instanceof Enemy)) {
 
             this.hitflag = false;
 
-            if (b.sprite.source instanceof Enemy) {
+            a.sprite.source.damage(1);
 
-                a.sprite.source.damage(b.sprite.source.atkdamage);
-
-            } else {
-
-                a.sprite.source.damage(1);
-
-            }
-
-            this.collision = game.add.audio('hurtmag', 0.5);
-
-            this.collision.play();
             game.time.events.add(500, function () {
 
                 this.hitflag = true;
 
             }, this);
 
+        } else if (this.pflag) {
+
+            this.pflag = false;
+
+            game.time.events.add(10, function () {
+
+                this.pflag = true;
+
+            }, this);
+
+            a.sprite.source.damage(b.sprite.source.atkdamage);
+
         }
+
+        this.collision = game.add.audio('hurt', 0.3);
+        this.collision.play();
 
     }
 
