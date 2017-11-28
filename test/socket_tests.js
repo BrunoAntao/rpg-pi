@@ -205,8 +205,7 @@ describe('Socket', () =>{
             id = player1.id;
             
             player1.emit('remove enemy');
-
-                      
+                 
         });
 
     })

@@ -23,9 +23,13 @@ describe('Server', () => {
 
       let prevMap = fs.readFileSync('./server/map.json');
 
+      let map = JSON.parse(prevMap);
+
       serverFunctions.generateMap();
 
       let newMap = fs.readFileSync('./server/map.json');
+
+      fs.writeFileSync('./server/map.json', JSON.stringify(map));
 
       assert(prevMap !== newMap);
 
