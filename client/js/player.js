@@ -137,6 +137,13 @@ class Player extends Phaser.Sprite {
 
     update() {
 
+        if(!this.alive && !(this instanceof Enemy)){
+
+            this.destroy();
+            game.state.start('Menu');
+
+        }
+
         if (typeof this.ctrls != 'undefined' && this.alive) {
 
             if (this.ctrls.up.isDown) {
@@ -536,7 +543,7 @@ class Warrior extends Player {
 
             }, this);
 
-        } else if (this.pflag) {
+        } else if (this.pflag && !this.ignoreActive) {
 
             this.pflag = false;
 
