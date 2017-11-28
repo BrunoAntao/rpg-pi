@@ -56,7 +56,9 @@ gameState = {
         game.load.audio('desert', ['client/assets/sounds/desert.m4a', 'client/assets/sounds/desert.ogg']);
         game.load.audio('ice', ['client/assets/sounds/ice.m4a', 'client/assets/sounds/ice.ogg']);
         game.load.audio('fire', ['client/assets/sounds/fire.m4a', 'client/assets/sounds/fire.ogg']);
-        game.load.audio('forest', ['client/assets/sounds/jungle.m4a', 'client/assets/sounds/jungle.ogg'])
+        game.load.audio('forest', ['client/assets/sounds/jungle.m4a', 'client/assets/sounds/jungle.ogg']);
+        game.load.audio('slime', 'client/assets/sounds/slime.m4a');
+        
     },
 
     create: function () {
