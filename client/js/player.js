@@ -639,12 +639,17 @@ class Warrior extends Player {
             this.loadTexture('warrior_skill');
             this.resource -= this.skillCost;
             this.ignoreActive = true;
+
             game.time.events.add(this.skillTimer, function () {
 
                 this.ignoreActive = false;
                 this.loadTexture('warrior');
 
+
             }, this)
+
+            this.rage = game.add.audio('rage', 0.5);
+            this.rage.play();
 
         }
 

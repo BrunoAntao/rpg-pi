@@ -59,6 +59,7 @@ gameState = {
         game.load.audio('forest', ['client/assets/sounds/jungle.m4a', 'client/assets/sounds/jungle.ogg']);
         game.load.audio('slime', 'client/assets/sounds/slime.m4a');
         game.load.audio('knife', 'client/assets/sounds/knife.m4a');
+        game.load.audio('rage', 'client/assets/sounds/rage.m4a');        
         
         
     },
