@@ -29,12 +29,12 @@ describe('Player', () => {
 
         it('#update()', ()=>{
 
-            chai.assert.isFunction(player.kill)
+            chai.assert.isFunction(player.update)
         })
 
         it('#kill()', () =>{
 
-            chai.assert.isFunction(player.update);
+            chai.assert.isFunction(player.kill);
         })
     })
 
