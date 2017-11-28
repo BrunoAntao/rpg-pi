@@ -1227,7 +1227,10 @@ class Mage extends Player {
 
             socket.emit('player skill', game.physics.arcade.angleToPointer(proj));
             
-           
+            this.skillSpell = game.add.audio('skillspell', 0.2);
+            this.skillSpell.play();
+            
+
         }
 
     }
