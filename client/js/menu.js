@@ -13,6 +13,8 @@ menuState = {
         game.stage.disableVisibilityChange = true;
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
+        socket = io();
+
         options = [{ name: 'Play', down: function () { game.state.start('Char'); } },
         { name: 'Controls', down: function () { game.state.start('Settings'); } }];
 

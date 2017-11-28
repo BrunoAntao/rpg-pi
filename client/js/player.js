@@ -32,7 +32,8 @@ class Player extends Phaser.Sprite {
 
             if(e.key == 'm') {
 
-                game.sound.mute = !game.sound.mute;
+                global.mute = !global.mute;
+                game.sound.mute = global.mute;
 
             }
 
@@ -140,6 +141,12 @@ class Player extends Phaser.Sprite {
         if(!this.alive && !(this instanceof Enemy)){
 
             this.destroy();
+            Object.keys(this.music).forEach(function (key) {
+
+                this.music[key].stop();
+
+            }, this)
+            socket.disconnect();
             game.state.start('Menu');
 
         }
@@ -217,10 +224,11 @@ class Enemy extends Player {
 
             case 'warrior': this.health = 15; this.maxhealth = 15; this.atkdamage = 3;
 
+            this.ignoreActive = false;
+
                 this.skill = function () {
 
                     this.loadTexture('warrior_skill');
-                    this.resource -= this.skillCost;
                     this.ignoreActive = true;
                     game.time.events.add(this.skillTimer, function () {
 
@@ -228,6 +236,9 @@ class Enemy extends Player {
                         this.loadTexture('warrior');
 
                     }, this)
+
+                    this.rage = game.add.audio('rage', 0.5);
+                    this.rage.play();
 
                 }
 

@@ -251,6 +251,12 @@ io.on('connection', function (socket) {
 
     });
 
+    socket.on('remove enemy', function () {
+
+        socket.broadcast.emit('remove enemy', socket.id);
+
+    })
+
     socket.on('disconnect', function () {
 
         console.log('User ' + socket.id + ': disconected', color);

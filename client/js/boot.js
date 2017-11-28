@@ -1,6 +1,6 @@
 var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, 'game');
 
-var socket = io();
+var socket = {};
 
 window.addEventListener('resize', function () {
 
@@ -54,7 +54,11 @@ function codeToKey(code) {
 
 }
 
-var global = {};
+var global = {
+
+    mute:false
+
+};
 
 game.state.add('Menu', menuState);
 game.state.add('Char', charState);
