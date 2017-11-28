@@ -20,7 +20,7 @@ class CapturePoint extends Phaser.Sprite{
         this.bg.lineStyle(2, 0x000000, 1);
         this.bg.drawCircle(this.x, this.y, this.range * 2);
 
-        this.timer = game.time.events.loop(500, this.spawn, this);
+        //this.timer = game.time.events.loop(500, this.spawn, this);
         this.spawned = game.add.group();
 
         game.add.existing(this);

@@ -27,6 +27,17 @@ class Player extends Phaser.Sprite {
             group.add(this);
 
         }
+
+        game.input.keyboard.onDownCallback = function (e) {
+
+            if(e.key == 'm') {
+
+                game.sound.mute = !game.sound.mute;
+
+            }
+
+        }
+
     }
 
     kill() {
@@ -137,12 +148,6 @@ class Player extends Phaser.Sprite {
             if (this.ctrls.down.isDown) {
 
                 this.y += this.speed;
-
-            }
-
-            if (this.ctrls.mute.isDown) {
-
-                game.sound.mute = true;
 
             }
 
