@@ -277,6 +277,8 @@ class Enemy extends Player {
                     dagger.body.force.x = Math.cos(angle) * speed;
                     dagger.body.force.y = Math.sin(angle) * speed;
 
+                    this.sound = game.add.audio('knife', 0.2);
+                    this.sound.play();
 
                 }
 
@@ -316,6 +318,9 @@ class Enemy extends Player {
 
                     proj3.body.force.x = Math.cos(angle + 45 * Math.PI / 180) * speed;
                     proj3.body.force.y = Math.sin(angle + 45 * Math.PI / 180) * speed;
+
+                    this.sound = game.add.audio('spell', 0.2);
+                    this.sound.play();
 
                 }
 
