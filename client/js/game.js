@@ -48,7 +48,7 @@ gameState = {
         game.load.spritesheet('slime', 'client/assets/enemies/slime.png', 100, 80);
 
         game.load.audio('spell', 'client/assets/sounds/spell.mp3');
-        game.load.audio('hurtmag', 'client/assets/sounds/hurtmage.mp3');
+        game.load.audio('hurtmag', 'client/assets/sounds/hurtmage.m4a');
         game.load.audio('hurt', 'client/assets/sounds/hurt.m4a');
         game.load.audio('hurtran', 'client/assets/sounds/hurtwar.mp3');
         game.load.audio('arrow', 'client/assets/sounds/arrow.m4a');
