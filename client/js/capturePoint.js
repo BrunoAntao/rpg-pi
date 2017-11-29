@@ -98,37 +98,47 @@ class CapturePoint extends Phaser.Sprite {
 
         } else {
 
-            Object.keys(global.enemies).forEach(function (key) {
+            if (Object.keys(global.enemies).length > 0) {
 
-                let enemy = global.enemies[key];
+                Object.keys(global.enemies).forEach(function (key) {
 
-                if (game.math.distance(this.x, this.y, enemy.x, enemy.y) < this.range) {
+                    let enemy = global.enemies[key];
 
-                    if (this.prog < this.range) {
+                    if (game.math.distance(this.x, this.y, enemy.x, enemy.y) < this.range) {
+
+                        if (this.prog < this.range) {
+
+                            this.loader.clear();
+
+                            this.prog++;
+
+                            this.loader.beginFill(0x000000, 0.5);
+                            this.loader.drawCircle(this.x, this.y, this.prog * 2);
+                            this.loader.endFill();
+
+                        } else if (enemy.alive) {
+
+                            this.captured = true;
+
+                        }
+
+                    } else {
 
                         this.loader.clear();
-
-                        this.prog++;
-
-                        this.loader.beginFill(0x000000, 0.5);
-                        this.loader.drawCircle(this.x, this.y, this.prog * 2);
-                        this.loader.endFill();
-
-                    } else if (enemy.alive) {
-
-                        this.captured = true;
+                        this.prog = 0;
+                        this.captured = false;
 
                     }
 
-                } else {
+                }, this)
 
-                    this.loader.clear();
-                    this.prog = 0;
-                    this.captured = false;
+            } else {
 
-                }
+                this.loader.clear();
+                this.prog = 0;
+                this.captured = false;
 
-            }, this)
+            }
 
         }
 
