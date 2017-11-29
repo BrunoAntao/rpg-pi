@@ -47,12 +47,12 @@ gameState = {
 
         game.load.spritesheet('slime', 'client/assets/enemies/slime.png', 100, 80);
 
-        game.load.audio('spell', 'client/assets/sounds/spell.mp3');
+        game.load.audio('spell', 'client/assets/sounds/spell.m4a');
         game.load.audio('hurtmag', 'client/assets/sounds/hurtmage.m4a');
         game.load.audio('hurt', 'client/assets/sounds/hurt.m4a');
-        game.load.audio('hurtran', 'client/assets/sounds/hurtwar.mp3');
+        game.load.audio('hurtran', 'client/assets/sounds/hurtwar.m4a');
         game.load.audio('arrow', 'client/assets/sounds/arrow.m4a');
-        game.load.audio('sword', 'client/assets/sounds/sword.mp3');
+        game.load.audio('sword', 'client/assets/sounds/sword.m4a');
         game.load.audio('desert', ['client/assets/sounds/desert.m4a', 'client/assets/sounds/desert.ogg']);
         game.load.audio('ice', ['client/assets/sounds/ice.m4a', 'client/assets/sounds/ice.ogg']);
         game.load.audio('fire', ['client/assets/sounds/fire.m4a', 'client/assets/sounds/fire.ogg']);
