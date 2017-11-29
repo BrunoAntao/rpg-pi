@@ -104,7 +104,7 @@ class CapturePoint extends Phaser.Sprite {
 
                     let enemy = global.enemies[key];
 
-                    if (game.math.distance(this.x, this.y, enemy.x, enemy.y) < this.range) {
+                    if (game.math.distance(this.x, this.y, enemy.x, enemy.y + enemy.height/2) < this.range) {
 
                         if (this.prog < this.range) {
 
