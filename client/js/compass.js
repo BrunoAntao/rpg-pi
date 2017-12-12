@@ -4,7 +4,7 @@ class Compass extends Array {
 
         super();
 
-        map.capPoints.forEach(function (point) {
+        map.caps.forEach(function (point) {
 
             this.push(new Pointer(target, point));
 
@@ -39,6 +39,10 @@ class Pointer extends Phaser.Sprite {
         if(!this.target.inCamera && this.target.captured) {
 
             this.tint = 0xff0000;
+
+        } else {
+
+            this.tint = 0xffffff;
 
         }
 
