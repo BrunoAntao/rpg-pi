@@ -338,8 +338,8 @@ class Enemy extends Player {
                     proj3.body.force.x = Math.cos(angle + 45 * Math.PI / 180) * speed;
                     proj3.body.force.y = Math.sin(angle + 45 * Math.PI / 180) * speed;
 
-                    this.sound = game.add.audio('spell', 0.2);
-                    this.sound.play();
+                    this.skillSpell = game.add.audio('skillspell', 0.2);
+                    this.skillSpell.play();
 
                 }
 
@@ -519,8 +519,8 @@ class Warrior extends Player {
         this.music = {
 
             forest: game.add.audio('forest', 0.4, true),
-            fire: game.add.audio('fire', 0.4, true),
-            ice: game.add.audio('ice', 0.4, true),
+            fire: game.add.audio('fire', 0.458, true),
+            ice: game.add.audio('ice', 0.3, true),
             desert: game.add.audio('desert', 0.4, true),
 
         }
@@ -733,8 +733,8 @@ class Ranger extends Player {
         this.music = {
 
             forest: game.add.audio('forest', 0.4, true),
-            fire: game.add.audio('fire', 0.4, true),
-            ice: game.add.audio('ice', 0.4, true),
+            fire: game.add.audio('fire', 0.458, true),
+            ice: game.add.audio('ice', 0.3, true),
             desert: game.add.audio('desert', 0.4, true),
 
         }
@@ -1030,8 +1030,8 @@ class Mage extends Player {
         this.music = {
 
             forest: game.add.audio('forest', 0.4, true),
-            fire: game.add.audio('fire', 0.4, true),
-            ice: game.add.audio('ice', 0.4, true),
+            fire: game.add.audio('fire', 0.458, true),
+            ice: game.add.audio('ice', 0.3, true),
             desert: game.add.audio('desert', 0.4, true),
 
         }
@@ -1226,6 +1226,10 @@ class Mage extends Player {
             proj3.body.force.y = Math.sin(game.physics.arcade.angleToPointer(proj3) + 45 * Math.PI / 180) * speed;
 
             socket.emit('player skill', game.physics.arcade.angleToPointer(proj));
+            
+            this.skillSpell = game.add.audio('skillspell', 0.2);
+            this.skillSpell.play();
+            
 
         }
 
