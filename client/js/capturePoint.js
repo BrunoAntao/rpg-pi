@@ -1,6 +1,6 @@
-class CapturePoint extends Phaser.Sprite {
+class CapturePoint extends Phaser.Sprite{
 
-    constructor(x, y, key, biome, group) {
+    constructor(x, y, key, biome, group){
 
         super(game, x, y, key);
 
@@ -29,9 +29,9 @@ class CapturePoint extends Phaser.Sprite {
 
     spawn() {
 
-        if (this.spawnCount < 14) {
+        if(this.spawnCount < 14) {
 
-            this.spawned.add(new Slime(this.x + Math.random() * this.range - this.range / 2, this.y + Math.random() * this.range - this.range / 2, this));
+            this.spawned.add(new Slime(this.x + Math.random() * this.range - this.range/2, this.y + Math.random() * this.range - this.range/2, this));
             this.spawnCount++;
 
         }
@@ -40,13 +40,13 @@ class CapturePoint extends Phaser.Sprite {
 
     update() {
 
-        if (this.spawned.length > 1) {
+        if(this.spawned.length > 1) {
 
             var notarget = [];
 
             this.spawned.forEach(function (slime) {
 
-                if (!slime.target && !slime.isTarget) {
+                if(!slime.target && !slime.isTarget){
 
                     notarget.push(slime);
 
@@ -54,7 +54,7 @@ class CapturePoint extends Phaser.Sprite {
 
             })
 
-            if (notarget.length > 1) {
+            if(notarget.length > 1) {
 
                 var tn = Math.floor(Math.random() * notarget.length);
 
@@ -63,82 +63,44 @@ class CapturePoint extends Phaser.Sprite {
                 notarget.splice(tn, 1);
 
                 notarget.forEach(function (slime) {
-
-                    if (slime.alive) {
+                    
+                    if(slime.alive) {
 
                         slime.target = target;
                         target.targetedBy.add(slime);
 
                     }
-
+    
                 })
 
             }
 
         }
 
-        if (game.math.distance(this.x, this.y, global.player.x, global.player.y) < this.range) {
+        if(game.math.distance(this.x, this.y, global.player.x, global.player.y) < this.range) {
 
-            if (this.prog < this.range) {
+            if(this.prog < this.range) {
 
                 this.loader.clear();
 
                 this.prog++;
-
+                
                 this.loader.beginFill(0x000000, 0.5);
                 this.loader.drawCircle(this.x, this.y, this.prog * 2);
                 this.loader.endFill();
 
-            } else if (global.player.alive) {
+            } else if(global.player.alive){
 
-                global.player.score++;
+                global.player.score ++;
                 this.captured = true;
 
             }
-
+        
         } else {
 
-            if (Object.keys(global.enemies).length > 0) {
-
-                Object.keys(global.enemies).forEach(function (key) {
-
-                    let enemy = global.enemies[key];
-
-                    if (game.math.distance(this.x, this.y, enemy.x, enemy.y + enemy.height/2) < this.range) {
-
-                        if (this.prog < this.range) {
-
-                            this.loader.clear();
-
-                            this.prog++;
-
-                            this.loader.beginFill(0x000000, 0.5);
-                            this.loader.drawCircle(this.x, this.y, this.prog * 2);
-                            this.loader.endFill();
-
-                        } else if (enemy.alive) {
-
-                            this.captured = true;
-
-                        }
-
-                    } else {
-
-                        this.loader.clear();
-                        this.prog = 0;
-                        this.captured = false;
-
-                    }
-
-                }, this)
-
-            } else {
-
-                this.loader.clear();
-                this.prog = 0;
-                this.captured = false;
-
-            }
+            this.loader.clear();
+            this.prog = 0;
+            this.captured = false;
 
         }
 

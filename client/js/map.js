@@ -37,7 +37,6 @@ class Map {
         this.entities = map.entities;
         this.capPoints = map.capPoints;
         this.biomes = map.biomes;
-        this.caps = [];
             
         this.loadSprite(this.entities);
 
@@ -67,7 +66,7 @@ class Map {
 
         for(let i = 0; i < capPoint.length; i++){
 
-            this.caps.push(new CapturePoint(capPoint[i].x, capPoint[i].y, capPoint[i].sprite, capPoint[i].biome, this.eGroup));
+            new CapturePoint(capPoint[i].x, capPoint[i].y, capPoint[i].sprite, capPoint[i].biome, this.eGroup);
 
         }      
     }

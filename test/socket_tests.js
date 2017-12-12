@@ -4,8 +4,7 @@ let assert = require('assert');
 let fs = require('fs');
 
 let io = require('socket.io-client');
-let port = JSON.parse(fs.readFileSync('./server/settings.json')).port;
-let socketURL = 'http://localhost:' + port;
+let socketURL = 'http://localhost:80';
 
 let options = {
 
@@ -40,9 +39,10 @@ describe('Socket', () =>{
 
     beforeEach( () =>{
 
+        player1 = io.connect(socketURL, options);
         player2 = io.connect(socketURL, options);
-        player1 = io.connect(socketURL, options); 
-
+     
+        
     })
 
     afterEach( () =>{
