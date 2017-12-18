@@ -1,5 +1,7 @@
-let expect  = require('chai').expect;
-let chai = require('chai');
+const expect  = require('chai').expect;
+const chai = require('chai');
+const sinon = require('sinon');
+const request = require('request');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
@@ -8,7 +10,7 @@ let Player = require('./js/player.js');
 
 describe('Player', () => {
 
-    var player = new Player(100, 100);
+    let player = new Player(100, 100);
 
     it('Properties', () =>{
 
@@ -29,7 +31,7 @@ describe('Player', () => {
 
         it('#update()', ()=>{
 
-            chai.assert.isFunction(player.update)
+          chai.assert.isFunction(player.update);
         })
 
         it('#kill()', () =>{

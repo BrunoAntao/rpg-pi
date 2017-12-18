@@ -1,9 +1,9 @@
-let expect  = require('chai').expect;
-let assert = require('assert');
-let request = require('request');
-let chai = require('chai');
-let fs = require('fs');
-let serverFunctions = require('./js/server_functions');
+const expect  = require('chai').expect;
+const assert = require('assert');
+const request = require('request');
+const chai = require('chai');
+const fs = require('fs');
+const serverFunctions = require('./js/server_functions');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
@@ -12,9 +12,9 @@ describe('Server', () => {
 
     it('Status', () => {
 
-        request("http://localhost:80" , function(error, response, body) {
+        request.get("http://localhost:80" , function(error, response, body) {
 
-        expect(response.statusCode).to.equal(200);
+          expect(response.statusCode).to.equal(200);
 
         });
     });

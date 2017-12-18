@@ -1,12 +1,12 @@
-let expect  = require('chai').expect;
-let chai = require('chai');
+const expect  = require('chai').expect;
+const chai = require('chai');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
 
-let Warrior = require('./js/warrior.js');
-let Ranger = require('./js/ranger.js');
-let Mage = require('./js/mage.js');
+const Warrior = require('./js/warrior.js');
+const Ranger = require('./js/ranger.js');
+const Mage = require('./js/mage.js');
 
 describe('Warrior', () =>{
 

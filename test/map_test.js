@@ -1,5 +1,5 @@
-let expect  = require('chai').expect;
-let chai = require('chai');
+const expect  = require('chai').expect;
+const chai = require('chai');
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
