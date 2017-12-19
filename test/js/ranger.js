@@ -14,10 +14,12 @@ module.exports = function(x, y, group, ctrls){
 
     this.health = 10;
     this.maxhealth = 10;
-    
+
     this.maxresource = 10;
     this.resource = 10;
     this.resColor = 0xcccc33;
+
+    this.score = 0;
 
     this.gainResource = function () {
 

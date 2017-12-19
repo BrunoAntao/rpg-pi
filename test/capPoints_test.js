@@ -5,7 +5,6 @@ const CapPoint = require('./js/capturePoints.js');
 
 describe('Capture Points', () => {
 
-
   it('Properties', () => {
 
     let capPoint =  new CapPoint(100, 100, 'desert');
