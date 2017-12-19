@@ -7,6 +7,7 @@ chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
 
 let Player = require('./js/player.js');
+let ServerPlayer = require('../server/player.js');
 
 describe('Player', () => {
 
@@ -30,3 +31,20 @@ describe('Player', () => {
     });
 
 });
+
+describe('Server Player', () => {
+
+  it('Properties', () => {
+
+    let server_player = new ServerPlayer();
+
+    expect(server_player).to.haveOwnProperty('id');
+  })
+
+  it('#id()', () => {
+
+    let server_player = new ServerPlayer(1328);
+
+    expect(server_player.id).to.equal(1328);
+  })
+})
