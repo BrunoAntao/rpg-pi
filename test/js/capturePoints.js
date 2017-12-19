@@ -13,7 +13,6 @@ module.exports = function (x, y, biome) {
 
     if (this.spawnCount < 14) {
 
-        this.spawned.add(new Slime());
         this.spawnCount++;
 
     }

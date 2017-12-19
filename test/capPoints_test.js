@@ -14,6 +14,18 @@ describe('Capture Points', () => {
     expect(capPoint).to.haveOwnProperty('prog').and.to.equal(0);
     expect(capPoint).to.haveOwnProperty('captured').and.to.equal(false);
     expect(capPoint).to.haveOwnProperty('biome').and.to.equal('desert');
+    expect(capPoint).to.haveOwnProperty('spawnCount').and.to.equal(0);
 
+
+  })
+
+  it('#spawn()', () => {
+
+    let capPoint =  new CapPoint(100, 100, 'desert');
+
+    capPoint.spawn();
+
+    expect(capPoint).to.haveOwnProperty('spawnCount').and.to.equal(1);
+    
   })
 })
