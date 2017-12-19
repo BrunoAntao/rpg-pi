@@ -10,6 +10,7 @@ module.exports = function(x, y, group, ctrls){
     this.maxhealth = 8;
 
     this.resColor = 0x3333cc;
+    this.score = 0;
 
 this.hitMob = function(a, b) {
 
