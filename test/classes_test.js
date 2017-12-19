@@ -80,7 +80,7 @@ describe('Warrior', () =>{
 
         })
 
-        it('#skill()', () => {
+        it('#skill()', (done) => {
 
           player2.on('player skill', (attack) =>{
 
@@ -148,7 +148,7 @@ describe('Ranger', () => {
             chai.assert.isFunction(ranger.gainResource);
         });
 
-        it('#attack()', () =>{
+        it('#attack()', (done) =>{
 
           player2.on('player attack', (attack) =>{
 
@@ -165,7 +165,7 @@ describe('Ranger', () => {
             chai.assert.isFunction(ranger.attack);
         });
 
-        it('#skill()', () =>{
+        it('#skill()', (done) =>{
 
           expect(ranger).to.have.ownProperty('sfireRate').and.to.equal(500);
 
@@ -213,7 +213,7 @@ describe('Mage', () =>{
           player2 = io.connect(socketURL, options);
           player1 = io.connect(socketURL, options);
 
-          let data = { x: 200, y: 200, class: 0};
+          let data = { x: 200, y: 200, class: 2};
 
           player1.emit('new player', data);
 
@@ -225,9 +225,20 @@ describe('Mage', () =>{
           player2.disconnect();
       })
 
-        it('#attack()', () =>{
+        it('#attack()', (done) =>{
 
-            chai.assert.isFunction(mage.attack);
+          player2.on('player attack', (attack) =>{
+
+              chai.assert.isFunction(mage.attack);
+              expect(attack).to.haveOwnProperty('id');
+              expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/4);
+
+              done();
+
+          })
+
+          player1.emit('player attack', Math.PI/4);
+
         });
 
         it('#skill', () =>{
