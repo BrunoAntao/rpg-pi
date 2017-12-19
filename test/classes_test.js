@@ -162,7 +162,6 @@ describe('Ranger', () => {
 
           player1.emit('player attack', Math.PI/4);
 
-            chai.assert.isFunction(ranger.attack);
         });
 
         it('#skill()', (done) =>{
@@ -181,7 +180,7 @@ describe('Ranger', () => {
 
           })
 
-          player1.emit('player skill');
+          player1.emit('player skill', Math.PI/6);
 
         });
     });
@@ -243,7 +242,17 @@ describe('Mage', () =>{
 
         it('#skill', () =>{
 
-            chai.assert.isFunction(mage.skill)
+          player2.on('player skill', (attack) =>{
+
+              chai.assert.isFunction(mage.skill);
+              expect(attack).to.haveOwnProperty('id')
+              expect(attack).to.haveOwnProperty('angle')
+
+              done();
+
+          })
+
+          player1.emit('player skill', Math.PI/6);
         });
     });
 });
