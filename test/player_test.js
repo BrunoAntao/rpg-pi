@@ -27,17 +27,4 @@ describe('Player', () => {
 
     });
 
-    describe('Functions', () =>{
-
-        it('#update()', ()=>{
-
-          chai.assert.isFunction(player.update);
-        })
-
-        it('#kill()', () =>{
-
-            chai.assert.isFunction(player.kill);
-        })
-    })
-
 });

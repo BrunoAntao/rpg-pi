@@ -6,6 +6,7 @@ const io = require('socket.io-client');
 const port = JSON.parse(fs.readFileSync('./server/settings.json')).port;
 const socketURL = 'http://localhost:' + port;
 
+
 const options = {
 
     transports: ['websocket'],
@@ -63,13 +64,6 @@ describe('Warrior', () =>{
             player2.disconnect();
         })
 
-        it('#hitmob()', () =>{
-
-            chai.assert.isFunction(warrior.hitMob);
-
-
-        })
-
         it('#attack()', (done) => {
 
           player2.on('player attack', (attack) =>{
@@ -102,12 +96,6 @@ describe('Warrior', () =>{
 
         })
 
-        it('#update()', () =>{
-
-            chai.assert.isFunction(warrior.update);
-
-        })
-
     })
 
 });
@@ -130,24 +118,51 @@ describe('Ranger', () => {
 
     describe('Functions', () =>{
 
+      let player1, player2;
+
+      beforeEach( () =>{
+
+          player2 = io.connect(socketURL, options);
+          player1 = io.connect(socketURL, options);
+
+          let data = { x: 200, y: 200, class: 1};
+
+          player1.emit('new player', data);
+
+      })
+
+      afterEach( () =>{
+
+          player1.disconnect();
+          player2.disconnect();
+      })
+
         it('#gainResource()', () =>{
+
+            ranger.resource--;
+
+            ranger.gainResource();
+
+            expect(ranger.resource).to.equal(10);
 
             chai.assert.isFunction(ranger.gainResource);
         });
 
-        it('#hitmob()', () => {
-
-            chai.assert.isFunction(ranger.hitMob);
-        });
-
         it('#attack()', () =>{
 
+          player2.on('player attack', (attack) =>{
+
+              chai.assert.isFunction(ranger.attack);
+              expect(attack).to.haveOwnProperty('id');
+              expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/4);
+
+              done();
+
+          })
+
+          player1.emit('player attack', Math.PI/4);
+
             chai.assert.isFunction(ranger.attack);
-        });
-
-        it('#skillHitMob()', () =>{
-
-            chai.assert.isFunction(ranger.skillHitMob);
         });
 
         it('#skill()', () =>{
@@ -180,10 +195,24 @@ describe('Mage', () =>{
 
     describe('Functions', () =>{
 
-        it('#hitMob()', () =>{
+      let player1, player2;
 
-            chai.assert.isFunction(mage.hitMob);
-        });
+      beforeEach( () =>{
+
+          player2 = io.connect(socketURL, options);
+          player1 = io.connect(socketURL, options);
+
+          let data = { x: 200, y: 200, class: 0};
+
+          player1.emit('new player', data);
+
+      })
+
+      afterEach( () =>{
+
+          player1.disconnect();
+          player2.disconnect();
+      })
 
         it('#attack()', () =>{
 
