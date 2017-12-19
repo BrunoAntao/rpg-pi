@@ -167,11 +167,22 @@ describe('Ranger', () => {
 
         it('#skill()', () =>{
 
-            expect(ranger).to.have.ownProperty('sfireRate').and.to.equal(500);
+          expect(ranger).to.have.ownProperty('sfireRate').and.to.equal(500);
 
-            expect(ranger).to.have.ownProperty('satkdamage').and.to.equal(3);
+          expect(ranger).to.have.ownProperty('satkdamage').and.to.equal(3);
 
-            chai.assert.isFunction(ranger.skill);
+          player2.on('player skill', (attack) =>{
+
+              chai.assert.isFunction(ranger.skill);
+              expect(attack).to.haveOwnProperty('id')
+              expect(attack).to.not.haveOwnProperty('angle')
+
+              done();
+
+          })
+
+          player1.emit('player skill');
+
         });
     });
 });
