@@ -1125,8 +1125,22 @@ class Mage extends Player {
 
         }
 
+        
+        let v = Math.floor((Math.random() * 20) + 1);            
+        
+        if (v != 2){
+
         this.collision = game.add.audio('hurt', 0.3);
         this.collision.play();
+    
+        } else {
+
+            this.collision = game.add.audio('hurtish', 0.3);
+            this.collision.play();
+
+        }
+
+        
 
     }
 
