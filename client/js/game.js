@@ -50,6 +50,7 @@ gameState = {
         game.load.audio('spell', 'client/assets/sounds/spell.m4a');
         game.load.audio('hurtmag', 'client/assets/sounds/hurtmage.m4a');
         game.load.audio('hurt', 'client/assets/sounds/hurt.m4a');
+        game.load.audio('hurtish', 'client/assets/sounds/hurtish.m4a');
         game.load.audio('hurtran', 'client/assets/sounds/hurtwar.m4a');
         game.load.audio('arrow', 'client/assets/sounds/arrow.m4a');
         game.load.audio('sword', 'client/assets/sounds/sword.m4a');
