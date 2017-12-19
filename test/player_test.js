@@ -14,15 +14,17 @@ describe('Player', () => {
 
     it('Properties', () =>{
 
-        expect(player).to.have.property('speed').and.to.equal(5);
+        expect(player).to.haveOwnProperty('speed').and.to.equal(5);
 
-        expect(player).to.have.property('maxhealth').and.to.equal(10);
+        expect(player).to.haveOwnProperty('maxhealth').and.to.equal(10);
 
-        expect(player).to.have.property('health').and.to.equal(10);
+        expect(player).to.haveOwnProperty('health').and.to.equal(10);
 
-        expect(player).to.have.property('maxresource').and.to.equal(10);
+        expect(player).to.haveOwnProperty('maxresource').and.to.equal(10);
 
-        expect(player).to.have.property('resource').and.to.equal(10);
+        expect(player).to.haveOwnProperty('resource').and.to.equal(10);
+
+        expect(player).to.haveOwnProperty('score').and.to.equal(0);
 
 
     });
