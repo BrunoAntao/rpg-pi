@@ -174,7 +174,7 @@ describe('Ranger', () => {
 
               chai.assert.isFunction(ranger.skill);
               expect(attack).to.haveOwnProperty('id')
-              expect(attack).to.not.haveOwnProperty('angle')
+              expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/6);
 
               done();
 
@@ -246,7 +246,7 @@ describe('Mage', () =>{
 
               chai.assert.isFunction(mage.skill);
               expect(attack).to.haveOwnProperty('id')
-              expect(attack).to.haveOwnProperty('angle')
+              expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/6);
 
               done();
 
