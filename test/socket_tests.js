@@ -26,7 +26,7 @@ describe('Socket', () =>{
 
         player3.on('connect', () =>{
 
-            let data = { x: 200, y: 200, class: 1};
+            let data = { x: 200, y: 200, class: 0};
 
             player3.emit('new player', data);
         })
@@ -94,7 +94,7 @@ describe('Socket', () =>{
 
         player1.on('players', (players) =>{
 
-            //expect(players).to.have.lengthOf(1);
+            expect(players).to.have.lengthOf(1);
 
             done();
 

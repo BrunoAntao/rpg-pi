@@ -1,5 +1,16 @@
 const expect  = require('chai').expect;
 const chai = require('chai');
+const assert = require('assert');
+const fs = require('fs');
+const io = require('socket.io-client');
+const port = JSON.parse(fs.readFileSync('./server/settings.json')).port;
+const socketURL = 'http://localhost:' + port;
+
+const options = {
+
+    transports: ['websocket'],
+    'force new connection': true
+}
 
 chai.use(require('chai-dom'));
 chai.use(require('chai-http'));
@@ -33,6 +44,25 @@ describe('Warrior', () =>{
 
     describe('Functions', () =>{
 
+        let player1, player2;
+
+        beforeEach( () =>{
+
+            player2 = io.connect(socketURL, options);
+            player1 = io.connect(socketURL, options);
+
+            let data = { x: 200, y: 200, class: 0};
+
+            player1.emit('new player', data);
+
+        })
+
+        afterEach( () =>{
+
+            player1.disconnect();
+            player2.disconnect();
+        })
+
         it('#hitmob()', () =>{
 
             chai.assert.isFunction(warrior.hitMob);
@@ -40,15 +70,35 @@ describe('Warrior', () =>{
 
         })
 
-        it('#attack()', () => {
+        it('#attack()', (done) => {
 
-            chai.assert.isFunction(warrior.attack);
+          player2.on('player attack', (attack) =>{
+
+              chai.assert.isFunction(warrior.attack);
+              expect(attack).to.haveOwnProperty('id');
+              expect(attack).to.haveOwnProperty('angle').and.to.equal(Math.PI/4);
+
+              done();
+
+          })
+
+          player1.emit('player attack', Math.PI/4);
 
         })
 
         it('#skill()', () => {
 
-            chai.assert.isFunction(warrior.skill);
+          player2.on('player skill', (attack) =>{
+
+              chai.assert.isFunction(warrior.skill);
+              expect(attack).to.haveOwnProperty('id')
+              expect(attack).to.not.haveOwnProperty('angle')
+
+              done();
+
+          })
+
+          player1.emit('player skill');
 
         })
 
